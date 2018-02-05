@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bookshop.dao.BooksMapper">
+  <resultMap id="BaseResultMap" type="com.bookshop.modle.Books">
+    <id column="b_id" jdbcType="VARCHAR" property="bId" />
+    <result column="b_name" jdbcType="VARCHAR" property="bName" />
+    <result column="b_description" jdbcType="VARCHAR" property="bDescription" />
+    <result column="b_price" jdbcType="REAL" property="bPrice" />
+    <result column="b_discount" jdbcType="INTEGER" property="bDiscount" />
+    <result column="b_author" jdbcType="VARCHAR" property="bAuthor" />
+    <result column="b_press" jdbcType="VARCHAR" property="bPress" />
+    <result column="b_press_time" jdbcType="DATE" property="bPressTime" />
+    <result column="b_add_time" jdbcType="TIMESTAMP" property="bAddTime" />
+    <result column="b_service" jdbcType="VARCHAR" property="bService" />
+    <result column="b_sale_num" jdbcType="INTEGER" property="bSaleNum" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    b_id, b_name, b_description, b_price, b_discount, b_author, b_press, b_press_time, 
+    b_add_time, b_service, b_sale_num
+  </sql>
+  <select id="selectByExample" parameterType="com.bookshop.modle.BooksExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from books
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from books
+    where b_id = #{bId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from books
+    where b_id = #{bId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bookshop.modle.BooksExample">
+    delete from books
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bookshop.modle.Books">
+    insert into books (b_id, b_name, b_description, 
+      b_price, b_discount, b_author, 
+      b_press, b_press_time, b_add_time, 
+      b_service, b_sale_num)
+    values (#{bId,jdbcType=VARCHAR}, #{bName,jdbcType=VARCHAR}, #{bDescription,jdbcType=VARCHAR}, 
+      #{bPrice,jdbcType=REAL}, #{bDiscount,jdbcType=INTEGER}, #{bAuthor,jdbcType=VARCHAR}, 
+      #{bPress,jdbcType=VARCHAR}, #{bPressTime,jdbcType=DATE}, #{bAddTime,jdbcType=TIMESTAMP}, 
+      #{bService,jdbcType=VARCHAR}, #{bSaleNum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bookshop.modle.Books">
+    insert into books
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bId != null">
+        b_id,
+      </if>
+      <if test="bName != null">
+        b_name,
+      </if>
+      <if test="bDescription != null">
+        b_description,
+      </if>
+      <if test="bPrice != null">
+        b_price,
+      </if>
+      <if test="bDiscount != null">
+        b_discount,
+      </if>
+      <if test="bAuthor != null">
+        b_author,
+      </if>
+      <if test="bPress != null">
+        b_press,
+      </if>
+      <if test="bPressTime != null">
+        b_press_time,
+      </if>
+      <if test="bAddTime != null">
+        b_add_time,
+      </if>
+      <if test="bService != null">
+        b_service,
+      </if>
+      <if test="bSaleNum != null">
+        b_sale_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bId != null">
+        #{bId,jdbcType=VARCHAR},
+      </if>
+      <if test="bName != null">
+        #{bName,jdbcType=VARCHAR},
+      </if>
+      <if test="bDescription != null">
+        #{bDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="bPrice != null">
+        #{bPrice,jdbcType=REAL},
+      </if>
+      <if test="bDiscount != null">
+        #{bDiscount,jdbcType=INTEGER},
+      </if>
+      <if test="bAuthor != null">
+        #{bAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="bPress != null">
+        #{bPress,jdbcType=VARCHAR},
+      </if>
+      <if test="bPressTime != null">
+        #{bPressTime,jdbcType=DATE},
+      </if>
+      <if test="bAddTime != null">
+        #{bAddTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bService != null">
+        #{bService,jdbcType=VARCHAR},
+      </if>
+      <if test="bSaleNum != null">
+        #{bSaleNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bookshop.modle.BooksExample" resultType="java.lang.Long">
+    select count(*) from books
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update books
+    <set>
+      <if test="record.bId != null">
+        b_id = #{record.bId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bName != null">
+        b_name = #{record.bName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bDescription != null">
+        b_description = #{record.bDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bPrice != null">
+        b_price = #{record.bPrice,jdbcType=REAL},
+      </if>
+      <if test="record.bDiscount != null">
+        b_discount = #{record.bDiscount,jdbcType=INTEGER},
+      </if>
+      <if test="record.bAuthor != null">
+        b_author = #{record.bAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bPress != null">
+        b_press = #{record.bPress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bPressTime != null">
+        b_press_time = #{record.bPressTime,jdbcType=DATE},
+      </if>
+      <if test="record.bAddTime != null">
+        b_add_time = #{record.bAddTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.bService != null">
+        b_service = #{record.bService,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bSaleNum != null">
+        b_sale_num = #{record.bSaleNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update books
+    set b_id = #{record.bId,jdbcType=VARCHAR},
+      b_name = #{record.bName,jdbcType=VARCHAR},
+      b_description = #{record.bDescription,jdbcType=VARCHAR},
+      b_price = #{record.bPrice,jdbcType=REAL},
+      b_discount = #{record.bDiscount,jdbcType=INTEGER},
+      b_author = #{record.bAuthor,jdbcType=VARCHAR},
+      b_press = #{record.bPress,jdbcType=VARCHAR},
+      b_press_time = #{record.bPressTime,jdbcType=DATE},
+      b_add_time = #{record.bAddTime,jdbcType=TIMESTAMP},
+      b_service = #{record.bService,jdbcType=VARCHAR},
+      b_sale_num = #{record.bSaleNum,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bookshop.modle.Books">
+    update books
+    <set>
+      <if test="bName != null">
+        b_name = #{bName,jdbcType=VARCHAR},
+      </if>
+      <if test="bDescription != null">
+        b_description = #{bDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="bPrice != null">
+        b_price = #{bPrice,jdbcType=REAL},
+      </if>
+      <if test="bDiscount != null">
+        b_discount = #{bDiscount,jdbcType=INTEGER},
+      </if>
+      <if test="bAuthor != null">
+        b_author = #{bAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="bPress != null">
+        b_press = #{bPress,jdbcType=VARCHAR},
+      </if>
+      <if test="bPressTime != null">
+        b_press_time = #{bPressTime,jdbcType=DATE},
+      </if>
+      <if test="bAddTime != null">
+        b_add_time = #{bAddTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bService != null">
+        b_service = #{bService,jdbcType=VARCHAR},
+      </if>
+      <if test="bSaleNum != null">
+        b_sale_num = #{bSaleNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where b_id = #{bId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bookshop.modle.Books">
+    update books
+    set b_name = #{bName,jdbcType=VARCHAR},
+      b_description = #{bDescription,jdbcType=VARCHAR},
+      b_price = #{bPrice,jdbcType=REAL},
+      b_discount = #{bDiscount,jdbcType=INTEGER},
+      b_author = #{bAuthor,jdbcType=VARCHAR},
+      b_press = #{bPress,jdbcType=VARCHAR},
+      b_press_time = #{bPressTime,jdbcType=DATE},
+      b_add_time = #{bAddTime,jdbcType=TIMESTAMP},
+      b_service = #{bService,jdbcType=VARCHAR},
+      b_sale_num = #{bSaleNum,jdbcType=INTEGER}
+    where b_id = #{bId,jdbcType=VARCHAR}
+  </update>
+</mapper>

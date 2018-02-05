@@ -1,0 +1,181 @@
+﻿<!DOCTYPE html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title></title>
+  <link href="css/font-awesome.min.css" rel="stylesheet" />
+  <link href="css/login.css" rel="stylesheet" />
+</head>
+<body>
+<div id="container">
+  <div id="header">
+    <h2 class="header-text">注册中心</h2>
+    <span class="header-a"><a href="index.html"><img src="img/arrow-right.png"/>&nbsp;首页</a></span>
+    <div style="clear: both"></div>
+  </div>
+  <div id="contents">
+    <div id="main">
+      <label for="register_username">用户名：</label>
+      <input type="text" placeholder="请输入用户名" id="register_username"/>
+      <div class="tip-area">
+        <div class="check checkRegisterUsername"></div>
+      </div>
+      <label for="register_passwd">密&nbsp;码:</label>
+      <input type="password" id="register_passwd" placeholder="请输入密码"/>
+      <div class="tip-area">
+        <div class="check tip_password"></div>
+      </div>
+      <label for="confirmPwd">确认密码：</label><input type="password" placeholder="请输入确认密码" id="confirmPwd"/>
+      <div class="tip-area">
+        <div class="check confirmPwd"></div>
+      </div>
+      <label for="phone">手机号码：</label><input type="tel" placeholder="请输入手机号码" id="phone"/>
+      <div class="tip-area">
+        <div class="check tip-phone"></div>
+      </div>
+      <label for="role">角色：</label><input type="radio" id="role" name="role" value="0">买家&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" id="role" name="role" value="1">卖家
+      <button id="register">注&nbsp;&nbsp;册</button>
+      <p class="text-center">已有账户<a href="login.html"><small>登录</small></a>
+    </div>
+  </div>
+  <div id="footer">
+  </div>
+</div>
+</body>
+</html>
+<script src="js/jquery-2.2.4.min.js"></script>
+<script>
+  $(function () {
+    function createRequest(){
+        try {
+            var request = new XMLHttpRequest();
+        } catch (tryMS) {
+            try {
+                request = new ActiveXObject("Msxml2.XMLHTTP");
+            } catch (otherMS) {
+                try {
+                    request = new ActiveXObject("Microsoft.XMLHTTP");
+                } catch (failed) {
+                    request = null;
+                }
+            }
+        }
+        return request;
+    }
+    //用户名判断 是否存在
+    $("#register_username").blur(function(){
+
+        //法二通过$(this)
+        var username= $("#register_username").val();
+        if(!username){
+            $(".checkRegisterUsername").html("用户名不能为空！")
+        }else{
+          requestName = createRequest();
+          var url = "user/registerAccount?uAccount="+username;
+          requestName.open("GET",url, true);
+          requestName.onreadystatechange = handleStateChange;
+          requestName.send(null);
+        }
+    }).focus(function(){
+        $(".checkRegisterUsername").html("");
+    });
+
+    //回调函数
+    function handleStateChange(data) {
+        if(requestName.readyState==4){
+            if(requestName.status==200){
+            	responseText=requestName.responseText;
+            	console.log(requestName.responseText.trim())
+                if(requestName.responseText.trim()=="uAccountOK"){
+                    //成功
+                	$(".checkRegisterUsername").html("&radic;");
+                }else{
+                    $(".checkRegisterUsername").text("该用户名已存在！");
+                }
+            }
+        }
+    }
+
+    //密码判断
+    $("#register_passwd").blur(function(){
+
+        var passwd= $("#register_passwd").val();
+
+        if(!passwd){
+            $(".tip_password").html("密码不能为空！");
+
+        }else if(!passwd.match(/^\w{6,15}$/)){
+            $(".tip_password").html("密码必须数字或英文或下划线组成的6-15个字符！");
+        }
+    }).focus(function(){
+        $(".tip_password").html("");
+    });
+
+    // 确认密码
+    $("#confirmPwd").blur(function(){
+        if(!($("#confirmPwd").val())){
+            $(".confirmPwd").html("确认密码不能为空！");
+        }
+        var confirmpwd=$(this).val();
+        if( ($("#register_passwd").val())&&confirmpwd){
+            if(confirmpwd !=($("#register_passwd").val())){
+                $(".confirmPwd").html("二次密码输入不一致！");
+            }
+        }
+    }).focus(function(){
+        $(".confirmPwd").html("");
+    });
+
+    $("#phone").blur(function(){
+        var phone=$("#phone").val();
+        if(!phone){
+            $(".tip-phone").html("电话不能为空！");
+        }else if(!phone.match(/^\d{11}$/)){
+            $(".tip-phone").html("电话号码必须11位!");
+        }
+    }).focus(function (){
+        $(".tip-phone").html("");
+    });
+
+  //提交按钮的ajax提交
+  $("#register").click(function(){
+	  
+	alert("role："+$("#role").val())
+	
+      if($("#register_username").val() && $("#register_passwd").val() && $("#confirmPwd").val() && $("#phone").val()){
+          requestRegister = createRequest();
+          var url = getDate();
+          requestRegister.open("GET",url,true);
+          requestRegister.onreadystatechange = handleStateChange2;
+          requestRegister.send(null);
+      }
+  })
+
+  function getDate() {
+      var date = "user/register?uAccount="+$("#register_username").val()+"&uPassword="+$("#register_passwd").val()+"&uPhone="+$("#phone").val();
+      return date;
+  }
+
+  function handleStateChange2(data) {
+      if(requestRegister.readyState==4){
+          if(requestRegister.status==200){
+             /*  //alert(request.responseText);
+              var register = document.getElementById("register-tag");
+              register.innerHTML = requestRegister.responseText;
+              window.location = "index.jsp";
+              //alert("注册成功"); */
+              
+              
+              //piperChan
+              responseText=data.target.responseText;
+              console.log(responseText);
+              //注册成功，重定向到登录页面
+              if(responseText.registerSuccess){
+            	  window.location="login.html"
+              }
+              
+          }
+      }
+  }
+});
+
+</script>

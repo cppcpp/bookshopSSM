@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bookshop.dao.OrdersMapper">
+  <resultMap id="BaseResultMap" type="com.bookshop.modle.Orders">
+    <id column="o_id" jdbcType="VARCHAR" property="oId" />
+    <result column="o_num" jdbcType="INTEGER" property="oNum" />
+    <result column="o_price" jdbcType="REAL" property="oPrice" />
+    <result column="o_time" jdbcType="TIMESTAMP" property="oTime" />
+    <result column="u_account" jdbcType="VARCHAR" property="uAccount" />
+    <result column="u_address" jdbcType="VARCHAR" property="uAddress" />
+    <result column="o_phone" jdbcType="VARCHAR" property="oPhone" />
+    <result column="u_receiver" jdbcType="VARCHAR" property="uReceiver" />
+    <result column="o_cheaper" jdbcType="REAL" property="oCheaper" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    o_id, o_num, o_price, o_time, u_account, u_address, o_phone, u_receiver, o_cheaper
+  </sql>
+  <select id="selectByExample" parameterType="com.bookshop.modle.OrdersExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from orders
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from orders
+    where o_id = #{oId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from orders
+    where o_id = #{oId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bookshop.modle.OrdersExample">
+    delete from orders
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bookshop.modle.Orders">
+    insert into orders (o_id, o_num, o_price, 
+      o_time, u_account, u_address, 
+      o_phone, u_receiver, o_cheaper
+      )
+    values (#{oId,jdbcType=VARCHAR}, #{oNum,jdbcType=INTEGER}, #{oPrice,jdbcType=REAL}, 
+      #{oTime,jdbcType=TIMESTAMP}, #{uAccount,jdbcType=VARCHAR}, #{uAddress,jdbcType=VARCHAR}, 
+      #{oPhone,jdbcType=VARCHAR}, #{uReceiver,jdbcType=VARCHAR}, #{oCheaper,jdbcType=REAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bookshop.modle.Orders">
+    insert into orders
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="oId != null">
+        o_id,
+      </if>
+      <if test="oNum != null">
+        o_num,
+      </if>
+      <if test="oPrice != null">
+        o_price,
+      </if>
+      <if test="oTime != null">
+        o_time,
+      </if>
+      <if test="uAccount != null">
+        u_account,
+      </if>
+      <if test="uAddress != null">
+        u_address,
+      </if>
+      <if test="oPhone != null">
+        o_phone,
+      </if>
+      <if test="uReceiver != null">
+        u_receiver,
+      </if>
+      <if test="oCheaper != null">
+        o_cheaper,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="oId != null">
+        #{oId,jdbcType=VARCHAR},
+      </if>
+      <if test="oNum != null">
+        #{oNum,jdbcType=INTEGER},
+      </if>
+      <if test="oPrice != null">
+        #{oPrice,jdbcType=REAL},
+      </if>
+      <if test="oTime != null">
+        #{oTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uAccount != null">
+        #{uAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="uAddress != null">
+        #{uAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="oPhone != null">
+        #{oPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="uReceiver != null">
+        #{uReceiver,jdbcType=VARCHAR},
+      </if>
+      <if test="oCheaper != null">
+        #{oCheaper,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bookshop.modle.OrdersExample" resultType="java.lang.Long">
+    select count(*) from orders
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update orders
+    <set>
+      <if test="record.oId != null">
+        o_id = #{record.oId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oNum != null">
+        o_num = #{record.oNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.oPrice != null">
+        o_price = #{record.oPrice,jdbcType=REAL},
+      </if>
+      <if test="record.oTime != null">
+        o_time = #{record.oTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.uAccount != null">
+        u_account = #{record.uAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uAddress != null">
+        u_address = #{record.uAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oPhone != null">
+        o_phone = #{record.oPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uReceiver != null">
+        u_receiver = #{record.uReceiver,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oCheaper != null">
+        o_cheaper = #{record.oCheaper,jdbcType=REAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update orders
+    set o_id = #{record.oId,jdbcType=VARCHAR},
+      o_num = #{record.oNum,jdbcType=INTEGER},
+      o_price = #{record.oPrice,jdbcType=REAL},
+      o_time = #{record.oTime,jdbcType=TIMESTAMP},
+      u_account = #{record.uAccount,jdbcType=VARCHAR},
+      u_address = #{record.uAddress,jdbcType=VARCHAR},
+      o_phone = #{record.oPhone,jdbcType=VARCHAR},
+      u_receiver = #{record.uReceiver,jdbcType=VARCHAR},
+      o_cheaper = #{record.oCheaper,jdbcType=REAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bookshop.modle.Orders">
+    update orders
+    <set>
+      <if test="oNum != null">
+        o_num = #{oNum,jdbcType=INTEGER},
+      </if>
+      <if test="oPrice != null">
+        o_price = #{oPrice,jdbcType=REAL},
+      </if>
+      <if test="oTime != null">
+        o_time = #{oTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uAccount != null">
+        u_account = #{uAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="uAddress != null">
+        u_address = #{uAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="oPhone != null">
+        o_phone = #{oPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="uReceiver != null">
+        u_receiver = #{uReceiver,jdbcType=VARCHAR},
+      </if>
+      <if test="oCheaper != null">
+        o_cheaper = #{oCheaper,jdbcType=REAL},
+      </if>
+    </set>
+    where o_id = #{oId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bookshop.modle.Orders">
+    update orders
+    set o_num = #{oNum,jdbcType=INTEGER},
+      o_price = #{oPrice,jdbcType=REAL},
+      o_time = #{oTime,jdbcType=TIMESTAMP},
+      u_account = #{uAccount,jdbcType=VARCHAR},
+      u_address = #{uAddress,jdbcType=VARCHAR},
+      o_phone = #{oPhone,jdbcType=VARCHAR},
+      u_receiver = #{uReceiver,jdbcType=VARCHAR},
+      o_cheaper = #{oCheaper,jdbcType=REAL}
+    where o_id = #{oId,jdbcType=VARCHAR}
+  </update>
+</mapper>

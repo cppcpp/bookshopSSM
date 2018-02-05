@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bookshop.dao.UsersMapper">
+  <resultMap id="BaseResultMap" type="com.bookshop.modle.Users">
+    <id column="u_account" jdbcType="VARCHAR" property="uAccount" />
+    <result column="u_name" jdbcType="VARCHAR" property="uName" />
+    <result column="u_password" jdbcType="VARCHAR" property="uPassword" />
+    <result column="u_phone" jdbcType="VARCHAR" property="uPhone" />
+    <result column="u_mail" jdbcType="VARCHAR" property="uMail" />
+    <result column="u_role" jdbcType="VARCHAR" property="uRole" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    u_account, u_name, u_password, u_phone, u_mail, u_role
+  </sql>
+  <select id="selectByExample" parameterType="com.bookshop.modle.UsersExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from users
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from users
+    where u_account = #{uAccount,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from users
+    where u_account = #{uAccount,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bookshop.modle.UsersExample">
+    delete from users
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bookshop.modle.Users">
+    insert into users (u_account, u_name, u_password, 
+      u_phone, u_mail, u_role
+      )
+    values (#{uAccount,jdbcType=VARCHAR}, #{uName,jdbcType=VARCHAR}, #{uPassword,jdbcType=VARCHAR}, 
+      #{uPhone,jdbcType=VARCHAR}, #{uMail,jdbcType=VARCHAR}, #{uRole,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bookshop.modle.Users">
+    insert into users
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uAccount != null">
+        u_account,
+      </if>
+      <if test="uName != null">
+        u_name,
+      </if>
+      <if test="uPassword != null">
+        u_password,
+      </if>
+      <if test="uPhone != null">
+        u_phone,
+      </if>
+      <if test="uMail != null">
+        u_mail,
+      </if>
+      <if test="uRole != null">
+        u_role,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uAccount != null">
+        #{uAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="uName != null">
+        #{uName,jdbcType=VARCHAR},
+      </if>
+      <if test="uPassword != null">
+        #{uPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="uPhone != null">
+        #{uPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="uMail != null">
+        #{uMail,jdbcType=VARCHAR},
+      </if>
+      <if test="uRole != null">
+        #{uRole,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bookshop.modle.UsersExample" resultType="java.lang.Long">
+    select count(*) from users
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update users
+    <set>
+      <if test="record.uAccount != null">
+        u_account = #{record.uAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uName != null">
+        u_name = #{record.uName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uPassword != null">
+        u_password = #{record.uPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uPhone != null">
+        u_phone = #{record.uPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uMail != null">
+        u_mail = #{record.uMail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uRole != null">
+        u_role = #{record.uRole,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update users
+    set u_account = #{record.uAccount,jdbcType=VARCHAR},
+      u_name = #{record.uName,jdbcType=VARCHAR},
+      u_password = #{record.uPassword,jdbcType=VARCHAR},
+      u_phone = #{record.uPhone,jdbcType=VARCHAR},
+      u_mail = #{record.uMail,jdbcType=VARCHAR},
+      u_role = #{record.uRole,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bookshop.modle.Users">
+    update users
+    <set>
+      <if test="uName != null">
+        u_name = #{uName,jdbcType=VARCHAR},
+      </if>
+      <if test="uPassword != null">
+        u_password = #{uPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="uPhone != null">
+        u_phone = #{uPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="uMail != null">
+        u_mail = #{uMail,jdbcType=VARCHAR},
+      </if>
+      <if test="uRole != null">
+        u_role = #{uRole,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where u_account = #{uAccount,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bookshop.modle.Users">
+    update users
+    set u_name = #{uName,jdbcType=VARCHAR},
+      u_password = #{uPassword,jdbcType=VARCHAR},
+      u_phone = #{uPhone,jdbcType=VARCHAR},
+      u_mail = #{uMail,jdbcType=VARCHAR},
+      u_role = #{uRole,jdbcType=VARCHAR}
+    where u_account = #{uAccount,jdbcType=VARCHAR}
+  </update>
+</mapper>

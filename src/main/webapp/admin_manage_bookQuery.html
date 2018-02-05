@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>管理员主页</title>
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/manage.css">
+
+</head>
+<body>
+<header>
+  <div class="manage-top-nav">
+    <img src="img/logo.png" class="nav-left-img"/>
+    <span class="nav-right-area"><a href="">退出</a></span>
+  </div>
+</header>
+
+<section class="left-bar">
+  <ul class="menu">
+    <li class="level1">
+      <a href="#none" id="bookManage">图书管理</a>
+      <ul class="level2">
+        <li><a href="admin_manage_bookAdd.html" id="book_add">增加图书</a></li>
+        <li><a href="admin_manage_bookQuery.html" id="book_query">查询图书</a></li>
+      </ul>
+    </li>
+    <li class="level1">
+      <a href="#none">用户信息</a>
+      <!--<ul class="level2">
+        <li><a href="#none">开襟卫衣</a></li>
+        <li><a href="#none">套头卫衣</a></li>
+        <li><a href="#none">运动卫衣</a></li>
+        <li><a href="#none">童装卫衣</a></li>
+      </ul>-->
+    </li>
+  </ul>
+</section>
+
+<!-- 修改按钮 -->
+<div id="div2">
+  <div class="circles" >X</div>
+  <form action="booksModify" method="get" >
+    <div class="mini-form-input">
+      <label>图书名称：</label>
+      <input type="text" class="book_input" name="book_name" value="">
+    </div>
+    <div class="mini-form-input">
+      <label>图书描述：</label>
+      <input type="text" class="book_input" name="book_description" value="">
+    </div>
+
+    <div class="mini-form-input">
+      <label>图书价格：</label>
+      <input type="text" class="book_input" name="book_price" value="">
+    </div>
+
+    <div class="mini-form-input">
+      <label>图书折扣：</label>
+      <input type="text" class="book_input" name="book_discount" value="">
+    </div>
+
+    <div class="mini-form-input">
+      <label>图书作者：</label>
+      <input type="text" class="book_input" name="book_author" value="">
+    </div>
+
+    <div class="mini-form-input">
+      <label>图书出版社：</label>
+      <input type="text" class="book_input" name="book_press" value="">
+    </div>
+
+    <div class="mini-form-input">
+      <label>出版时间：</label>
+      <input type="text" class="book_input" name="book_press_time" value="">
+    </div>
+
+    <div class="mini-form-input">
+      <label>图书服务：</label>
+      <input type="text" class="book_input" name="book_service" value="">
+    </div>
+    <div class="mini-form-input">
+      <input type="submit" value="提交" name="submitButton">
+    </div>
+
+  </form>
+
+</div>
+
+<section class="right-content">
+  <div>
+    <span class="title"><i class="glyphicon glyphicon-search"></i>图书查询</span>
+  </div>
+  <div class="search_nav">
+    <select name="search_con" id="search_con">
+      <option>请选择搜索类型</option>
+      <option value="b_name" selected="selected">书名</option>
+      <option value="b_press">出版社</option>
+      <option value="b_author">作者</option>
+      <!-- <option value="search_bookCategory">书目类别</option> -->
+    </select>
+    <input type="text" name="search_input" id="search_input" >
+    <input type="submit" value="搜索" id="search_button" name="searchButton">
+  </div>
+
+  <!--<c:forEach var="b" items="${sessionScope.booksList}">-->
+    <div class="book">
+      <div class="book_column book_column_one">
+        <input id='1' type='checkbox' value='${b.b_id }'/>编号：1
+      </div>
+      <div class="book_column book_column_two">
+        <img src="img/book_images/j1.jpg">
+      </div>
+      <div class="book_column book_column_three" >
+        <ul>
+          <li title="book_name"  class="li_book"><b>名称：</b>shy</li>
+          <br>
+          <li title="book_description" class="li_book"><b>图书描述：</b>${b.b_description}</li>
+          <br>
+          <li title="book_price" class="li_book"><b>价格：</b>${b.b_price}</li>
+          <li title="book_discount" class="li_book"><b>折扣：</b>${b.b_discount}</li>
+          <br>
+          <li title="book_author" class="li_book"><b>作者：</b>${b.b_author}</li>
+          <br>
+          <li title="book_press" class="li_book"><b>出版社：</b>${b.b_press}</li>
+          <br>
+          <li title="book_press_time" class="li_book"><b>出版时间：</b>${b.b_press_time}</li>
+          <br>
+          <li title="book_service" class="li_book"><b>服务：</b>${b.b_service}</li>
+          <br>
+          <li title="book_num" class="li_book"><b>已售数量：</b>${b.b_sale_num}</li>
+          <li title="book_time" class="li_book"><b>上架时间：</b>${b.b_add_time}</li>
+        </ul>
+      </div>
+      <div class="book_column book_column_four">
+        <input type="button" value="删除" class="singleDelete" name="${b.b_id}">
+        <input type="button" value="修改" class="singleModify" name="${b.b_id}">
+      </div>
+    </div>
+
+  <div class="book">
+    <div  class="book_column book_column_one">
+      <input id='2' type='checkbox' value='${b.b_id }'/>
+      编号：2
+    </div>
+    <div class="book_column book_column_two">
+      <!--img/book_images/j1.jpg-->
+      <div>
+        <img src="img/book_images/j1.jpg">
+      </div>
+    </div>
+
+    <div class="book_column book_column_three" >
+      <ul>
+        <li title="book_name"  class="li_book"><b>名称：</b>shy1</li>
+        <br>
+        <li title="book_description" class="li_book"><b>图书描述：</b>${b.b_description}</li>
+        <br>
+        <li title="book_price" class="li_book"><b>价格：</b>${b.b_price}</li>
+        <li title="book_discount" class="li_book"><b>折扣：</b>${b.b_discount}</li>
+        <br>
+        <li title="book_author" class="li_book"><b>作者：</b>${b.b_author}</li>
+        <br>
+        <li title="book_press" class="li_book"><b>出版社：</b>${b.b_press}</li>
+        <br>
+        <li title="book_press_time" class="li_book"><b>出版时间：</b>${b.b_press_time}</li>
+        <br>
+        <li title="book_service" class="li_book"><b>服务：</b>${b.b_service}</li>
+        <br>
+        <li title="book_num" class="li_book"><b>已售数量：</b>${b.b_sale_num}</li>
+        <li title="book_time" class="li_book"><b>上架时间：</b>${b.b_add_time}</li>
+      </ul>
+    </div>
+    <div  class="book_column book_column_four">
+      <input type="button" value="删除" class="singleDelete" name="${b.b_id}">
+      <input type="button" value="修改" class="singleModify" name="${b.b_id}">
+    </div>
+  </div>
+<!--  </c:forEach>-->
+
+  <div class="row papigation">
+    <span class="papigation-button">首页</span>
+    <span class="papigation-button">上一页</span>
+    <span class="papigation-button">下一页</span>
+    <span class="papigation-button">尾页</span>
+    <span>第1页／共8页</span>
+    <span>设置每页&nbsp;<input type="text" id="pageSize">&nbsp;条</span>
+  </div>
+</section>
+
+</body>
+</html>
+<script src="js/jquery-2.2.4.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $("#bookManage").addClass("current").next().show()
+    $("#book_query").addClass("subliCurrent")
+    $(".level1 > a").click(function () {
+      if($(this).is(".current")){
+        $(this).next().slideUp("slow");
+        $(this).removeClass("current");
+      }else{
+        $(this).addClass("current")   /*给当前元素添加“当前”样式*/
+          .next().slideDown("slow")   //下一个元素显示
+          .parent().siblings().children("a").removeClass("current")  /*这句话执行好后当前this即为silbings 不再为本身了*/
+          .next().slideUp("slow");   //她们下一个元素隐藏
+      }
+      return false;
+    })
+    $(".level2 > li").hover(function () {
+      $(".level1 >a").css('textDecoration','none')
+      return false;
+    })
+
+
+      $(".singleModify").click(function(){
+          //$("#div2").css("display","block");
+          $("#div2").slideDown();
+         /* var b_id=this.name;
+          var ul=this.parentNode;
+          console.log("ul::"+ul.title);
+          var ulchilds=ul.childNodes;
+          for(var i=0;i<ulchilds.length;i++){
+              //console.log("li:::"+ulchilds[i].nodeName);
+              if(ulchilds[i].nodeName=="LI"){
+                  //console.log("li  title:::"+ulchilds[i].title);
+                  assignment(ulchilds[i]);
+              }
+          }*/
+      });
+
+      $(".circles").click(function() {
+          //弹框消失
+          $("#div2").slideUp();
+      })
+
+      var length_book_description;
+      var length_book_name;
+      $(".singleModify").click(function(){
+          //$("#div2").css("display","block");
+          $("#div2").slideDown();
+          var b_id=this.name;
+          var ul=this.parentNode.parentNode.querySelector("ul");
+          console.log("ul::"+ul.nodeName);
+          var ulchilds=ul.childNodes;
+          for(var i=0;i<ulchilds.length;i++){
+              if(ulchilds[i].nodeName=="LI"){
+                  assignment(ulchilds[i]);
+              }
+          }
+      });
+
+
+
+
+      //给input的相应节点赋值
+      function assignment(thNode){
+          var input=document.getElementsByTagName("input");
+          for(var k=0;k<input.length;k++){
+              var name=input[k].name;
+              if(name==thNode.title){
+                  input[k].value=thNode.lastChild.nodeValue;
+              }
+          }
+      }
+
+  })
+
+
+
+</script>

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="css/style.css" rel="stylesheet" type="text/css">
+  <title>Title</title>
+</head>
+<body>
+<header>
+  <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <ul class="col-md-2 col-sm-4 col-xs-6 sol-xs-offset-6 sol-sm-offset-8 col-md-offset-10 clearfix">
+      <li><a href="login.html">登录</a></li>
+      <li><a href="register.html">注册</a></li>
+    </ul>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <div class="row col-md-12">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header col-md-1">
+            <a class="navbar-brand" href="index.html">
+              <img src="img/logo.png" alt="Logo">
+            </a>
+            <button type="button" class="navbar-toggle collapsed button-collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+          </div>
+          <!-- id 关联上面的折叠 -->
+          <div class="collapse navbar-collapse nav-collapsed-area" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right clearfix">
+              <li><a href="index.html">首页</a></li>
+              <li><a href="categroy.html">书城</a></li>
+              <li><a href="special.html">特价</a></li>
+              <li><a href="mineInfo.html">我的</a></li>
+              <li><a href="about.html">关于我们</a></li>
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
+    </div>
+  </div>
+  <div class="nav-cart-area">
+    <a href="cart.html"><span class="nav-cart"><img src="img/icon-cart.png"></span></a>
+    <span class="cart-num">3</span>
+  </div>
+</nav>
+
+<!--back to top-->
+<p id="back-to-top">
+  <a href="#top"><img src="img/top_arrow1.png"/></a>
+</p>
+
+<section id="booklist">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="categrory">
+          <div class="booklist-categrory-top">
+            <div><i class="fa fa-list"></i>&nbsp;&nbsp;图&nbsp;书&nbsp;分&nbsp;类</div>
+          </div>
+          <div class="booklist-categrory-content">
+            <ul class="list">
+              <a href="category.jsp" class="cate-a"><li class="no-select-cat tag" title="哲学、社会科学"><i class="glyphicon glyphicon-eye-open"></i>哲学、社会科学</li></a>
+              <a href="category.jsp" class="cate-a"><li class="no-select-cat tag" title="政治、法律"><i class="glyphicon glyphicon-bookmark"></i>政治、法律</li></a>
+              <a href="category.jsp" class="cate-a"><li class="no-select-cat tag" title="文学书"><i class="glyphicon glyphicon-book"></i>文学书</li></a>
+              <a href="category.jsp" class="cate-a"><li class="no-select-cat tag" title="语言、文字"><i class="glyphicon glyphicon-text-width"></i>语言、文字</li></a>
+              <a href="category.jsp" class="cate-a"><li class="no-select-cat tag" title="艺术"><i class="glyphicon glyphicon-fire"></i>艺术</li></a>
+              <a href="category.jsp" class="cate-a"><li class="no-select-cat tag" title="数理化科学"><i class="glyphicon glyphicon-asterisk"></i>数理化科学</li></a>
+              <a href="category.jsp" class="cate-a"><li class="no-select-cat tag" title="天文学、地球科学"><i class="glyphicon glyphicon-globe"></i>天文学、地球科学</li></a>
+              <a href="category.jsp" class="cate-a"><li class="no-select-cat tag" title="自然科学总论"><i class="glyphicon glyphicon-leaf"></i>自然科学总论</li></a>
+              <a href="category.jsp" class="cate-a"><li class="no-select-cat tag" title="文化、科学、教育、体育"><i class="glyphicon glyphicon-user"></i>文化、教育</li></a>
+              <a href="category.jsp" class="cate-a"><li class="no-select-cat tag" title="综合性图书"><i class="glyphicon glyphicon-pushpin"></i>综合性图书</li></a>
+              <a href="category.jsp" class="cate-a"><li class="no-select-cat tag" title="期刊杂志"><i class="glyphicon glyphicon-paperclip"></i>期刊杂志</li></a>
+              <a href="category.jsp" class="cate-a"><li class="no-select-cat tag" title="经济"><i class="glyphicon glyphicon-usd"></i>经济</li></a>
+              <a href="category.jsp" class="cate-a"><li class="no-select-cat tag" title="历史、地理"><i class="glyphicon glyphicon-map-marker"></i>历史、地理</li></a>
+              <a href="category.jsp" class="cate-a"><li class="no-select-cat tag" title="更多种类"><i class="glyphicon glyphicon-hand-right"></i>更多种类</li></a>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-9">
+        <div class="row">
+            <div class="sort">
+              <ul>
+                <!-- 后期加上默认显示所有书籍   --》 booksListServlet -->
+                <li><a>默认</a><span class="split">|</span></li>
+                <li><a id="b_sale_num">销量<span class="fa  fa-arrow-down"></span></a><span class="split">|</span></li>
+                <li><a id="b_discount">折扣<span class="fa  fa-arrow-down"></span></a><span class="split">|</span></li>
+                <li><a id="b_add_time">最新<span class="fa  fa-arrow-down"></span></a><span class="split">|</span></li>
+                <li><a id="b_price"><span id="b_price_text">价格</span>
+                  <i id="angle_up" class="fa fa-arrow-up"></i>
+                  <i id="angle_down" class="fa fa-arrow-down"></i>
+                </a>
+                  <span class="split">|</span>
+                </li>
+                <li>价格区间：<input id="input_left" type="text" class="input1">-<input id="input_right" type="text" class="input1"></li>
+              </ul>
+              <ul class="tipUl">
+                <li id="b_sale_num_show">点击后销量由高到低</li>
+                <li id="b_discount_show">点击后折扣由高到低</li>
+                <li id="b_add_time_show">点击后按照最近由近到远</li>
+                <li id="b_price_show"></li>
+                <li>
+                  <input id="input_button_submit" type="button" value="确定">
+                  <input id="input_button_reset" type="reset" value="取消" ></li>
+              </ul>
+            </div>
+        </div>
+        <div class="row new_products">
+          <!-- 循环列出所有图书信息 -->
+         <!-- <c:forEach var="b" items="${sessionScope.booksList}">
+            <div class="new_prod_box" style="border:1px">
+              <div class="new_prod_bg" style="height:250px">
+                <a href="details?b_id=${b.b_id}"><img src="book_images/${b.b_id}.jpg" alt="" title="" class="thumb" border="0" style="width:90px;height:90px"/></a>
+                <span style="font-size:20px;color:#ec2323;font-weight:bold;">￥${b.b_price}</span><br>
+                <c:if test="${b.b_discount!=100}">
+                        	<span style="text-decoration:line-through;font-size:5px;color:#b5b5b6;">
+                        		(￥<fmt:formatNumber value="${b.b_price/(b.b_discount/100)}" maxFractionDigits="2">
+                        		</fmt:formatNumber>)
+                        	</span>
+                  <span style="font-size:5px;color:#b5b5b6;">${b.b_discount/100}折</span>
+                </c:if>
+                <a href="details?b_id=${b.b_id}">${b.b_name}</a>
+              </div>
+            </div>
+          </c:forEach>-->
+          <div class="new_prod_box col-md-4 col-sm-6" style="border:1px">
+            <div class="new_prod_bg" >
+              <a href="details?b_id=${b.b_id}">
+                <img src="img/book/b1.jpg" alt="" title="" class="thumb"/>
+              </a>
+              <span class="price">￥$234</span><br>
+              <span class="discount">100折</span>
+              <a href="details?b_id=${b.b_id}">《皮囊》</a>
+            </div>
+          </div>
+          <div class="new_prod_box col-md-4 col-sm-6" style="border:1px">
+            <div class="new_prod_bg">
+              <a href="details?b_id=${b.b_id}"><img src="img/book/b2.jpg" alt="" title="" class="thumb"/></a>
+              <span class="price">￥$234</span><br>
+              <span class="discount">100折</span>
+              <a href="details?b_id=${b.b_id}">《和平的世界》</a>
+            </div>
+          </div>
+          <div class="new_prod_box col-md-4 col-sm-6" style="border:1px">
+            <div class="new_prod_bg">
+              <a href="details?b_id=${b.b_id}"><img src="img/book/b3.jpg" alt="" title="" class="thumb"/></a>
+              <span class="price">￥$234</span><br>
+              <span class="discount">100折</span>
+              <a href="details?b_id=${b.b_id}">《最小说》</a>
+            </div>
+          </div>
+          <div class="new_prod_box col-md-4 col-sm-6" style="border:1px">
+            <div class="new_prod_bg">
+              <a href="details?b_id=${b.b_id}"><img src="img/book/b4.jpg" alt="" title="" class="thumb"/></a>
+              <span class="price">￥$234</span><br>
+              <span class="discount">100折</span>
+              <a href="details?b_id=${b.b_id}">《爵迹》</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="row papigation">
+          <!--<span>
+					<c:if test="${sessionScope.pageCount!=0&&sessionScope.curPage!=1}">
+						<a style="cursor:pointer" onclick="tab(1)">首页</a>
+						<a style="cursor:pointer" onclick="tab(${sessionScope.curPage-1})">前一页</a>
+					</c:if>
+				</span>
+
+          <span>
+					<c:if test="${sessionScope.pageCount==0||sessionScope.curPage==1}">首页 前一页</c:if>
+				</span>
+
+          <span>
+					<c:if test="${sessionScope.pageCount!=0&&sessionScope.curPage!=sessionScope.pageCount}">
+						<a style="cursor:pointer" onclick="tab(${sessionScope.curPage+1})">下一页</a>
+						<a style="cursor:pointer" onclick="tab(${sessionScope.pageCount})">尾页</a>
+					</c:if>
+				</span>
+
+          <span>
+					<c:if test="${sessionScope.pageCount==0||sessionScope.curPage==sessionScope.pageCount}">下一页 尾页</c:if>
+					&nbsp;
+					第${sessionScope.curPage}页/共${sessionScope.pageCount}页
+					&nbsp;
+					设置每页<input type="text" id="pageSize" style="width: 20px;">条
+				</span>
+-->
+          <span class="papigation-button">首页</span>
+          <span class="papigation-button">上一页</span>
+          <span class="papigation-button">下一页</span>
+          <span class="papigation-button">尾页</span>
+          <span>第1页／共8页</span>
+          <span>设置每页&nbsp;<input type="text" id="pageSize" style="width: 30px;">&nbsp;条</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- footer Start -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="footer-manu">
+          <ul>
+            <li><a href="#">首页</a></li>
+            <li><a href="#">书城</a></li>
+            <li><a href="#">特价</a></li>
+            <li><a href="#">我的</a></li>
+            <li><a href="#">联系我们</a></li>
+          </ul>
+        </div>
+        <p>Copyright &copy; Design & SHY</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
+<script src="js/jquery-2.2.4.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/index.js"></script>
+<script type="text/javascript">
+  //-------------------------------------------------按照种类查找以及分页----------------------------------------
+  var storage=window.localStorage;
+
+  var ul=document.getElementsByClassName("list");
+  var b=ul[0].childNodes;
+  for(var i=0;i<b.length;i++){
+    b[i].onclick=function(){
+      console.log(this.title);
+      checkByCat(this.title);
+    }
+  }
+  //var category;
+  function checkByCat(cat){
+    //console.log(cat);
+    //category=cat;
+    if(!window.localStorage){
+      alert("浏览器支持localstorage");
+      return false;
+    }else{
+      var storage=window.localStorage;
+      storage.setItem("category",cat);
+      console.log("存cunc"+storage["category"]);
+    }
+    //console.log("--------category"+category);
+    $.ajax({
+      url:'booksSearchByCat2',
+      type:"get",
+      data:{"category":cat},
+      success:function(data){
+        location.href =data;
+      },
+      error:function(){
+
+      }
+    });
+  }
+
+  var flag2=0;
+
+  $("#input_button_reset").click(function(){
+    $("#input_button_submit").css("display","none");
+    $("#input_button_reset").css("display","none");
+    $("#input_left").val("");
+    $("#input_right").val("");
+  })
+
+  $("#search_button").click(function(){
+    var search_con=$("#search_con").val();
+    var search_input=$("#search_input").val();
+    console.log(search_con+"+++++"+search_input);
+    //var storage=window.localStorage;
+    var cat=storage.getItem("category");
+    console.log(cat);
+
+    $.ajax({
+      url:"booksSearch",
+      type:"get",
+      async: false,//失去ajax异步的优点
+      data:{"search_con":search_con,"search_input":search_input,"cat":cat},
+      success:function(data){
+        console.log("data::"+data);
+        if(data=="searchByCat"){
+          flag2=1;
+        }
+        if(data=="flush"){
+          location.href="jsp/category1.jsp";
+        }
+      },
+      error:function(){
+
+      }
+    })
+    if(flag2==1){
+      checkByCat(cat);
+    }
+  });
+
+  //分页
+  function tab(curPage){
+    var category=storage.getItem("category");
+    var pageSize=document.getElementById("pageSize").value;
+    console.log("category:++"+category+"pageSize:+++"+pageSize);
+    var sortCat=storage.getItem("sortCat");
+    var whichSort=storage.getItem("whichSort");
+    var minPrice=storage.getItem("minPrice");
+    var maxPrice=storage.getItem("maxPrice");
+    console.log("srotCat:"+sortCat+"++whichSort:"+whichSort);
+    if(sortCat==undefined||whichSort==undefined){
+      //alert("分页没有排序");
+      $.ajax({
+        url:'booksSearchByCat2?category='+category+"&&curPage="+curPage+"&&pageSize="+pageSize,
+        type:"get",
+        success:function(data){
+          location.href =data;
+        },
+        error:function(){
+
+        }
+      });
+    }else{
+      //分页有排序
+      $.ajax({
+        url:'sort',
+        type:"get",
+        data:{"cat":category,"sortCat":sortCat,"whichSort":whichSort,"curPage":curPage,"minPrice":minPrice,"maxPrice":maxPrice},
+        success:function(){
+          location.href="jsp/category1.jsp";
+        },
+        error:function(){
+
+        }
+      })
+    }
+
+  }
+
+
+  //--------------------------------------------------排序------------------------------------------------
+  var b_sale_num_show=document.getElementById("b_sale_num_show");
+  var b_discount_show=document.getElementById("b_discount_show");
+  var b_add_time_show=document.getElementById("b_add_time_show");
+  var b_price_show=document.getElementById("b_price_show");
+  var b_price_text = document.getElementById("b_price_text")
+
+
+  $("#b_sale_num").hover(function(){
+      b_sale_num_show.style.display="block";
+      this.style.color = "#ff9933"
+    },
+    function(){
+      b_sale_num_show.style.display="none";
+      this.style.color = "#fff"
+    });
+
+  //根据已卖数量排序
+  $("#b_sale_num").click(function(){
+    storage.setItem("sortCat","b_sale_num");
+    storage.setItem("whichSort","desc");
+    sort("b_sale_num","desc");
+  })
+
+  $("#b_discount").hover(function(){
+    b_discount_show.style.display="block";
+    this.style.color = "#ff9933"
+  },function(){
+    b_discount_show.style.display="none";
+    this.style.color = "#fff"
+  })
+
+  //按照折扣查询
+  $("#b_discount").click(function(){
+    //var storage=window.localStorage;
+    storage.setItem("sortCat","b_discount");
+    storage.setItem("whichSort","asc");
+    sort("b_discount","asc");
+  })
+
+  $("#b_add_time").hover(function(){
+    b_add_time_show.style.display="block";
+    this.style.color= "#ff9933"
+  },function(){
+    b_add_time_show.style.display="none";
+    this.style.color = "#fff"
+  })
+
+  //按照添加时间时间查找
+  $("#b_add_time").click(function(){
+    storage.setItem("sortCat","b_add_time");
+    storage.setItem("whichSort","desc");
+    sort("b_add_time","desc");
+  })
+
+  var angle_up=document.getElementById("angle_up");
+  var angle_down=document.getElementById("angle_down");
+  var storage=window.localStorage;
+  if(storage.getItem("flag")==undefined){
+    storage.setItem("flag","asc");
+  }
+  var flag=storage.getItem("flag");
+  $("#angle_up").hover(function () {
+    b_price_show.style.display="block";
+    b_price_show.innerHTML="按照价格升序";
+    angle_up.style.color="#ff9933";
+    b_price_text.style.color = "#ff9933"
+    storage.setItem("flag","asc");
+    return;
+  },function(){
+    angle_up.style.color="#fff";
+    b_price_text.style.color = "#fff"
+    b_price_show.style.display="none";
+  })
+
+  $("#angle_down").hover(function () {
+    b_price_show.style.display="block";
+    b_price_show.innerHTML="按照价格降序";
+    angle_down.style.color="#ff9933";
+    b_price_text.style.color = "#ff9933"
+    storage.setItem("flag","desc");
+    return;
+  },function(){
+    angle_down.style.color="#fff";
+    b_price_text.style.color = "#fff"
+    b_price_show.style.display="none";
+  })
+
+  //按照价格排序
+  $("#b_price").click(function(){
+    var flag=storage.getItem("flag");
+    if(flag=="asc"){
+      storage.setItem("sortCat","b_price");
+      storage.setItem("whichSort","asc");
+      sort("b_price","asc");
+    }
+    if(flag=="desc"){
+      storage.setItem("sortCat","b_price");
+      storage.setItem("whichSort","desc");
+      sort("b_price","desc");
+    }
+  })
+
+
+  //background-color:#de6a5d;color:#ffffff"
+  //按照输入的价格区间查询
+  var submit=document.getElementById("input_button_submit");
+  var reset=document.getElementById("input_button_reset");
+
+  $("#input_button_submit").hover(function(){
+    submit.style.backgroundColor="#d8160f";
+  },function(){
+    submit.style.backgroundColor="#ff9933";
+  })
+  $("#input_button_reset").hover(function(){
+    reset.style.backgroundColor="#5a5856";
+    reset.style.color = "#fff"
+  },function(){
+    reset.style.backgroundColor="#797491";
+    reset.style.color = "#fff"
+  })
+
+  $("#input_left").click(function(){
+    submit.style.display="block";
+    reset.style.display="block";
+  })
+  $("#input_right").click(function(){
+    submit.style.display="block";
+    reset.style.display="block";
+  })
+
+  $("#input_button_submit").click(function(){
+    var left_value=$("#input_left").val();
+    var right_value=$("#input_right").val();
+    //console.log("left:"+left_value+"right:"+right_value);
+    if((left_value==""||left_value=="undefined")&&(right_value==""||right_value=="undefined")){
+      return;
+    }
+    storage.setItem("minPrice",left_value);
+    storage.setItem("maxPrice",right_value);
+    sortBetweenPrice("b_price","desc",left_value,right_value);
+
+  })
+  function sort(sortCat,whichSort){
+    var storage=window.localStorage;
+    var cat=storage.getItem("category");
+    //alert("cat:"+cat+"sortCat:"+sortCat+"whichSort:"+whichSort);
+    $.ajax({
+      url:'sort',
+      data:{"cat":cat,"sortCat":sortCat,"whichSort":whichSort},
+      success:function(){
+        location.href="jsp/category1.jsp";
+      },
+      error:function(){
+
+      }
+    });
+  }
+
+  function sortBetweenPrice(sortCat,whichSort,minPrice,maxPrice){
+    var storage=window.localStorage;
+    var cat=storage.getItem("category");
+
+    $.ajax({
+      url:'sort',
+      data:{"cat":cat,"sortCat":sortCat,"whichSort":whichSort,"minPrice":minPrice,"maxPrice":maxPrice},
+      success:function(){
+        location.href="jsp/category1.jsp";
+      },
+      error:function(){
+
+      }
+    })
+  }
+</script>
+</html>

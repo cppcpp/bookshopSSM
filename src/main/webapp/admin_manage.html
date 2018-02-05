@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>管理员主页</title>
+  <link rel="stylesheet" type="text/css" href="css/manage.css">
+</head>
+<body>
+<header>
+  <div class="manage-top-nav">
+    <img src="img/logo.png" class="nav-left-img"/>
+    <span class="nav-right-area"><a href="">退出</a></span>
+  </div>
+</header>
+
+<section class="left-bar">
+  <ul class="menu">
+    <li class="level1">
+      <a href="#none">图书管理</a>
+      <ul class="level2">
+        <li><a href="admin_manage_bookAdd.html" id="addBookLi">增加图书</a></li>
+        <li><a href="admin_manage_bookQuery.html">查询图书</a></li>
+        <li><a href="#">图书下架</a></li>
+      </ul>
+    </li>
+    <li class="level1">
+      <a href="#none">用户信息</a>
+      <!--<ul class="level2">
+        <li><a href="#none">开襟卫衣</a></li>
+        <li><a href="#none">套头卫衣</a></li>
+        <li><a href="#none">运动卫衣</a></li>
+        <li><a href="#none">童装卫衣</a></li>
+      </ul>-->
+    </li>
+  </ul>
+</section>
+
+<section class="right-content">
+
+</section>
+</body>
+</html>
+<script src="js/jquery-2.2.4.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $(".level1 > a").click(function () {
+      if($(this).is(".current")){
+        $(this).next().slideUp("slow");
+        $(this).removeClass("current");
+      }else{
+        $(this).addClass("current")   /*给当前元素添加“当前”样式*/
+          .next().slideDown("slow")   //下一个元素显示
+          .parent().siblings().children("a").removeClass("current")  /*这句话执行好后当前this即为silbings 不再为本身了*/
+          .next().slideUp("slow");   //她们下一个元素隐藏
+      }
+      return false;
+    })
+    $(".level2 > li").hover(function () {
+      $(".level1 >a").css('textDecoration','none')
+      return false;
+    })
+  })
+</script>

@@ -1,0 +1,179 @@
+package com.bookshop.serviceImpl;import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Map;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.bookshop.service.BooksService;
+import com.bookshop.modle.Books;
+import com.bookshop.modle.BooksExample;
+import com.bookshop.dao.BooksMapper;
+import com.github.pagehelper.PageHelper;
+import org.apache.ibatis.annotations.Param;
+@Service("booksService")
+public class BooksServiceImpl implements BooksService {
+    @Autowired
+    BooksMapper dao;
+    @Override
+    public int countByExample(BooksExample example){
+        return (int)dao.countByExample(example);
+    }
+    @Override
+    public int deleteByExample(BooksExample example){
+        return dao.deleteByExample(example);
+    }
+    @Override
+    public int deleteByPrimaryKey(String id){
+        return (int)dao.deleteByPrimaryKey(id);
+    }
+    @Override
+    public int insert(Books record)  {
+        return dao.insert(record);
+    }
+    @Override
+    public int insertSelective(Books record)  {
+        return dao.insertSelective(record);
+    }
+    @Override
+    public List<Books> selectByExample(BooksExample example)  {
+        return dao.selectByExample(example);
+    }
+    @Override
+    public Books selectByPrimaryKey(String id)  {
+        return dao.selectByPrimaryKey(id);
+    }
+    @Override
+    public int updateByExampleSelective(@Param("record") Books record, @Param("example") BooksExample example)  {
+        return dao.updateByExampleSelective(record, example);
+    }
+    @Override
+    public int updateByExample(@Param("record") Books record, @Param("example") BooksExample example)  {
+        return dao.updateByExample(record, example);
+    }
+    @Override
+    public int updateByPrimaryKeySelective(Books record)  {
+        return dao.updateByPrimaryKeySelective(record);
+    }
+    @Override
+    public int updateByPrimaryKey(Books record)  {
+        return dao.updateByPrimaryKey(record);
+    }
+    @Override
+    public Books createBooks(Map<String, String>req) {
+        String bId = req.get("bId");
+        String bName = req.get("bName");
+        String bDescription = req.get("bDescription");
+        String bPrice = req.get("bPrice");
+        String bDiscount = req.get("bDiscount");
+        String bAuthor = req.get("bAuthor");
+        String bPress = req.get("bPress");
+        String bPressTime = req.get("bPressTime");
+        String bAddTime = req.get("bAddTime");
+        String bService = req.get("bService");
+        String bSaleNum = req.get("bSaleNum");
+        Books books = new Books();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        if (StringUtils.isNotEmpty(bId)) {
+            books.setbId(bId);
+        }
+        if (StringUtils.isNotEmpty(bName)) {
+            books.setbName(bName);
+        }
+        if (StringUtils.isNotEmpty(bDescription)) {
+            books.setbDescription(bDescription);
+        }
+        if (StringUtils.isNotEmpty(bDiscount)) {
+            books.setbDiscount(Integer.parseInt(bDiscount));
+        }
+        if (StringUtils.isNotEmpty(bAuthor)) {
+            books.setbAuthor(bAuthor);
+        }
+        if (StringUtils.isNotEmpty(bPress)) {
+            books.setbPress(bPress);
+        }
+        try{
+            if (StringUtils.isNotEmpty(bPressTime)) {
+                books.setbPressTime(sdf.parse(bPressTime)); 
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        try{
+            if (StringUtils.isNotEmpty(bAddTime)) {
+                books.setbAddTime(sdf.parse(bAddTime)); 
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (StringUtils.isNotEmpty(bService)) {
+            books.setbService(bService);
+        }
+        if (StringUtils.isNotEmpty(bSaleNum)) {
+            books.setbSaleNum(Integer.parseInt(bSaleNum));
+        }
+        return books;
+    }
+    @Override
+    public BooksExample createBooksExm(Map<String, String>req){
+        String bId = req.get("bId");
+        String bName = req.get("bName");
+        String bDescription = req.get("bDescription");
+        String bPrice = req.get("bPrice");
+        String bDiscount = req.get("bDiscount");
+        String bAuthor = req.get("bAuthor");
+        String bPress = req.get("bPress");
+        String bPressTimeStart = req.get("bPressTimeStart");
+        String bPressTimeEnd = req.get("bPressTimeEnd");
+        String bAddTimeStart = req.get("bAddTimeStart");
+        String bAddTimeEnd = req.get("bAddTimeEnd");
+        String bService = req.get("bService");
+        String bSaleNum = req.get("bSaleNum");
+        BooksExample example = new BooksExample();
+        BooksExample.Criteria criteria = example.createCriteria();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        if (StringUtils.isNotEmpty(bId)) {
+            criteria.andBIdEqualTo(bId);
+        }
+        if (StringUtils.isNotEmpty(bName)) {
+            criteria.andBNameEqualTo(bName);
+        }
+        if (StringUtils.isNotEmpty(bDescription)) {
+            criteria.andBDescriptionEqualTo(bDescription);
+        }
+        if (StringUtils.isNotEmpty(bDiscount)) {
+            criteria.andBDiscountEqualTo(Integer.parseInt(bDiscount));
+        }
+        if (StringUtils.isNotEmpty(bAuthor)) {
+            criteria.andBAuthorEqualTo(bAuthor);
+        }
+        if (StringUtils.isNotEmpty(bPress)) {
+            criteria.andBPressEqualTo(bPress);
+        }
+        try{
+            if (StringUtils.isNotEmpty(bPressTimeStart) && StringUtils.isNotEmpty(bPressTimeEnd)) {
+                criteria.andBPressTimeBetween(sdf.parse(bPressTimeStart),sdf.parse(bPressTimeEnd));
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        try{
+            if (StringUtils.isNotEmpty(bAddTimeStart) && StringUtils.isNotEmpty(bAddTimeEnd)) {
+                criteria.andBAddTimeBetween(sdf.parse(bAddTimeStart),sdf.parse(bAddTimeEnd));
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (StringUtils.isNotEmpty(bService)) {
+            criteria.andBServiceEqualTo(bService);
+        }
+        if (StringUtils.isNotEmpty(bSaleNum)) {
+            criteria.andBSaleNumEqualTo(Integer.parseInt(bSaleNum));
+        }
+        return example;
+    }
+    @Override
+    public List<Books> selectByExample(BooksExample example, int pageNum, int pageSize)  {
+        PageHelper.startPage(pageNum, pageSize);
+        return dao.selectByExample(example);
+    }
+}

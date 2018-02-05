@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title></title>
+  <link href="css/font-awesome.min.css" rel="stylesheet" />
+  <link href="css/login.css" rel="stylesheet" />
+</head>
+<body>
+<div id="container">
+  <div id="header">
+    <h2 class="header-text">登录中心</h2>
+    <span class="header-a"><a href="index.html"><img src="img/arrow-right.png"/>&nbsp;首页</a></span>
+    <div style="clear: both"></div>
+  </div>
+  <div id="contents">
+    <div id="main">
+     <!--  <form name="login" action="login"> -->
+        <label for="username">用户名：</label>
+        <input type="text" placeholder="请输入用户名" id="username"/>
+        <div class="tip-area">
+          <span class="check checkUser"></span>
+        </div>
+      <label for="passwd">密&nbsp;码:</label>
+        <input type="password" id="passwd" placeholder="请输入密码"/>
+        <div class="tip-area">
+          <span class="check checkPwd" ></span>
+        </div>
+      <div class="form-control">
+        <label for="codeinput">验证码:</label>
+        <input type="text" id="codeinput" class="small-input" placeholder="请输入验证码"/>
+        <div class="code">
+          <!--<img alt="" src="img" id="code" >-->
+          <img alt="" src="user/generateValidateCode" id="code" >
+        </div>
+        <div id="refresh" class="refresh-code"><a href="#">换一张</a></div>
+      </div>
+      <div class="tip-area">
+        <span class="check checkCode" ></span>
+      </div>
+      <div class="checkbox">
+        <input type="checkbox" id="remenberMe" name="remenberMe">
+        <label id="rm" for="remenberMe">Remenber Me</label>
+      </div>
+      <div>
+        <button id="loginBtn">登&nbsp;&nbsp;录</button>
+      </div>
+        <p class="text-center">还没有账户?<a href="register.html"><small>注册!</small></a></p>
+      <!-- </form> -->
+    </div>
+  </div>
+</div>
+</body>
+</html>
+<script src="js/jquery-2.2.4.min.js"></script>
+<script>
+
+  $("#username").blur(function(){
+
+      //法二通过$(this)
+      var realname= $("#username").val();
+      console.log(realname)
+      if(!realname){
+          $(".checkUser").html("用户名不能为空！");
+      }
+  }).focus(function(){
+      console.log(1111)
+      $(".checkUser").html("");
+  });
+
+  //密码判断
+  $("#passwd").blur(function(){
+
+      //法二通过$(this)
+      var passwd= $("#passwd").val();
+      // alert(passwd);
+      if(!passwd){
+          $(".checkPwd").html("密码不能为空！");
+
+      }else if(!passwd.match(/^\w{6,15}$/)){
+          $(".checkPwd").html("密码必须数字或英文或下划线组成的2-15个字符！");
+      }
+  }).focus(function(){
+      $(".checkPwd").html("");
+  });
+
+  $("#codeinput").blur(function(){
+
+      //法二通过$(this)
+      var codeinput= $("#codeinput").val();
+      // alert(passwd);
+      if(!codeinput) {
+          $(".checkCode").html("未输入验证码！");
+      }
+  }).focus(function(){
+      $(".checkCode").html("");
+  });
+
+  $("#refresh").click(function() {
+      let img = this.parentNode.querySelector("img")
+      img.src = "user/generateValidateCode"+ "?" + new Date().getTime();
+  })
+
+
+
+  var loginBtn = document.getElementById("loginBtn");
+  var username = document.getElementById("username");
+  var passwd = document.getElementById("passwd");
+  var code  = document.getElementById("codeinput");
+  loginBtn.onclick = checkLogin;
+
+  function checkLogin() {
+
+      if(!username.value) {
+          $(".checkUser").html("请输入用户名")
+          return ;
+      }
+      if(!passwd.value) {
+          $(".checkPwd").html("请输入密码")
+          return ;
+      }
+      if(!code.value) {
+          $(".checkCode").html("请输入验证码")
+          return ;
+      }
+
+      img = document.getElementById("code");
+     /*  requestLogin = createRequest();
+      
+      //请求参数
+      var param= "userName="+username.value+"&password="+passwd.value+"&code="+code.value;
+      requestLogin.open("POST", "user/login", true);
+      requestLogin.setRequestHeader("cache-control","no-cache");
+      requestLogin.setRequestHeader("ContentType","text/html;chatset=utf-8");
+      requestLogin.setRequestHeader("ContentType","application/x-www-form-urlencoded;");
+      requestLogin.onreadystatechange = handleStateChangeLogin;
+      console.log(param)
+      requestLogin.send(param); */
+      
+      $.ajax({
+    	  url:"user/login",
+    	  method:"post",
+    	  data:{
+    		  "userName":username.value,
+    		  "password":passwd.value,
+    		  "code":code.value
+    	  },
+    	  success:function(data){
+    		  console.log(data)
+    		  //验证码错误
+    		  if(data.codeRong!=null){
+    			  alert(data.codeRong)
+    		  }
+    		  //用户名或密码错
+    		  if(data.loginError!=null){
+    			  alert(data.loginError)
+    		  }
+    		  
+    		  //登录成功--重定向到index
+    		  if(data.loginSuccess){
+    			  window.location="index.html"
+    		  }
+    		  
+    	  },
+    	  error:function(){
+    		  
+    	  }
+      })
+  }
+
+
+  /* function handleStateChangeLogin(data) {
+      if(requestLogin.readyState==4){
+          if(requestLogin.status==200){
+            //4种情况
+              //登陆成功 跳转页面
+              //用户名不存在
+              //密码错误
+              //验证码错误
+              response=data.target.response
+              console.log(data.target.response)
+
+          }
+      }
+  } */
+
+ /*  function createRequest(){
+  	  try {
+            var request = new XMLHttpRequest();
+        } catch (tryMS) {
+            try {
+                request = new ActiveXObject("Msxml2.XMLHTTP");
+            } catch (otherMS) {
+                try {
+                    request = new ActiveXObject("Microsoft.XMLHTTP");
+                } catch (failed) {
+                    request = null;
+                }
+            }
+        }
+        return request;
+    } */
+
+
+</script>

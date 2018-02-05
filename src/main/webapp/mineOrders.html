@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="css/style.css" rel="stylesheet" type="text/css">
+  <title>Title</title>
+</head>
+<body>
+<header>
+  <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <ul class="col-md-2 col-sm-4 col-xs-6 sol-xs-offset-6 sol-sm-offset-8 col-md-offset-10 clearfix">
+      <li><a href="login.html">登录</a></li>
+      <li><a href="register.html">注册</a></li>
+    </ul>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <div class="row col-md-12">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header col-md-1">
+            <a class="navbar-brand" href="index.html">
+              <img src="img/logo.png" alt="Logo">
+            </a>
+            <button type="button" class="navbar-toggle collapsed button-collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+          </div>
+          <!-- id 关联上面的折叠 -->
+          <div class="collapse navbar-collapse nav-collapsed-area" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right clearfix">
+              <li><a href="index.html">首页</a></li>
+              <li><a href="categroy.html">书城</a></li>
+              <li><a href="special.html">特价</a></li>
+              <li><a href="mineInfo.html">我的</a></li>
+              <li><a href="about.html">关于我们</a></li>
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
+    </div>
+  </div>
+  <div class="nav-cart-area">
+    <a href="cart.html"><span class="nav-cart"><img src="img/icon-cart.png"></span></a>
+    <span class="cart-num">3</span>
+  </div>
+</nav>
+
+<!--back to top-->
+<p id="back-to-top">
+  <a href="#top"><img src="img/top_arrow1.png"/></a>
+</p>
+
+<section id="mine">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="categrory">
+          <div class="booklist-categrory-top">
+            <div><i class="fa fa-user"></i>&nbsp;&nbsp;个&nbsp;人&nbsp;中&nbsp;心</div>
+          </div>
+          <div class="booklist-categrory-content">
+            <ul class="subnav">
+              <a href="mineInfo.html"><li class="no-select-cat tag " title="文学书" id="mineInfo"><i class="glyphicon glyphicon-info-sign"></i>个人资料</li></a>
+              <a href="mineAccount.html"><li class="no-select-cat tag" title="语言、文字" id="mineAccount"><i class="glyphicon glyphicon-inbox"></i>账户与安全</li></a>
+              <a href="mineAddress.html"><li class="no-select-cat tag" title="哲学、社会科学" id="mineAddress"><i class="glyphicon glyphicon-home"></i>收货地址管理</li></a>
+              <a href="mineOrders.html"><li class="no-select-cat tag activeLI" title="政治、法律" id="mineOrders"><i class="glyphicon glyphicon-sort-by-order"></i>所有订单</li></a>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-8 col-md-offset-1">
+        <div class="row">
+          <div class="nav-title"><i class="glyphicon glyphicon-sort-by-order"></i>&nbsp;&nbsp;所有订单</div>
+        </div>
+        <div class="row">
+          <form action="MineAllNew">
+            <div class="order-container">
+              <div class="order-top">
+                <div class="order-top-left">
+                  <div>订单编号：<span>2380168687910</span></div>
+                  <div>订单时间：<span>2017-10-09 12:13:14</span></div>
+                  <div>收货人：<span>shy</span></div>
+                </div>
+                <div class="order-top-right">
+                  <div>等待付款</div>
+                </div>
+              </div>
+              <div class="order-content">
+                <div class="order-content-detail">
+                  <div class="detail-list-item">
+                    <img src="img/book_images/f1.jpg">
+                    <span class="order-content-detail-bookname">共享经济</span>
+                    <div class="order-content-detail-right">
+                      <span class="order-content-detail-bookprice">¥120</span>
+                      <span class="order-content-detail-bookoldprice">¥120</span>
+                      <span class="order-content-detail-booknum">x3</span>
+                    </div>
+                  </div>
+                  <!--清除浮动-->
+                  <div class="clear"></div>
+
+                  <div class="detail-list-item">
+                    <img src="img/book_images/f1.jpg">
+                    <span class="order-content-detail-bookname">共享经济</span>
+                    <div class="order-content-detail-right">
+                      <span class="order-content-detail-bookprice">¥120</span>
+                      <span class="order-content-detail-bookoldprice">¥120</span>
+                      <span class="order-content-detail-booknum">x3</span>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="order-bottom">
+                <div><input type="submit" value="删除" class="pass_button"></div>
+                <div>共2件商品&nbsp;&nbsp;合计：¥240</div>
+              </div>
+            </div>
+
+
+            <div class="order-container">
+              <div class="order-top">
+                <div class="order-top-left">
+                  <div>订单编号：<span>2380168687910</span></div>
+                  <div>订单时间：<span>2017-10-09 12:13:14</span></div>
+                  <div>收货人：<span>shy</span></div>
+                </div>
+                <div class="order-top-right">
+                  <div>等待付款</div>
+                </div>
+              </div>
+              <div class="order-content">
+                <div class="order-content-detail">
+                  <div class="detail-list-item">
+                    <img src="img/book_images/f1.jpg">
+                    <span class="order-content-detail-bookname">共享经济</span>
+                    <div class="order-content-detail-right">
+                      <span class="order-content-detail-bookprice">¥120</span>
+                      <span class="order-content-detail-bookoldprice">¥120</span>
+                      <span class="order-content-detail-booknum">x3</span>
+                    </div>
+                  </div>
+                  <!--清除浮动-->
+                  <div class="clear"></div>
+
+                  <div class="detail-list-item">
+                    <img src="img/book_images/f1.jpg">
+                    <span class="order-content-detail-bookname">共享经济</span>
+                    <div class="order-content-detail-right">
+                      <span class="order-content-detail-bookprice">¥120</span>
+                      <span class="order-content-detail-bookoldprice">¥120</span>
+                      <span class="order-content-detail-booknum">x3</span>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="order-bottom">
+                <div><i class="fa fa-trash-o"></i></div>
+                <div>共2件商品&nbsp;&nbsp;合计：¥240</div>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+<!-- footer Start -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="footer-manu">
+          <ul>
+            <li><a href="#">首页</a></li>
+            <li><a href="#">书城</a></li>
+            <li><a href="#">特价</a></li>
+            <li><a href="#">我的</a></li>
+            <li><a href="#">联系我们</a></li>
+          </ul>
+        </div>
+        <p>Copyright &copy; Design & SHY</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
+<script src="js/jquery-2.2.4.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/utils.js"></script>
+<script>
+  $(function () {
+    $(".subnav li").hover(function () {
+      $(".subnav li").removeClass("activeLI")
+    },function () {
+      $("#mineOrders").addClass("activeLI")
+    })
+  })
+</script>

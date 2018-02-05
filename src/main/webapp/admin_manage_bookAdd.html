@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>管理员主页</title>
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/manage.css">
+</head>
+<body>
+<header>
+  <div class="manage-top-nav">
+    <img src="img/logo.png" class="nav-left-img"/>
+    <span class="nav-right-area"><a href="">退出</a></span>
+  </div>
+</header>
+
+<section class="left-bar">
+  <ul class="menu">
+    <li class="level1">
+      <a href="#none" id="bookManage">图书管理</a>
+      <ul class="level2">
+        <li><a href="admin_manage_bookAdd.html" id="book_add">增加图书</a></li>
+        <li><a href="admin_manage_bookQuery.html">查询图书</a></li>
+      </ul>
+    </li>
+    <li class="level1">
+      <a href="#none">用户信息</a>
+      <ul class="level2">
+        <li><a href="#none">开襟卫衣</a></li>
+        <li><a href="#none">套头卫衣</a></li>
+        <li><a href="#none">运动卫衣</a></li>
+        <li><a href="#none">童装卫衣</a></li>
+      </ul>
+    </li>
+  </ul>
+</section>
+
+<section class="right-content">
+  <div>
+    <span class="title"><i class="glyphicon glyphicon-tasks"></i>图书添加</span>
+  </div>
+  <form action="booksAdd" method="post" class="addBooks" enctype="multipart/form-data">
+    <table class="add_table">
+      <tr class="book_id">
+        <td class="id_text">图书id</td>
+        <td class="id_put"><input type="text" name="book_id" id="b_id" class="input-book"></td>
+        <td><p id="p_id"></p></td>
+      </tr>
+      <tr class="book_name">
+        <td class="name_text">图书名称</td>
+        <td class="name_input"><input type="text" name="book_name" id="b_name" class="input-book"></td>
+        <td><p id="p_name"></p></td>
+      </tr>
+      <tr>
+        <td>图书图片</td>
+        <td class="file_input" colspan="2">
+          <a href="javascript:;" class="a-upload"><input type="file" name="book_pic" >选择封面</a>
+          <div class="file_name"></div>
+        </td>
+      </tr>
+      <tr class="book_desc">
+        <td class="desc_text">描述</td>
+        <td class="desc_input"><input type="text" name="book_description" id="b_description" class="input-book"></td>
+        <td><p id="p_description"></p></td>
+      </tr>
+      <tr class="book_price">
+        <td class="price_text">单价</td>
+        <td class="price_input"><input type="text" name="book_price" id="b_price" class="input-book"></td>
+        <td><p id="p_price"></p></td>
+      </tr>
+      <tr  class="book_disc">
+        <td class="disc_text">折扣（百分制）</td>
+        <td class="disc_input"><input type="text" name="book_discount" id="b_discount" class="input-book"></td>
+        <td><p id="p_discount"></p></td>
+      </tr>
+      <tr class="book_author">
+        <td class="author_text">作者</td>
+        <td class="author_input"><input type="text" name="book_author" id="b_author"  class="input-book"></td>
+        <td><p id="p_author"></p></td>
+      </tr>
+      <tr class="book_press">
+        <td class="press_text">出版社</td>
+        <td class="press_input"><input type="text" name="book_press" id="b_press"  class="input-book"></td>
+        <td><p id="p_press"></p></td>
+      </tr>
+      <tr class="book_press_time">
+        <td class="time_text">出版时间</td>
+        <td class="time_input"><input type="date" name="book_press_time" id="b_press_time" class="input-book"></td>
+        <td><p id="p_input_time"></p></td>
+      </tr>
+      <tr class="book_server">
+        <td class="server_text">店铺服务</td>
+        <td class="server_input"><input type="text" name="book_service"  class="input-book"></td>
+        <td><p id="p_server"></p></td>
+      </tr>
+      <tr><td colspan="3"><input type="submit" value="提交" onclick="return checkAddStuNull()" class="add_submit"></td></tr>
+    </table>
+  </form>
+</section>
+</body>
+</html>
+<script src="js/jquery-2.2.4.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $("#bookManage").addClass("current").next().show()
+    $("#book_add").addClass("subliCurrent")
+    $(".level1 > a").click(function () {
+      if($(this).is(".current")){
+        $(this).next().slideUp("slow");
+        $(this).removeClass("current");
+      }else{
+        $(this).addClass("current")   /*给当前元素添加“当前”样式*/
+          .next().slideDown("slow")   //下一个元素显示
+          .parent().siblings().children("a").removeClass("current")  /*这句话执行好后当前this即为silbings 不再为本身了*/
+          .next().slideUp("slow");   //她们下一个元素隐藏
+      }
+      return false;
+    })
+    $(".level2 > li").hover(function () {
+      $(".level1 >a").css('textDecoration','none')
+      return false;
+    })
+  })
+
+  $(".a-upload").on("change","input[type='file']",function(){
+    var filePath=$(this).val();
+    if(filePath.indexOf("jpg")!=-1 || filePath.indexOf("png")!=-1 ||filePath.indexOf("jpeg")!=-1){
+      var arr=filePath.split('\\');
+      var fileName=arr[arr.length-1];
+      $(".file_name").html(fileName);
+    }else{
+      $(".file_name").html("您未上传文件，或者您上传文件类型有误！");
+      return false
+    }
+  })
+</script>
