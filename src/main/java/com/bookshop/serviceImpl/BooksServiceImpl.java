@@ -176,4 +176,22 @@ public class BooksServiceImpl implements BooksService {
         PageHelper.startPage(pageNum, pageSize);
         return dao.selectByExample(example);
     }
+
+	@Override
+	public List<Books> getNewsetBook(int count) {
+		// TODO Auto-generated method stub
+		return dao.getNewsetBook(count);
+	}
+
+	@Override
+	public List<Books> getdiscountBook(int count) {
+		// TODO Auto-generated method stub
+		return dao.getdiscountBook(count);
+	}
+
+	@Override
+	public List<Books> getBestSaleBook(int count) {
+		// TODO Auto-generated method stub
+		return dao.getBestSaleBook(count);
+	}
 }

@@ -112,4 +112,13 @@ public class Books {
     public void setbSaleNum(Integer bSaleNum) {
         this.bSaleNum = bSaleNum;
     }
+
+	@Override
+	public String toString() {
+		return "Books [bId=" + bId + ", bName=" + bName + ", bDescription=" + bDescription + ", bPrice=" + bPrice
+				+ ", bDiscount=" + bDiscount + ", bAuthor=" + bAuthor + ", bPress=" + bPress + ", bPressTime="
+				+ bPressTime + ", bAddTime=" + bAddTime + ", bService=" + bService + ", bSaleNum=" + bSaleNum + "]";
+	}
+    
+    
 }

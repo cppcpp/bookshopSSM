@@ -27,4 +27,10 @@ public interface BooksMapper {
     int updateByPrimaryKeySelective(Books record);
 
     int updateByPrimaryKey(Books record);
+    
+    List<Books> getNewsetBook(@Param("count")int count);
+    
+    List<Books> getdiscountBook(@Param("count")int count);
+    
+    List<Books> getBestSaleBook(@Param("count")int count);
 }

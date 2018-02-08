@@ -18,4 +18,10 @@ import org.apache.ibatis.annotations.Param;
     public Books createBooks(Map<String, String>req);
     public BooksExample createBooksExm(Map<String, String>req);
     public List<Books> selectByExample(BooksExample example, int pageNum, int pageSize);
+    
+    public List<Books> getNewsetBook(int count);
+    
+    public List<Books> getdiscountBook(int count);
+    
+    public List<Books> getBestSaleBook(int count);
 }

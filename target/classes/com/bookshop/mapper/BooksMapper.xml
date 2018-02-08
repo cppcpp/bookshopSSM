@@ -303,4 +303,16 @@
       b_sale_num = #{bSaleNum,jdbcType=INTEGER}
     where b_id = #{bId,jdbcType=VARCHAR}
   </update>
+  
+  <select id="getNewsetBook" resultMap="BaseResultMap">
+  	select  * from books ORDER BY b_add_time desc limit 0,#{count};
+  </select>
+  
+  <select id="getdiscountBook" resultMap="BaseResultMap">
+  	select  * from books ORDER BY b_discount asc limit 0,#{count};
+  </select>
+  
+  <select id="getBestSaleBook" resultMap="BaseResultMap">
+  	select  * from books ORDER BY b_sale_num desc limit 0,#{count};
+  </select>
 </mapper>

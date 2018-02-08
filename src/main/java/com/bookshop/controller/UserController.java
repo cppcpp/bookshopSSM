@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.bookshop.modle.Users;
 import com.bookshop.modle.UsersExample;
 import com.bookshop.modle.UsersExample.Criteria;
+import com.bookshop.service.RecommendBookService;
 import com.bookshop.service.UsersService;
 import com.bookshop.util.StringUtil;
 import com.bookshop.util.ValidateCode;
@@ -38,6 +39,8 @@ public class UserController {
 	@Autowired
 	UsersService usersService;
 	
+	@Autowired
+	RecommendBookService recommendBookService;
 	
 	//生成验证码
 	@RequestMapping(value="/generateValidateCode",method=RequestMethod.GET)
@@ -96,6 +99,11 @@ public class UserController {
 		if(usersService.insert(users)!=1) {
 			resultMap.put("registerError", "服务器问题，注册失败");
 		}else {
+			//更新recommend_books表
+			if(recommendBookService.insertUAccount(uAccount)!=1) {
+				resultMap.put("recommendBookInsertError", "推荐图书表插入异常");
+				return resultMap;
+			}
 			resultMap.put("registerSuccess", "注册成功");
 		}
 		
@@ -146,7 +154,7 @@ public class UserController {
 		resultMap.put("loginSuccess","登录成功");
 		Users users=new Users(userName,password);
 		//登录成功，保存session
-		session.setAttribute("user", users);
+		session.setAttribute("users", users);
 		return resultMap;
 	}
 }
