@@ -35,6 +35,10 @@ public class RecommendBookServiceImpl implements RecommendBookService{
 
 	@Override
 	public List<Books> getRecommendBooks(String uAccount, int count) {
+		if(uAccount==null) {
+			return null;
+		}
+		
 		String[] othUAccount ;//除了该用户的其他账户
 		Map<String, Object> uAccountBooksInfo=null;//该用户的买书信息
 		List<Map<String, Object>> othUAccountBooksInfo=new ArrayList<>();//其他用户的买书信息

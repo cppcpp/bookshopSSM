@@ -33,15 +33,16 @@ public class HomeController {
 	@ResponseBody
 	public Map initIndex() {
 		Users users=(Users) session.getAttribute("users");
+		String uAccount=null;
 		Map<String,Object> resultMap=new HashMap<>();
 		
-		if(users==null) {
-			resultMap.put("sessionUserNull", "您还未登录，请检查登录");
+		if(users!=null) {
+			uAccount=users.getuAccount();
 		}
 		
 		List<Books> newsetThreeBooks=booksService.getNewsetBook(3);
 		List<Books> discountFourBooks=booksService.getdiscountBook(4);
-		List<Books> recommendFourBooks=recommendBookService.getRecommendBooks(users.getuAccount(), 4);
+		List<Books> recommendFourBooks=recommendBookService.getRecommendBooks(uAccount, 4);
 		List<Books> bestSaleFourBooks=booksService.getBestSaleBook(4);
 		
 		
