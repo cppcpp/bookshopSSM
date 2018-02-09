@@ -14,6 +14,7 @@ import com.github.pagehelper.PageHelper;
 public class BooksServiceImpl implements BooksService {
     @Autowired
     BooksMapper dao;
+    
     @Override
     public int countByExample(BooksExample example){
         return (int)dao.countByExample(example);
@@ -193,5 +194,12 @@ public class BooksServiceImpl implements BooksService {
 	public List<Books> getBestSaleBook(int count) {
 		// TODO Auto-generated method stub
 		return dao.getBestSaleBook(count);
+	}
+
+	@Override
+	public List<Books> getBookByConditions(String category, String saleNum, String discount, String newset, String price,
+			Float lowestPrice, Float highestPrice) {
+		// TODO Auto-generated method stub
+		return dao.getBookByConditions(category, saleNum, discount, newset, price, lowestPrice, highestPrice);
 	}
 }

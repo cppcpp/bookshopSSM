@@ -24,4 +24,6 @@ import org.apache.ibatis.annotations.Param;
     public List<Books> getdiscountBook(int count);
     
     public List<Books> getBestSaleBook(int count);
+    
+    public List<Books> getBookByConditions(String category,String saleNum,String discount,String newset,String price,Float lowestPrice,Float highestPrice);
 }
