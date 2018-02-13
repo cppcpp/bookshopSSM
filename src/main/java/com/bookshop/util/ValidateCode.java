@@ -106,6 +106,7 @@ public class ValidateCode {
 		g.setColor(new Color(255, 255, 255));
 		g.drawRect(0, 0, WIDTH, HEIGHT);
 	}
+	
 
 	private static void setBackGround(Graphics g) {
 		// TODO Auto-generated method stub
