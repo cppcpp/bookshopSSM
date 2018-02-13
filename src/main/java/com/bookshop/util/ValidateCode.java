@@ -48,7 +48,7 @@ public class ValidateCode {
 	
 	private static String drawRandomNum(Graphics2D g) {
 		// TODO Auto-generated method stub
-		g.setColor(new Color(64, 0, 0));
+		g.setColor(new Color(123 ,104 ,238));
 		g.setFont(new Font("宋体", Font.BOLD, 40));
 		// 所有的汉字都在Unicode【\u4e00--\u9fa5】区间,所有的中文都是以Unicode码存进去的。所以char c =
 		// '\u4e00',相当于char c='一'
@@ -84,7 +84,7 @@ public class ValidateCode {
 	
 	private static void drawRandomLine(Graphics g) {
 		// TODO Auto-generated method stub
-		Color[] colors = {new Color(249, 34, 34),new Color(113, 2, 121),new Color(73, 1, 45)};
+		Color[] colors = {new Color(126 ,192 ,238),new Color(255, 185, 15),new Color(255, 127, 80),new Color(0, 178, 238),new Color(144 ,238 ,144)};
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setStroke(new BasicStroke(2.0f));
 		g2.setFont(new Font("宋体", Font.BOLD, 600));
@@ -103,13 +103,13 @@ public class ValidateCode {
 
 	private static void setBorder(Graphics g) {
 		// TODO Auto-generated method stub
-		g.setColor(new Color(25, 200, 100));
+		g.setColor(new Color(255, 255, 255));
 		g.drawRect(0, 0, WIDTH, HEIGHT);
 	}
 
 	private static void setBackGround(Graphics g) {
 		// TODO Auto-generated method stub
-		g.setColor(new Color(25, 200, 100));
+		g.setColor(new Color(255, 255, 255));
 		g.fillRect(1, 1, WIDTH - 2, HEIGHT - 2);
 	}
 }

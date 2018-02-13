@@ -32,7 +32,9 @@
       <div class="tip-area">
         <div class="check tip-phone"></div>
       </div>
-      <label for="role">角色：</label><input type="radio" id="role" name="role" value="0">买家&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" id="role" name="role" value="1">卖家
+      <label for="role">角色：
+      </label><input type="radio" id="role" name="role" value="0">买家&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <input type="radio" id="role1" name="role" value="1">卖家
       <button id="register">注&nbsp;&nbsp;册</button>
       <p class="text-center">已有账户<a href="login.html"><small>登录</small></a>
     </div>
@@ -66,9 +68,14 @@
 
         //法二通过$(this)
         var username= $("#register_username").val();
+        console.log(username.length)
         if(!username){
             $(".checkRegisterUsername").html("用户名不能为空！")
         }else{
+        	if(username.length > 30) {
+        		 $(".checkRegisterUsername").html("用户名长度不能超过30位！")
+        		 return;
+        	}
           requestName = createRequest();
           var url = "user/registerAccount?uAccount="+username;
           requestName.open("GET",url, true);
@@ -87,7 +94,7 @@
             	console.log(requestName.responseText.trim())
                 if(requestName.responseText.trim()=="uAccountOK"){
                     //成功
-                	$(".checkRegisterUsername").html("&radic;");
+                	$(".checkRegisterUsername").html("&radic;该用户名可以使用").css("color",'green');
                 }else{
                     $(".checkRegisterUsername").text("该用户名已存在！");
                 }
@@ -138,9 +145,7 @@
 
   //提交按钮的ajax提交
   $("#register").click(function(){
-	  
-	alert("role："+$("#role").val())
-	
+	let radioValue  = $("input[name='role']:checked").val()
       if($("#register_username").val() && $("#register_passwd").val() && $("#confirmPwd").val() && $("#phone").val()){
           requestRegister = createRequest();
           var url = getDate();
@@ -151,11 +156,13 @@
   })
 
   function getDate() {
-      var date = "user/register?uAccount="+$("#register_username").val()+"&uPassword="+$("#register_passwd").val()+"&uPhone="+$("#phone").val();
+	  console.log($("#role").val())
+      var date = "user/register?uAccount="+$("#register_username").val()+"&uPassword="+$("#register_passwd").val()+"&uPhone="+$("#phone").val()+"&uRole="+$("input[name='role']:checked").val();
       return date;
   }
 
   function handleStateChange2(data) {
+	  console.log(requestRegister.readyState,requestRegister.status)
       if(requestRegister.readyState==4){
           if(requestRegister.status==200){
              /*  //alert(request.responseText);
@@ -163,16 +170,14 @@
               register.innerHTML = requestRegister.responseText;
               window.location = "index.jsp";
               //alert("注册成功"); */
-              
-              
               //piperChan
               responseText=data.target.responseText;
-              console.log(responseText);
               //注册成功，重定向到登录页面
-              if(responseText.registerSuccess){
+              if(JSON.parse(responseText).registerSuccess){
             	  window.location="login.html"
               }
-              
+          }else {
+        	  alert("已注册，请勿重复点击！")
           }
       }
   }
