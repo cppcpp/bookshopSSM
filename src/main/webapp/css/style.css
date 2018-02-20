@@ -159,7 +159,7 @@ nav .nav-cart img {
     padding: 100px 0 100px 0;
     position: relative;
 }
-/*遮罩*/
+/*閬僵*/
 #slider:before {
     content: "";
     position: absolute;
@@ -269,7 +269,7 @@ p#back-to-top a{
     text-decoration:none;
     color:#d1d1d1;
     display:block;
-    /*使用CSS3中的transition属性给跳转链接中的文字添加渐变效果*/
+    /*浣跨敤CSS3涓殑transition灞炴�х粰璺宠浆閾炬帴涓殑鏂囧瓧娣诲姞娓愬彉鏁堟灉*/
     -moz-transition:all 1s;
     -webkit-transition:all 1s;
     -o-transition:all 1s;
@@ -306,10 +306,10 @@ p#back-to-top a:hover{
 --*/
 #service {
     text-align: center;
-    padding: 40px 0;
+   
 }
 #service .service-item {
-    padding-bottom: 30px;
+    padding:10px 0px;
 }
 #service .service-item img {
     width:250px;
@@ -319,6 +319,11 @@ p#back-to-top a:hover{
     padding-top: 20px;
     margin: 0;
     color: #666;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp:1;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 #service .service-item p {
     color: #888;
@@ -327,6 +332,7 @@ p#back-to-top a:hover{
     font-size: 14px;
     line-height: 1.8em;
     height:60px;
+    width:95%;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp:2;
@@ -338,8 +344,7 @@ p#back-to-top a:hover{
 	content Start
 --*/
 #testimonial {
-
-    padding: 50px 0;
+    padding: 30px 0;
 }
 #testimonial .block h2 {
     line-height: 27px;
@@ -353,20 +358,21 @@ p#back-to-top a:hover{
 
 #testimonial .counter-box {
     list-style-type: none;
+    padding:0px;
  }
 
 #testimonial .counter-box li {
-    width: 50%;
+    width: 30%;
     float: left;
     text-align: center;
-    margin: 30px 0 30px;
+    margin: 10px auto;
 }
 #testimonial .counter-box li img {
-    width:100px;
-    height: 120px;
+    width:80px;
+    height: 80px;
 }
 #testimonial .counter-box li h4 {
-    font-size: 30px;
+    font-size: 14px;
     font-weight: bold;
 }
 #testimonial .counter-box li span {
@@ -376,16 +382,20 @@ p#back-to-top a:hover{
     text-align: center;
     width: 75%;
     border: 1px solid #DEDEDE;
-    padding: 24px;
-    margin: 0 auto;
+    padding: 14px;
+    margin: 10px auto;
 }
 #testimonial .testimonial-carousel img {
-    padding-bottom: 38px;
+   
+    width:30px;
+    height:30px;
+    margin-bottom:10px;
 }
 #testimonial .testimonial-carousel p {
     line-height: 28px;
     font-weight: 300;
     padding-bottom: 20px;
+    height:80px;
 }
 #testimonial .testimonial-carousel .user img {
     padding-bottom: 0px;
@@ -393,15 +403,18 @@ p#back-to-top a:hover{
     height: 180px;
 }
 #testimonial .testimonial-carousel .user p {
-    padding-bottom: 0;
+    padding-bottom: 0px;
     font-size: 12px;
     line-height: 20px;
     color: #353241;
+  	height:40px;
 }
 #testimonial .testimonial-carousel .user p span {
     display: block;
     color: #353241;
     font-weight: 600;
+   
+
 }
 #testimonial .testimonial-carousel .owl-carousel .owl-pagination div {
     border: 1px solid #1D1D1D;
@@ -600,7 +613,7 @@ footer .footer-manu ul li a:hover {
 }
 
 
-/*分页区*/
+/*鍒嗛〉鍖�*/
 .papigation {
     margin-top: 40px;
    text-align: center;
@@ -619,7 +632,7 @@ footer .footer-manu ul li a:hover {
     color:#4f445e;
 }
 
-/*详情页面*/
+/*璇︽儏椤甸潰*/
 .tipUl li:not(:last-child) {
     width: 150px;
     height: 30px;
@@ -880,7 +893,7 @@ p.more_details{
 }
 
 
-/*特价页面*/
+/*鐗逛环椤甸潰*/
 .special {
     margin-top: 15px;
     width: 100%;
@@ -1032,7 +1045,7 @@ p.more_details{
     font-size: 16px;
     font-family: 'PT Sans', Helvetica, Arial, sans-serif;
     outline: none;
-    padding-left:20px ;/*必须设置，否则文本在背景图上方*/
+    padding-left:20px ;/*蹇呴』璁剧疆锛屽惁鍒欐枃鏈湪鑳屾櫙鍥句笂鏂�*/
     border-radius:6px ;
     border: 1px solid rgba(0,0,0,.5);
     box-shadow: 0 1px 2px rgba(0,0,0,.1);
@@ -1275,7 +1288,7 @@ textarea {
     font-size: 16px;
     font-family: 'PT Sans', Helvetica, Arial, sans-serif;
     outline: none;
-    padding-left:10px ;/*必须设置，否则文本在背景图上方*/
+    padding-left:10px ;/*蹇呴』璁剧疆锛屽惁鍒欐枃鏈湪鑳屾櫙鍥句笂鏂�*/
     border-radius:6px ;
     border: 1px solid rgba(0,0,0,.5);
     box-shadow: 0 1px 2px rgba(0,0,0,.1);
@@ -1356,6 +1369,15 @@ textarea {
     height:50px;
     background:#795636;
 }
+
+.tabbox{width:100%;border:1px solid #f0f0f0;}
+.tabbox .tab{overflow:hidden;background:#cccccc87;height:60px;}
+.tabbox .tab a{display:block;padding:10px 20px;float:left;text-decoration:none;color:#333;line-height:45px;}
+.tabbox .tab a:hover{background:#8080c0;color:#fff;text-decoration:none;height:60px;}
+.tabbox .tab a.on{background:#8080c0;color:#fff;text-decoration:none;height:60px;}
+.tabbox .ctx{overflow:hidden;}
+.tabbox .ctx li{display:none;list-style:none}
+.tabbox .ctx li:first-child{display:block;list-style:none}
 
 
 
