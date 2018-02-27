@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.bookshop.service.CartService;
+import com.bookshop.util.StringUtil;
 import com.bookshop.modle.Cart;
 import com.bookshop.modle.CartExample;
 import com.bookshop.dao.CartMapper;
@@ -70,7 +71,6 @@ public class CartServiceImpl implements CartService {
         String bSumprice = req.get("bSumprice");
         String bSumdiscountprice = req.get("bSumdiscountprice");
         Cart cart = new Cart();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         if (StringUtils.isNotEmpty(cId)) {
             cart.setcId(cId);
         }
@@ -85,6 +85,18 @@ public class CartServiceImpl implements CartService {
         }
         if (StringUtils.isNotEmpty(bNums)) {
             cart.setbNums(Integer.parseInt(bNums));
+        }
+        if(StringUtils.isNotEmpty(bPrice)) {
+        	cart.setbPrice(Float.valueOf(bPrice));
+        }
+        if(StringUtils.isNotEmpty(bDiscountprice)) {
+        	cart.setbDiscountprice(Float.valueOf(bDiscountprice));
+        }
+        if(StringUtils.isNotEmpty(bSumprice)) {
+        	cart.setbSumprice(Float.valueOf(bSumprice));
+        }
+        if(StringUtils.isNotEmpty(bSumdiscountprice)) {
+        	cart.setbSumdiscountprice(Float.valueOf(bSumdiscountprice));
         }
         return cart;
     }
@@ -118,10 +130,5 @@ public class CartServiceImpl implements CartService {
             criteria.andBNumsEqualTo(Integer.parseInt(bNums));
         }
         return example;
-    }
-    @Override
-    public List<Cart> selectByExample(CartExample example, int pageNum, int pageSize)  {
-        PageHelper.startPage(pageNum, pageSize);
-        return dao.selectByExample(example);
     }
 }

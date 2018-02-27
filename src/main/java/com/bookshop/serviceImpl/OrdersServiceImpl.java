@@ -77,6 +77,9 @@ public class OrdersServiceImpl implements OrdersService {
         if (StringUtils.isNotEmpty(oNum)) {
             orders.setoNum(Integer.parseInt(oNum));
         }
+        if(StringUtils.isNotEmpty(oPrice)) {
+        	orders.setoPrice(Float.valueOf(oPrice));
+        }
         try{
             if (StringUtils.isNotEmpty(oTime)) {
                 orders.setoTime(sdf.parse(oTime)); 
@@ -95,6 +98,9 @@ public class OrdersServiceImpl implements OrdersService {
         }
         if (StringUtils.isNotEmpty(uReceiver)) {
             orders.setuReceiver(uReceiver);
+        }
+        if(StringUtils.isNotEmpty(oCheaper)) {
+        	orders.setoCheaper(Float.parseFloat(oCheaper));
         }
         return orders;
     }

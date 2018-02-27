@@ -1,19 +1,23 @@
 package com.bookshop.controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bookshop.modle.Users;
@@ -23,6 +27,7 @@ import com.bookshop.service.RecommendBookService;
 import com.bookshop.service.UsersService;
 import com.bookshop.util.StringUtil;
 import com.bookshop.util.ValidateCode;
+import com.github.pagehelper.PageInfo;
 
 @Controller()
 @RequestMapping("/user")
@@ -158,4 +163,99 @@ public class UserController {
 		session.setAttribute("users", users);
 		return resultMap;
 	}
+	
+	@RequestMapping(value="/usersQry",method=RequestMethod.GET)
+	@ResponseBody
+    public Map usersQry(
+             @RequestParam(name="uAccount",required=false)String uAccount,
+             @RequestParam(name="uName",required=false)String uName,
+             @RequestParam(name="uPassword",required=false)String uPassword,
+             @RequestParam(name="uPhone",required=false)String uPhone,
+             @RequestParam(name="uMail",required=false)String uMail,
+             @RequestParam(name="uRole",required=false)String uRole,
+             @RequestParam(name="page",required=false)String page,@RequestParam(name="limit",required=false)String limit){
+		Map<String, Object> resultMap=new HashMap<>();
+        List<Map> mapList = new ArrayList<>();
+        int pageNum =  page == null ? 1 : Integer.parseInt(page);
+        int pageSize =  limit == null ? 10 : Integer.parseInt(limit);
+        Map<String, String> usersExmMap = new HashMap<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        
+        usersExmMap.put("uAccount", uAccount);
+        usersExmMap.put("uName", uName);
+        usersExmMap.put("uPassword", uPassword);
+        usersExmMap.put("uPhone", uPhone);
+        usersExmMap.put("uMail", uMail);
+        usersExmMap.put("uRole", uRole);
+        UsersExample example = usersService.createUsersExm(usersExmMap);
+        List<Users> usersList = usersService.selectByExample(example,pageNum,pageSize);
+        int total = usersService.countByExample(example);
+        for (Users users : usersList) {
+            Map<String,Object> tMap = new HashMap<>();
+            tMap.put("uAccount", users.getuAccount());
+            tMap.put("uName", users.getuName());
+            tMap.put("uPassword", users.getuPassword());
+            tMap.put("uPhone", users.getuPhone());
+            tMap.put("uMail", users.getuMail());
+            tMap.put("uRole", users.getuRole());
+            mapList.add(tMap);
+        }
+        
+        resultMap.put("usersList", usersList);
+        PageInfo<Users> pageInfo=new PageInfo<>(usersList);
+        resultMap.put("pageInfo", pageInfo);
+        return resultMap;
+    }
+	
+	@RequestMapping(value="/updateUsers",method=RequestMethod.POST)
+	@ResponseBody
+    public String updateUsers(@RequestBody Map<String, String>req){
+        String id = req.get("uAccount");
+        try {
+            if(StringUtils.isEmpty(id)){
+                return "uAccountNull";
+            }
+            Users users = usersService.createUsers(req);
+            if (usersService.updateByPrimaryKeySelective(users) == 1) {
+                return "success";
+            }else {
+                return "error";
+            }
+        } catch (Exception e) {
+            return "error";
+        }
+    }
+	
+	@RequestMapping(value="/deleteUsers",method=RequestMethod.POST)
+	@ResponseBody
+    public String deleteUsers(@RequestBody Map<String, Object>req){
+        List<String> idList = (List<String>) req.get("ids");
+        String strSuc = "";
+        String strFail = "";
+        String strNotExist = "";        
+        try {
+            if (idList.size() != 0 && idList != null) {
+                for (int i = 0; i < idList.size(); i++) {
+                    String id = idList.get(i);
+                    if (usersService.selectByPrimaryKey(id) != null) {
+                        if (usersService.deleteByPrimaryKey(id) == 1) {
+                            strSuc += (id + " ");
+                        } else {
+                            strFail += (id + " ");
+                        }
+                   } else {
+                       strNotExist += (id + " ");                   }
+               }
+                if (strNotExist.equals("") && strFail.equals("")) {
+                    return strSuc + "delete success";
+                } else {
+                    return strFail + strNotExist + "delete error";
+                }
+            } else {
+            	return "idsNull";
+            }
+        } catch (Exception e) {
+        	return "error";
+        }
+    }
 }

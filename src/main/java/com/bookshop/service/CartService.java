@@ -17,5 +17,4 @@ import org.apache.ibatis.annotations.Param;
     public int updateByPrimaryKey(Cart record);
     public Cart createCart(Map<String, String>req);
     public CartExample createCartExm(Map<String, String>req);
-    public List<Cart> selectByExample(CartExample example, int pageNum, int pageSize);
 }

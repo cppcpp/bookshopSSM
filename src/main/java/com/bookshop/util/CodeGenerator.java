@@ -636,7 +636,7 @@ public class CodeGenerator {
 		
 		///// 只需要改这里
 		///
-		Class t = Books.class;
+		Class t = Users.class;
 		////
 //		String isv = ISVCode(t); 
 //		String svimpl = SVImplCode(t);

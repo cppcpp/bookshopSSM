@@ -70,7 +70,6 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         String bSumprice = req.get("bSumprice");
         String bSumdiscountprice = req.get("bSumdiscountprice");
         OrderDetail orderDetail = new OrderDetail();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         if (StringUtils.isNotEmpty(oDId)) {
             orderDetail.setoDId(oDId);
         }
@@ -85,6 +84,18 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         }
         if (StringUtils.isNotEmpty(bNums)) {
             orderDetail.setbNums(Integer.parseInt(bNums));
+        }
+        if(StringUtils.isNotEmpty(bPrice)) {
+        	orderDetail.setbPrice(Float.valueOf(bPrice));
+        }
+        if(StringUtils.isNotEmpty(bDiscountprice)) {
+        	orderDetail.setbDiscountprice(Float.valueOf(bDiscountprice));
+        }
+        if(StringUtils.isNotEmpty(bSumprice)) {
+        	orderDetail.setbSumprice(Float.valueOf(bSumprice));
+        }
+        if(StringUtils.isNotEmpty(bSumdiscountprice)) {
+        	orderDetail.setbSumdiscountprice(Float.valueOf(bSumdiscountprice));
         }
         return orderDetail;
     }
@@ -101,7 +112,6 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         String bSumdiscountprice = req.get("bSumdiscountprice");
         OrderDetailExample example = new OrderDetailExample();
         OrderDetailExample.Criteria criteria = example.createCriteria();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         if (StringUtils.isNotEmpty(oDId)) {
             criteria.andODIdEqualTo(oDId);
         }
@@ -116,6 +126,18 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         }
         if (StringUtils.isNotEmpty(bNums)) {
             criteria.andBNumsEqualTo(Integer.parseInt(bNums));
+        }
+        if(StringUtils.isNotEmpty(bPrice)) {
+        	criteria.andBPriceEqualTo(Float.valueOf(bPrice));
+        }
+        if(StringUtils.isNotEmpty(bDiscountprice)) {
+        	criteria.andBDiscountpriceEqualTo(Float.valueOf(bDiscountprice));
+        }
+        if(StringUtils.isNotEmpty(bSumprice)) {
+        	criteria.andBSumpriceEqualTo(Float.valueOf(bSumprice));
+        }
+        if(StringUtils.isNotEmpty(bSumdiscountprice)) {
+        	criteria.andBSumdiscountpriceEqualTo(Float.valueOf(bSumdiscountprice));
         }
         return example;
     }
