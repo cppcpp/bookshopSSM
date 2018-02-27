@@ -73,12 +73,15 @@ public class BooksServiceImpl implements BooksService {
         String bService = req.get("bService");
         String bSaleNum = req.get("bSaleNum");
         Books books = new Books();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         if (StringUtils.isNotEmpty(bId)) {
             books.setbId(bId);
         }
         if (StringUtils.isNotEmpty(bName)) {
             books.setbName(bName);
+        }
+        if(StringUtils.isNotEmpty(bPrice)) {
+        	books.setbPrice(Float.valueOf(bPrice));
         }
         if (StringUtils.isNotEmpty(bDescription)) {
             books.setbDescription(bDescription);
@@ -131,24 +134,27 @@ public class BooksServiceImpl implements BooksService {
         String bSaleNum = req.get("bSaleNum");
         BooksExample example = new BooksExample();
         BooksExample.Criteria criteria = example.createCriteria();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         if (StringUtils.isNotEmpty(bId)) {
             criteria.andBIdEqualTo(bId);
         }
         if (StringUtils.isNotEmpty(bName)) {
-            criteria.andBNameEqualTo(bName);
+            criteria.andBNameLike("%"+bName+"%");
         }
         if (StringUtils.isNotEmpty(bDescription)) {
-            criteria.andBDescriptionEqualTo(bDescription);
+            criteria.andBDescriptionLike("%"+bDescription+"%");
+        }
+        if(StringUtils.isNotEmpty(bPrice)) {
+        	criteria.andBPriceEqualTo(Float.valueOf(bPrice));
         }
         if (StringUtils.isNotEmpty(bDiscount)) {
             criteria.andBDiscountEqualTo(Integer.parseInt(bDiscount));
         }
         if (StringUtils.isNotEmpty(bAuthor)) {
-            criteria.andBAuthorEqualTo(bAuthor);
+            criteria.andBAuthorLike("%"+bAuthor+"%");
         }
         if (StringUtils.isNotEmpty(bPress)) {
-            criteria.andBPressEqualTo(bPress);
+            criteria.andBPressLike("%"+bPress+"%");
         }
         try{
             if (StringUtils.isNotEmpty(bPressTimeStart) && StringUtils.isNotEmpty(bPressTimeEnd)) {

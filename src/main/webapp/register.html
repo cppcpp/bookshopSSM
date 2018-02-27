@@ -177,6 +177,26 @@
             	  window.location="login.html"
               }
               
+              //注册失败情况
+              if(responseText.uAccountNull){
+            	  alert(responseText.uAccountNull)
+              }
+              if(responseText.uPasswordNull){
+            	alert(responseText.uPasswordNull)  
+              }
+              if(responseText.uPhoneNull){
+            	  alert(responseText.uPhoneNull)
+              }
+              if(responseText.roleNull){
+            	  alert(responseText.roleNull)
+              }
+              if(responseText.registerError){
+            	  alert(responseText.registerError)
+              }
+              if(responseText.recommendBookInsertError){
+            	  alert(responseText.recommendBookInsertError)
+              }
+              
           }else {
         	  alert("已注册，请勿重复点击！")
           }

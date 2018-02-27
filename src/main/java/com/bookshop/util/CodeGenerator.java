@@ -636,17 +636,17 @@ public class CodeGenerator {
 		
 		///// 只需要改这里
 		///
-		Class t = BookImages.class;
+		Class t = Books.class;
 		////
-		String isv = ISVCode(t); 
-		String svimpl = SVImplCode(t);
-		//String controller = ControllerCode(t);
+//		String isv = ISVCode(t); 
+//		String svimpl = SVImplCode(t);
+		String controller = ControllerCode(t);
 		String clzNm=t.getName();
 		int index =clzNm.lastIndexOf(".");
 		String tableName = clzNm.substring(index+1);
 		 try {  
 			   System.out.println(tableName);
-	            File file = new File("E:/shy/data/"+tableName+"Service.java");  
+	           /* File file = new File("E:/shy/data/"+tableName+"Service.java");  
 	            // if file doesnt exists, then create it  
 	            if (!file.exists()) {  
 	                file.createNewFile();  
@@ -669,9 +669,9 @@ public class CodeGenerator {
 	            bwSVimpl.write(svimpl);  
 	            bwSVimpl.flush();  
 	            bwSVimpl.close();  
-	            System.out.println(fileSVimpl.getName());
+	            System.out.println(fileSVimpl.getName());*/
 	            
-	          /* File fileCon = new File("E:/codeGen/"+Sim+"Controller.java");
+	           File fileCon = new File("E:/shy/data/"+tableName+"Controller.java");
 	            if (!fileCon.exists()) {  
 	            	fileCon.createNewFile();  
 	            } 
@@ -680,7 +680,7 @@ public class CodeGenerator {
 	            bwCon.write(controller);  
 	            bwCon.flush();  
 	            bwCon.close();  
-	            System.out.println(fileCon.getName());*/
+	            System.out.println(fileCon.getName());
 	            
 	        } catch (IOException e) {  
 	            e.printStackTrace();  

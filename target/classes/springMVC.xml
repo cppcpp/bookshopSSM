@@ -27,7 +27,8 @@
 	<!--告诉spring，启动注解驱动，会将这几个bean注册到bean工厂中： RequestMappingHandlerMapping BeanNameUrlHandlerMapping 
 		RequestMappingHandlerAdapter HttpRequestHandlerAdapter SimpleControllerHandlerAdpter 
 		ExceptionHandlrExceptionResolver ResponseStatusExceptionResolver DefaultHandlerExceptionResolver -->
-	<mvc:annotation-driven validator="validator"/>
+	<!-- <mvc:annotation-driven validator="validator"/> -->
+	<mvc:annotation-driven/>
 
 	<!-- 使用默认的静态资源处理器处理静态资源 :将静态资源转发给web服务器默认的servlet处理，而不是本身处理静态资源 
 	一般web服务器默认的servlet名字是“default”,如果不是，通过default-servlet-name属性指定-->
@@ -47,29 +48,6 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
-	<!-- 校验器 -->
-	<bean id="validator"
-		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
-		<!-- 校验器 -->
-		<property name="providerClass" value="org.hibernate.validator.HibernateValidator" />
-		<!-- 指定校验使用的资源文件，在文件中配置校验的错误信息，如果不指定则默认使用classpath下的ValidationMessages.properties -->
-		<!-- <property name="validationMessageSource" ref="messageSource" /> -->
-	</bean>
-	<!-- 校验错误信息配置文件 -->
-	<bean id="messageSource"
-		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-		<!-- 资源文件名 -->
-		<property name="basenames">
-			<list>
-				<value>classpath:CustomValidationMessages.properties</value>
-			</list>
-		</property>
-		<!-- 资源文件编码格式 -->
-		<property name="fileEncodings" value="utf-8" />
-		<!-- 对资源文件内容缓存时间，单位秒 -->
-		<property name="cacheSeconds" value="120" />
-	</bean>
-	
 	<!-- springMVC上传文件 -->
 	<bean id="multipartResolver"    
         class="org.springframework.web.multipart.commons.CommonsMultipartResolver">    

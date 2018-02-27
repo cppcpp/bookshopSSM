@@ -28,16 +28,16 @@
 	</context:component-scan>
 
 	<!-- 启动注解驱动缓存 -->
-	<cache:annotation-driven cache-manager="cacheManager" />
+	<!-- <cache:annotation-driven cache-manager="cacheManager" /> -->
 
 	<!-- spring3.1内置了5个缓存管理器 spring3.2又提供了redis和gemfire -->
-	<bean id="ehcache"
+	<!-- <bean id="ehcache"
 		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
 		<property name="configLocation" value="classpath:encache.xml"></property>
 	</bean>
 	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
 		<property name="cacheManager" ref="ehcache"></property>
-	</bean>
+	</bean> -->
 
 	<!-- *************************************mybatis配置文件****************************** -->
 	 <!-- 读取数据库配置文件信息 -->

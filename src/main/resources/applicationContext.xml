@@ -22,18 +22,6 @@
 
 	<context:component-scan base-package="com.bookshop.*" />
 
-	<!-- 启动注解驱动缓存 -->
-	<cache:annotation-driven cache-manager="cacheManager" />
-
-	<!-- spring3.1内置了5个缓存管理器 spring3.2又提供了redis和gemfire -->
-	<bean id="ehcache"
-		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-		<property name="configLocation" value="classpath:encache.xml"></property>
-	</bean>
-	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
-		<property name="cacheManager" ref="ehcache"></property>
-	</bean>
-
 	<!-- *************************************mybatis配置文件****************************** -->
 	 <!-- 读取数据库配置文件信息 -->
 	<!-- <context:property-placeholder location="classpath:jdbc.properties"/>
@@ -64,7 +52,7 @@
 		<property name="dataSource" ref="mysqlSource"></property>
 		<property name="mapperLocations" value="classpath:com/bookshop/mapper/*.xml" />
 		<!-- pageHelper配置文件 -->
-		<!-- <property name="configLocation" value="classpath:mybatisPageHelper.xml" /> -->
+		<property name="configLocation" value="classpath:mybatisPageHelper.xml" />
 	</bean>
 
 	<!-- dao接口所在包名，Spring自动查找下面的类 -->

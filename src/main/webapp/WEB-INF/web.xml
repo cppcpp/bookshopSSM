@@ -70,7 +70,7 @@
 	</filter-mapping> -->
 		
 	
-	<!-- 字符集 过滤器 -->
+	<!-- 字符集过滤器 -->
 	<filter>
 		<filter-name>CharacterEncodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>

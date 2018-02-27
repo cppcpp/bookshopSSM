@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 
+import javax.security.auth.login.FailedLoginException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,6 +51,19 @@ public class RecommendBookServiceImpl implements RecommendBookService{
 		//获得所有用户和图书的关联信息
 		List<Map<String, Object>> resultLists=mapper.getAllRecommendBooks();
 		othUAccount=new String[resultLists.size()-1];//初始化数组
+		
+		//resultLists中可能没有该用户
+		boolean uAccountExits=false;
+		for(int i=0;i<resultLists.size();i++) {
+			tempMap=resultLists.get(i);
+			if(tempMap.get("u_account").toString().equals(uAccount)) {
+				uAccountExits=true;
+			}
+		}
+		if(uAccountExits==false) {
+			throw new GeneralException("数据库推荐表中没有该用户账号信息，请检查");
+		}
+		
 		for(int i=0;i<resultLists.size();i++) {
 			tempMap=resultLists.get(i);
 			if(tempMap.get("u_account")==null) {

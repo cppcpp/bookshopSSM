@@ -124,7 +124,8 @@ public class UserController {
 			resultMap.put("codeNull", "验证码不能为空");
 			return resultMap;
 		}else {
-			if(!code.equals(correctCode)) {
+			//验证码忽略大小写
+			if(!code.equalsIgnoreCase(correctCode)) {
 				resultMap.put("codeRong", "验证码不正确");
 				return resultMap;
 			}

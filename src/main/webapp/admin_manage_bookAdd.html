@@ -39,58 +39,85 @@
   <div>
     <span class="title"><i class="glyphicon glyphicon-tasks"></i>图书添加</span>
   </div>
-  <form action="booksAdd" method="post" class="addBooks" enctype="multipart/form-data">
+  <form action="books/addBooks" method="post" class="addBooks" enctype="multipart/form-data">
     <table class="add_table">
       <tr class="book_id">
-        <td class="id_text">图书id</td>
-        <td class="id_put"><input type="text" name="book_id" id="b_id" class="input-book"></td>
+        <td class="id_text">图书种类</td>
+        <td class="id_put">
+        	<!-- <input type="text" name="book_id" id="b_id" class="input-book"> -->
+        	<!-- piperChan 修改 -->
+        	<select class="input-book" id="b_category" name="bCategory">
+        		<option value="a">马克思主义、列宁主义、毛泽东思想(A)</option>
+        		<option value="b">哲学(B)</option>
+        		<option value="c">社会科学(C)</option>
+        		<option value="d">政治、法律(D)</option>
+        		<option value="e">军事(E)</option>
+        		<option value="f">经济(F)</option>
+        		<option value="g">文化、科学、教育、体育(G)</option>
+        		<option value="h">语言、文字(H)</option>
+        		<option value="i">文学(I)</option>
+        		<option value="j">艺术(J)</option>
+        		<option value="k">历史、地理(K)</option>
+        		<option value="n">自然科学总论(N)</option>
+        		<option value="o">数理科学和化学(O)</option>
+        		<option value="p">天文学、地球科学(P)</option>
+        		<option value="q">生物科学(Q)</option>
+        		<option value="r">医药、卫生(R)</option>
+        		<option value="s">农业科学(S)</option>
+        		<option value="t">工业科学(T)</option>
+        		<option value="u">交通运输(U)</option>
+        		<option value="v">航空、航天(V)</option>
+        		<option value="x">环境科学(X)</option>
+        		<option value="z">综合性图书(Z)</option>
+        	</select>
+        </td>
         <td><p id="p_id"></p></td>
       </tr>
       <tr class="book_name">
         <td class="name_text">图书名称</td>
-        <td class="name_input"><input type="text" name="book_name" id="b_name" class="input-book"></td>
+        <td class="name_input"><input type="text" name="bName" id="b_name" class="input-book"></td>
         <td><p id="p_name"></p></td>
       </tr>
       <tr>
         <td>图书图片</td>
         <td class="file_input" colspan="2">
-          <a href="javascript:;" class="a-upload"><input type="file" name="book_pic" >选择封面</a>
+          <a href="javascript:;" class="a-upload"><input type="file" name="bookPic" >选择封面</a>
           <div class="file_name"></div>
         </td>
       </tr>
       <tr class="book_desc">
         <td class="desc_text">描述</td>
-        <td class="desc_input"><input type="text" name="book_description" id="b_description" class="input-book"></td>
+        <td class="desc_input"><input type="text" name="bDescription" id="b_description" class="input-book"></td>
         <td><p id="p_description"></p></td>
       </tr>
       <tr class="book_price">
         <td class="price_text">单价</td>
-        <td class="price_input"><input type="text" name="book_price" id="b_price" class="input-book"></td>
+        <td class="price_input"><input type="text" name="bPrice" id="b_price" class="input-book"></td>
         <td><p id="p_price"></p></td>
       </tr>
       <tr  class="book_disc">
         <td class="disc_text">折扣（百分制）</td>
-        <td class="disc_input"><input type="text" name="book_discount" id="b_discount" class="input-book"></td>
+        <td class="disc_input"><input type="text" name="bDiscount" id="b_discount" class="input-book"></td>
         <td><p id="p_discount"></p></td>
       </tr>
       <tr class="book_author">
         <td class="author_text">作者</td>
-        <td class="author_input"><input type="text" name="book_author" id="b_author"  class="input-book"></td>
+        <td class="author_input"><input type="text" name="bAuthor" id="b_author"  class="input-book"></td>
         <td><p id="p_author"></p></td>
       </tr>
       <tr class="book_press">
         <td class="press_text">出版社</td>
-        <td class="press_input"><input type="text" name="book_press" id="b_press"  class="input-book"></td>
+        <td class="press_input"><input type="text" name="bPress" id="b_press"  class="input-book"></td>
         <td><p id="p_press"></p></td>
       </tr>
       <tr class="book_press_time">
         <td class="time_text">出版时间</td>
-        <td class="time_input"><input type="date" name="book_press_time" id="b_press_time" class="input-book"></td>
+        <td class="time_input"><input type="date" name="bPressTime" id="b_press_time" class="input-book"></td>
         <td><p id="p_input_time"></p></td>
       </tr>
       <tr class="book_server">
         <td class="server_text">店铺服务</td>
-        <td class="server_input"><input type="text" name="book_service"  class="input-book"></td>
+        <td class="server_input"><input type="text" name="bService"  class="input-book"></td>
         <td><p id="p_server"></p></td>
       </tr>
       <tr><td colspan="3"><input type="submit" value="提交" onclick="return checkAddStuNull()" class="add_submit"></td></tr>
