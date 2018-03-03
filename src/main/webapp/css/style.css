@@ -159,7 +159,7 @@ nav .nav-cart img {
     padding: 100px 0 100px 0;
     position: relative;
 }
-/*閬僵*/
+/*闁喚鍍�*/
 #slider:before {
     content: "";
     position: absolute;
@@ -269,7 +269,7 @@ p#back-to-top a{
     text-decoration:none;
     color:#d1d1d1;
     display:block;
-    /*浣跨敤CSS3涓殑transition灞炴�х粰璺宠浆閾炬帴涓殑鏂囧瓧娣诲姞娓愬彉鏁堟灉*/
+    /*娴ｈ法鏁SS3娑擃厾娈憈ransition鐏炵偞锟窖呯舶鐠哄疇娴嗛柧鐐复娑擃厾娈戦弬鍥х摟濞ｈ濮炲〒鎰綁閺佸牊鐏�*/
     -moz-transition:all 1s;
     -webkit-transition:all 1s;
     -o-transition:all 1s;
@@ -312,8 +312,8 @@ p#back-to-top a:hover{
     padding:10px 0px;
 }
 #service .service-item img {
-    width:250px;
-    height:280px;
+    width:180px;
+    height:180px;
 }
 #service .service-item h4 {
     padding-top: 20px;
@@ -613,9 +613,9 @@ footer .footer-manu ul li a:hover {
 }
 
 
-/*鍒嗛〉鍖�*/
+/*閸掑棝銆夐崠锟�*/
 .papigation {
-    margin-top: 40px;
+    margin: 40px 0px;
    text-align: center;
 }
 
@@ -632,7 +632,7 @@ footer .footer-manu ul li a:hover {
     color:#4f445e;
 }
 
-/*璇︽儏椤甸潰*/
+/*鐠囷附鍎忔い鐢告桨*/
 .tipUl li:not(:last-child) {
     width: 150px;
     height: 30px;
@@ -893,7 +893,7 @@ p.more_details{
 }
 
 
-/*鐗逛环椤甸潰*/
+/*閻楅�涚幆妞ょ敻娼�*/
 .special {
     margin-top: 15px;
     width: 100%;
@@ -1045,7 +1045,7 @@ p.more_details{
     font-size: 16px;
     font-family: 'PT Sans', Helvetica, Arial, sans-serif;
     outline: none;
-    padding-left:20px ;/*蹇呴』璁剧疆锛屽惁鍒欐枃鏈湪鑳屾櫙鍥句笂鏂�*/
+    padding-left:20px ;/*韫囧懘銆忕拋鍓х枂閿涘苯鎯侀崚娆愭瀮閺堫剙婀懗灞炬珯閸ュ彞绗傞弬锟�*/
     border-radius:6px ;
     border: 1px solid rgba(0,0,0,.5);
     box-shadow: 0 1px 2px rgba(0,0,0,.1);
@@ -1288,7 +1288,7 @@ textarea {
     font-size: 16px;
     font-family: 'PT Sans', Helvetica, Arial, sans-serif;
     outline: none;
-    padding-left:10px ;/*蹇呴』璁剧疆锛屽惁鍒欐枃鏈湪鑳屾櫙鍥句笂鏂�*/
+    padding-left:10px ;/*韫囧懘銆忕拋鍓х枂閿涘苯鎯侀崚娆愭瀮閺堫剙婀懗灞炬珯閸ュ彞绗傞弬锟�*/
     border-radius:6px ;
     border: 1px solid rgba(0,0,0,.5);
     box-shadow: 0 1px 2px rgba(0,0,0,.1);
@@ -1379,7 +1379,20 @@ textarea {
 .tabbox .ctx li{display:none;list-style:none}
 .tabbox .ctx li:first-child{display:block;list-style:none}
 
+.overflow_text {
+	width: 120px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
 
+.delete_decoration {
+	text-decoration:line-through;
+	color: gray;
+	font-size: 14px;
+	margin-left:10px;
+	font-weight: normal;
+}
 
 
 

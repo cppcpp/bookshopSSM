@@ -1,94 +1,67 @@
-/**
- * ztchun
- */
-
 $(function(){
+	function getQueryString(name) {
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)","i")
+		var r = window.location.search.substr(1).match(reg)
+		 if (r != null) return unescape(r[2]); 
+        return null; 
+	}
+	let bookId = getQueryString('bId')
+	if(bookId) {
+		$.ajax({
+			url:'books/booksQry',
+			method:'get',
+			data:{
+				bId:bookId
+			},
+			success:function(data) {
+				console.log(data)
+				var html = '';
+				var html1 = ''
+				$.each(data.books,function(index,ndata){
+					$("#book_name").html(ndata['bName'])
+					html += "<p class=\"details\">"+ndata["bDescription"]+"</br>";
+					html += "购买信息：已有"+ndata['bSaleNum']+"人购买</p>";
+					html += "<div class=\"price\"><strong>价格:</strong> <span class=\"red\">"+(ndata['bDiscount']/100 *ndata['bPrice']).toFixed(2);
+					html += "<span class=\"delete_decoration\">原价："+ndata['bPrice']+"</span></div>";
+					html1 += "<a href=\"#\" ><img style=\"width:150px;height: 150px;\" src=\"img/book_images/"+ndata['bId']+".jpg\" /></a>";
+					html1 += "<br /><br /><img src=\"img/zoom.gif\" /></a>"
+					
+                   
+					$("#book_detail").html(html);
+					$(".prod_img").html(html1);
+				})
+			},
+			error: function() {
+				
+			}
+		})
+	}
+	
 	//图书详细信息  增加和减少图书
-    var inp = document.getElementById("num_text");
-    var b_id = document.getElementById("b_id_text");
-    //var add_cart = document.getElementById("add_cart");
-    //add_cart.onclick = alert("dfsd");
+    var inp = $("#num_text");
+    var b_id = $("#b_id_text");
+    
 	$(".desc").click(function() {
-		value = Number(inp.value);
+		value = Number(inp.val());
 		value -= 1;
 		if(value<1){
 			value = 1;
 		}
-		inp.value = value;
+		inp.val(value);
 	})
 	
 	$(".plus").click(function() {
-		value = Number(inp.value);
+		value = Number(inp.val());
 		value += 1;
 		if(value<1){
 			value = 1;
 		}
-		inp.value = value;
+		inp.val(value);
 	})
 	
 	//获取图书信息  准备存入数据库cart数据表中
-	$("#add_cart").click(function() {
-		//alert("加入购物车");
-		detailsRequest = createRequest();
-		var url = "detailsCart?num="+Number(inp.value)+"&b_id="+b_id.value;
-		detailsRequest.open("GET",url,true);
-		detailsRequest.onreadystatechange = detailHandler;
-		detailsRequest.send(null);
+	$("#add_cart").click(function(){
+		
 	})
-	
-	function detailHandler() {
-		if(detailsRequest.readyState==4){
-			if(detailsRequest.status==200){
-				//console.log("添加成功");
-//				alert("添加成功");
-				if(detailsRequest.responseText=="fail"){
-					alert("你还没有登录,将为你跳转到登录页面");
-					window.location = "login.jsp";
-				}else{
-					alert("添加成功");
-				}
-			}
-		}
-	}
-	
-	//立即购买
-	$("#now_order").click(function() {
-		//alert("立即购买");
-		form1.submit();
-		/*orderRequest = createRequest();
-		var url = "detailsOrder?num="+Number(inp.value)+"&b_id="+b_id.value;
-		orderRequest.open("GET",url,true);
-		orderRequest.onreadystatechange = orderDetailsHandler;
-		orderRequest.send(null);*/
-	})
-	
-	
-	/*function orderDetailsHandler() {
-		if(orderRequest.readyState==4){
-			if(orderRequest.status==200){
-				alert("下单成功");
-				window.location = "order.jsp";
-			}
-		}
-	}*/
-	
-	//ajax异步请求对象 
-    function createRequest(){
-    	try {
-    		var request = new XMLHttpRequest();
-    	} catch (tryMS) {
-    		try {
-    			request = new ActiveXObject("Msxml2.XMLHTTP");
-    		} catch (otherMS) {
-    			try {
-    				request = new ActiveXObject("Microsoft.XMLHTTP");
-    			} catch (failed) {
-    				request = null;
-    			}
-    		}
-    	}
-    	return request;
-    }
-	
 	
 })
