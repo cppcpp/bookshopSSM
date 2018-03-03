@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.junit.runner.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,6 +29,7 @@ import com.bookshop.modle.Books;
 import com.bookshop.modle.BooksExample;
 import com.bookshop.service.BooksService;
 import com.bookshop.util.StringUtil;
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 @Controller
@@ -46,9 +48,16 @@ public class BooksController {
 			@RequestParam(name="newset",required=false)String newset,
 			@RequestParam(name="price",required=false)String price,
 			@RequestParam(name="lowsetPrice",required=false)Float lowestPrice,
-			@RequestParam(name="highestPrice",required=false)Float highestPrice) {
+			@RequestParam(name="highestPrice",required=false)Float highestPrice,
+			@RequestParam(name="page",required=false)String page,
+			@RequestParam(name="limit",required=false)String limit) {
 		Map<String, Object> resultMap=new HashMap<>();
 		String category1,saleNum1,discount1,newset1,price1;
+		List<Map<String, String>> resultList=new ArrayList<>();
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		
+		int pageNum =  page == null ? 1 : Integer.parseInt(page);
+	    int pageSize =  limit == null ? 10 : Integer.parseInt(limit);
 		
 		category1=category==null?null:"%"+category+"%";
 		saleNum1=saleNum==null?null:saleNum.equals("desc")?"desc":saleNum.equals("asc")?"asc":null;
@@ -63,8 +72,32 @@ public class BooksController {
 			highestPrice=Float.MAX_VALUE;
 		}
 		
+		
+		//分页
+		PageHelper.startPage(pageNum, pageSize);
+		
 		List<Books> booksList= booksService.getBookByConditions(category1, saleNum1, discount1, newset1, price1, lowestPrice, highestPrice);
-		resultMap.put("books", booksList);
+		//将bookList 以List<Map<String,Stirng>>形式存储
+		for(Books books:booksList) {
+			Map<String, String> tempMap=new HashMap<>();
+			tempMap.put("bId", books.getbId());
+			tempMap.put("bName", books.getbName());
+			tempMap.put("bDescription", books.getbDescription());
+			tempMap.put("bPrice", books.getbPrice().toString());
+			tempMap.put("bDiscount", books.getbDiscount().toString());
+			tempMap.put("bAuthor", books.getbAuthor());
+			tempMap.put("bPress", books.getbPress());
+			tempMap.put("bPressTime", sdf.format(books.getbPressTime()));
+			tempMap.put("bAddTime", sdf.format(books.getbAddTime()));
+			tempMap.put("bService", books.getbService());
+			tempMap.put("bSaleNum", books.getbSaleNum().toString());
+			resultList.add(tempMap);
+		}
+		
+		//分页
+		PageInfo<Books> pageInfo=new PageInfo<>(booksList);
+		resultMap.put("pageInfo", pageInfo);
+		resultMap.put("books", resultList);
 		return resultMap;
 	}
 	
@@ -172,7 +205,6 @@ public class BooksController {
         int pageSize =  limit == null ? 10 : Integer.parseInt(limit);
         Map<String, String> booksExmMap = new HashMap<>();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        
         booksExmMap.put("bId", bId);
         booksExmMap.put("bName", bName);
         booksExmMap.put("bDescription", bDescription);
