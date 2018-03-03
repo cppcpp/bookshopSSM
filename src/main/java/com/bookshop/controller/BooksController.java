@@ -3,7 +3,6 @@ package com.bookshop.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,11 +12,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.junit.runner.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -144,11 +140,6 @@ public class BooksController {
         req.put("bService", request.getParameter("bService"));
         req.put("bSaleNum", request.getParameter("bSaleNum"));
         
-        Books books = booksService.createBooks(req);
-        if(books.getbAddTime()==null){
-            books.setbAddTime(new Date());
-        }
-        
         //上传图片
         if(!bookPic.isEmpty()) {
         	String path=request.getSession().getServletContext().getRealPath("/img/book_images/");
@@ -169,6 +160,12 @@ public class BooksController {
         	}
         }else {
         	mav.addObject("bookPicNotExit", "未选择图书图片");
+        }
+        
+        req.put("bPic", newFileName);
+        Books books = booksService.createBooks(req);
+        if(books.getbAddTime()==null){
+            books.setbAddTime(new Date());
         }
         
         if (booksService.insertSelective(books) == 1) {

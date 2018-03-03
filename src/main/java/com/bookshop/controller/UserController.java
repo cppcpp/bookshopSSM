@@ -99,8 +99,10 @@ public class UserController {
 			return resultMap;
 		}
 		
+		//对密码进行Md5加密
+		String md5Password=StringUtil.EncoderByMd5(uPassword);
 		
-		Users users=new Users(uAccount, uPassword, uPhone,uRole);
+		Users users=new Users(uAccount, md5Password, uPhone,uRole);
 		if(usersService.insert(users)!=1) {
 			resultMap.put("registerError", "服务器问题，注册失败");
 		}else {
@@ -149,7 +151,8 @@ public class UserController {
 		UsersExample example=new UsersExample();
 		Criteria criteria=example.createCriteria();
 		criteria.andUAccountEqualTo(userName);
-		criteria.andUPasswordEqualTo(password);
+		String md5Password=StringUtil.EncoderByMd5(password);
+		criteria.andUPasswordEqualTo(md5Password);
 		
 		int count=usersService.countByExample(example);
 		if(count!=1) {

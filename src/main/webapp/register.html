@@ -172,28 +172,32 @@
               //alert("注册成功"); */
               //piperChan
               responseText=data.target.responseText;
+              //console.log("responseText:"+responseText)
+              
+              //console.log("registterSuccess::"+JSON.parse(responseText).registerSuccess)
               //注册成功，重定向到登录页面
               if(JSON.parse(responseText).registerSuccess){
+            	  console.log("成功")
             	  window.location="login.html"
               }
               
               //注册失败情况
-              if(responseText.uAccountNull){
+              if(JSON.parse(responseText).uAccountNull){
             	  alert(responseText.uAccountNull)
               }
-              if(responseText.uPasswordNull){
+              if(JSON.parse(responseText).uPasswordNull){
             	alert(responseText.uPasswordNull)  
               }
-              if(responseText.uPhoneNull){
+              if(JSON.parse(responseText).uPhoneNull){
             	  alert(responseText.uPhoneNull)
               }
-              if(responseText.roleNull){
+              if(JSON.parse(responseText).roleNull){
             	  alert(responseText.roleNull)
               }
-              if(responseText.registerError){
+              if(JSON.parse(responseText).registerError){
             	  alert(responseText.registerError)
               }
-              if(responseText.recommendBookInsertError){
+              if(JSON.parse(responseText).recommendBookInsertError){
             	  alert(responseText.recommendBookInsertError)
               }
               

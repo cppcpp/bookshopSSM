@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bookshop.modle.BookImages;
 import com.bookshop.modle.Books;
 import com.bookshop.modle.Cart;
 import com.bookshop.modle.OrderDetail;

@@ -202,6 +202,76 @@ public class BooksExample {
             return (Criteria) this;
         }
 
+        public Criteria andBPicIsNull() {
+            addCriterion("b_pic is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBPicIsNotNull() {
+            addCriterion("b_pic is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBPicEqualTo(String value) {
+            addCriterion("b_pic =", value, "bPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andBPicNotEqualTo(String value) {
+            addCriterion("b_pic <>", value, "bPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andBPicGreaterThan(String value) {
+            addCriterion("b_pic >", value, "bPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andBPicGreaterThanOrEqualTo(String value) {
+            addCriterion("b_pic >=", value, "bPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andBPicLessThan(String value) {
+            addCriterion("b_pic <", value, "bPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andBPicLessThanOrEqualTo(String value) {
+            addCriterion("b_pic <=", value, "bPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andBPicLike(String value) {
+            addCriterion("b_pic like", value, "bPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andBPicNotLike(String value) {
+            addCriterion("b_pic not like", value, "bPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andBPicIn(List<String> values) {
+            addCriterion("b_pic in", values, "bPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andBPicNotIn(List<String> values) {
+            addCriterion("b_pic not in", values, "bPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andBPicBetween(String value1, String value2) {
+            addCriterion("b_pic between", value1, value2, "bPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andBPicNotBetween(String value1, String value2) {
+            addCriterion("b_pic not between", value1, value2, "bPic");
+            return (Criteria) this;
+        }
+
         public Criteria andBNameIsNull() {
             addCriterion("b_name is null");
             return (Criteria) this;
@@ -849,6 +919,66 @@ public class BooksExample {
 
         public Criteria andBSaleNumNotBetween(Integer value1, Integer value2) {
             addCriterion("b_sale_num not between", value1, value2, "bSaleNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andBStateIsNull() {
+            addCriterion("b_state is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBStateIsNotNull() {
+            addCriterion("b_state is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBStateEqualTo(Integer value) {
+            addCriterion("b_state =", value, "bState");
+            return (Criteria) this;
+        }
+
+        public Criteria andBStateNotEqualTo(Integer value) {
+            addCriterion("b_state <>", value, "bState");
+            return (Criteria) this;
+        }
+
+        public Criteria andBStateGreaterThan(Integer value) {
+            addCriterion("b_state >", value, "bState");
+            return (Criteria) this;
+        }
+
+        public Criteria andBStateGreaterThanOrEqualTo(Integer value) {
+            addCriterion("b_state >=", value, "bState");
+            return (Criteria) this;
+        }
+
+        public Criteria andBStateLessThan(Integer value) {
+            addCriterion("b_state <", value, "bState");
+            return (Criteria) this;
+        }
+
+        public Criteria andBStateLessThanOrEqualTo(Integer value) {
+            addCriterion("b_state <=", value, "bState");
+            return (Criteria) this;
+        }
+
+        public Criteria andBStateIn(List<Integer> values) {
+            addCriterion("b_state in", values, "bState");
+            return (Criteria) this;
+        }
+
+        public Criteria andBStateNotIn(List<Integer> values) {
+            addCriterion("b_state not in", values, "bState");
+            return (Criteria) this;
+        }
+
+        public Criteria andBStateBetween(Integer value1, Integer value2) {
+            addCriterion("b_state between", value1, value2, "bState");
+            return (Criteria) this;
+        }
+
+        public Criteria andBStateNotBetween(Integer value1, Integer value2) {
+            addCriterion("b_state not between", value1, value2, "bState");
             return (Criteria) this;
         }
     }

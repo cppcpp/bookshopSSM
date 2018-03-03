@@ -5,6 +5,8 @@ import java.util.Date;
 public class Books {
     private String bId;
 
+    private String bPic;
+
     private String bName;
 
     private String bDescription;
@@ -25,12 +27,22 @@ public class Books {
 
     private Integer bSaleNum;
 
+    private Integer bState;
+
     public String getbId() {
         return bId;
     }
 
     public void setbId(String bId) {
         this.bId = bId == null ? null : bId.trim();
+    }
+
+    public String getbPic() {
+        return bPic;
+    }
+
+    public void setbPic(String bPic) {
+        this.bPic = bPic == null ? null : bPic.trim();
     }
 
     public String getbName() {
@@ -113,12 +125,11 @@ public class Books {
         this.bSaleNum = bSaleNum;
     }
 
-	@Override
-	public String toString() {
-		return "Books [bId=" + bId + ", bName=" + bName + ", bDescription=" + bDescription + ", bPrice=" + bPrice
-				+ ", bDiscount=" + bDiscount + ", bAuthor=" + bAuthor + ", bPress=" + bPress + ", bPressTime="
-				+ bPressTime + ", bAddTime=" + bAddTime + ", bService=" + bService + ", bSaleNum=" + bSaleNum + "]";
-	}
-    
-    
+    public Integer getbState() {
+        return bState;
+    }
+
+    public void setbState(Integer bState) {
+        this.bState = bState;
+    }
 }

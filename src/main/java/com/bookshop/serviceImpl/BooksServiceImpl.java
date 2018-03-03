@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.bookshop.service.BooksService;
+import com.bookshop.util.StringUtil;
 import com.bookshop.modle.Books;
 import com.bookshop.modle.BooksExample;
 import com.bookshop.dao.BooksMapper;
@@ -62,6 +63,7 @@ public class BooksServiceImpl implements BooksService {
     @Override
     public Books createBooks(Map<String, String>req) {
         String bId = req.get("bId");
+        String bPic=req.get("bPic");
         String bName = req.get("bName");
         String bDescription = req.get("bDescription");
         String bPrice = req.get("bPrice");
@@ -76,6 +78,9 @@ public class BooksServiceImpl implements BooksService {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         if (StringUtils.isNotEmpty(bId)) {
             books.setbId(bId);
+        }
+        if(StringUtil.isNotEmpty(bPic)) {
+        	books.setbPic(bPic);
         }
         if (StringUtils.isNotEmpty(bName)) {
             books.setbName(bName);
@@ -120,6 +125,7 @@ public class BooksServiceImpl implements BooksService {
     @Override
     public BooksExample createBooksExm(Map<String, String>req){
         String bId = req.get("bId");
+        String bPic=req.get("bPic");
         String bName = req.get("bName");
         String bDescription = req.get("bDescription");
         String bPrice = req.get("bPrice");
@@ -137,6 +143,9 @@ public class BooksServiceImpl implements BooksService {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         if (StringUtils.isNotEmpty(bId)) {
             criteria.andBIdEqualTo(bId);
+        }
+        if(StringUtils.isNotEmpty(bPic)) {
+        	criteria.andBPicLike("%"+bPic+"%");
         }
         if (StringUtils.isNotEmpty(bName)) {
             criteria.andBNameLike("%"+bName+"%");
