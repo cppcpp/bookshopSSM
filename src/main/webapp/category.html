@@ -72,25 +72,25 @@
             <ul class="list">
               <a href="category.html?category=a" ><li><i class="glyphicon glyphicon-eye-open"></i>马列主义、毛泽东思想(A)</li></a>
               <a href="category.html?category=b" ><li><i class="glyphicon glyphicon-bookmark"></i>哲学(B)</li></a>
-              <a href="category.html?category=c" ><li><i class="glyphicon glyphicon-book"></i>社会科学(C)</li></a>
-              <a href="category.html?category=d"><li><i class="glyphicon glyphicon-text-width"></i>政治、法律(D)</li></a>
+              <a href="category.html?category=c" ><li><i class="glyphicon glyphicon-adjust"></i>社会科学(C)</li></a>
+              <a href="category.html?category=d"><li><i class="glyphicon glyphicon-book"></i>政治、法律(D)</li></a>
               <a href="category.html?category=e"><li><i class="glyphicon glyphicon-fire"></i>军事(E)</li></a>
-              <a href="category.html?category=f"><li><i class="glyphicon glyphicon-asterisk"></i>经济(F)</li></a>
-              <a href="category.html?category=g"><li><i class="glyphicon glyphicon-globe"></i>文化、科学、教育、体育(G)</li></a>
-              <a href="category.html?category=h"><li><i class="glyphicon glyphicon-leaf"></i>语言、文字(H)</li></a>
+              <a href="category.html?category=f"><li><i class="glyphicon glyphicon-usd"></i>经济(F)</li></a>
+              <a href="category.html?category=g"><li><i class="glyphicon glyphicon-education"></i>文化、科学、教育、体育(G)</li></a>
+              <a href="category.html?category=h"><li><i class="glyphicon glyphicon-text-width"></i>语言、文字(H)</li></a>
               <a href="category.html?category=i"><li><i class="glyphicon glyphicon-user"></i>文学(I)</li></a>
-              <a href="category.html?category=j"><li><i class="glyphicon glyphicon-pushpin"></i>艺术(J)</li></a>
-              <a href="category.html?category=k"><li><i class="glyphicon glyphicon-paperclip"></i>历史、地理(K)</li></a>
-              <a href="category.html?category=n"><li><i class="glyphicon glyphicon-usd"></i>自然科学总论(N)</li></a>
-              <a href="category.html?category=o"><li><i class="glyphicon glyphicon-map-marker"></i>数理科学和化学(O)</li></a>
+              <a href="category.html?category=j"><li><i class="glyphicon glyphicon-certificate"></i>艺术(J)</li></a>
+              <a href="category.html?category=k"><li><i class="glyphicon glyphicon-globe"></i>历史、地理(K)</li></a>
+              <a href="category.html?category=n"><li><i class="glyphicon glyphicon-indent-left"></i>自然科学总论(N)</li></a>
+              <a href="category.html?category=o"><li><i class="glyphicon glyphicon-wrench"></i>数理科学和化学(O)</li></a>
               <a href="category.html?category=p"><li><i class="glyphicon glyphicon-hand-right"></i>天文学、地球科学(P)</li></a>
-              <a href="category.html?category=q"><li><i class="glyphicon glyphicon-pushpin"></i>生物科学(Q)</li></a>
-              <a href="category.html?category=r"><li><i class="glyphicon glyphicon-paperclip"></i>医药、卫生(R)</li></a>
-              <a href="category.html?category=s"><li><i class="glyphicon glyphicon-usd"></i>农业科学(S)</li></a>
+              <a href="category.html?category=q"><li><i class="glyphicon glyphicon-tree-conifer"></i>生物科学(Q)</li></a>
+              <a href="category.html?category=r"><li><i class="glyphicon glyphicon-briefcase"></i>医药、卫生(R)</li></a>
+              <a href="category.html?category=s"><li><i class="glyphicon glyphicon-leaf"></i>农业科学(S)</li></a>
               <a href="category.html?category=t"><li><i class="glyphicon glyphicon-map-marker"></i>工业科学(T)</li></a>
-              <a href="category.html?category=u"><li><i class="glyphicon glyphicon-hand-right"></i>交通运输(U)</li></a>
-              <a href="category.html?category=v"><li><i class="glyphicon glyphicon-usd"></i>航空、航天(V)</li></a>
-              <a href="category.html?category=x"><li><i class="glyphicon glyphicon-map-marker"></i>环境科学(X)</li></a>
+              <a href="category.html?category=u"><li><i class="glyphicon glyphicon-road"></i>交通运输(U)</li></a>
+              <a href="category.html?category=v"><li><i class="glyphicon glyphicon-plane"></i>航空、航天(V)</li></a>
+              <a href="category.html?category=x"><li><i class="glyphicon glyphicon-tree-deciduous"></i>环境科学(X)</li></a>
               <a href="category.html?category=z"><li><i class="glyphicon glyphicon-hand-right"></i>综合性图书(Z)</li></a>
          </ul>
           </div>
@@ -102,26 +102,40 @@
             <div class="sort">
               <ul>
                 <!-- 后期加上默认显示所有书籍   --》 booksListServlet -->
-                <li><a>默认</a><span class="split">|</span></li>
-                <li><a id="b_sale_num">销量<span class="fa  fa-arrow-down"></span></a><span class="split">|</span></li>
-                <li><a id="b_discount">折扣<span class="fa  fa-arrow-down"></span></a><span class="split">|</span></li>
-                <li><a id="b_add_time">最新<span class="fa  fa-arrow-down"></span></a><span class="split">|</span></li>
-                <li><a id="b_price"><span id="b_price_text">价格</span>
-                  <i id="angle_up" class="fa fa-arrow-up"></i>
-                  <i id="angle_down" class="fa fa-arrow-down"></i>
+                <li><a id="defaut">默认</a><span class="split">|</span></li>
+                <li><a id="b_sale_num"><span id="b_sale_text">销量</span>
+                  <i id="b_sale_num_asc" class="fa fa-arrow-up"></i>
+                  <i id="b_sale_num_desc" class="fa fa-arrow-down"></i>
                 </a>
                   <span class="split">|</span>
                 </li>
-                <li>价格区间：<input id="input_left" type="text" class="input1">-<input id="input_right" type="text" class="input1"></li>
-              </ul>
-              <ul class="tipUl">
-                <li id="b_sale_num_show">点击后销量由高到低</li>
-                <li id="b_discount_show">点击后折扣由高到低</li>
-                <li id="b_add_time_show">点击后按照最近由近到远</li>
-                <li id="b_price_show"></li>
-                <li>
-                  <input id="input_button_submit" type="button" value="确定">
-                  <input id="input_button_reset" type="reset" value="取消" ></li>
+                <li><a id="b_discount"><span id="b_sale_text">折扣</span>
+                   <i id="b_discount_asc" class="fa fa-arrow-up"></i>
+                  <i id="b_discount_desc" class="fa fa-arrow-down"></i>
+                </a>
+                  <span class="split">|</span>
+                </li>
+                <li><a id="b_add_time"><span id="b_sale_text">最新</span>
+                  <i id="b_add_time_asc" class="fa fa-arrow-up"></i>
+                  <i id="b_add_time_desc" class="fa fa-arrow-down"></i>
+                </a>
+                  <span class="split">|</span>
+                </li>
+                
+                <li><a id="b_price"><span id="b_price_text">价格</span>
+                  <i id="b_price_asc" class="fa fa-arrow-up"></i>
+                  <i id="b_price_desc" class="fa fa-arrow-down"></i>
+                </a>
+                  <span class="split">|</span>
+                </li>
+                <li><a><span>价格区间：</span>
+                <input id="input_left" type="text" class="input1">-
+                <input id="input_right" type="text" class="input1">
+               </a> </li>
+				<li>
+				 <input id="input_submit" type="button" value="确定">
+				 <input id="input_reset" type="reset" value="取消" >
+				</li>            
               </ul>
             </div>
         </div>
@@ -130,11 +144,11 @@
         </div>
 
         <div class="row papigation">
-          <span class="papigation-button" onclick="getLists(1,10)">首页</span>
-          <span class="papigation-button" onclick="getLists("prev",10)">上一页</span>
-          <span class="papigation-button" onclick="getLists("next",10)">下一页</span>
-          <span class="papigation-button" onclick="getLists('end',10)">尾页</span>
-          <span>第1页／共8页</span>
+          <span class="papigation-button" onclick="toPage('index')">首页</span>
+          <span class="papigation-button" onclick="toPage('prev')">上一页</span>
+          <span class="papigation-button" onclick="toPage('next')">下一页</span>
+          <span class="papigation-button" onclick="toPage('end')">尾页</span>
+          <span class="papigationPage">第1页／共8页</span>
           <span>设置每页&nbsp;<input type="text" id="pageSize" style="width: 30px;">&nbsp;条</span>
         </div>
 
@@ -171,6 +185,8 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/index.js"></script>
 <script type="text/javascript">
+	var totalPage,currpage,limit,category
+	var discount,saleNum,newset,price,lowsetPrice,highestPrice
 	$(function(){
 		function getQueryString(name) {
 			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)","i")
@@ -178,223 +194,188 @@
 			 if (r != null) return unescape(r[2]); 
 	        return null; 
 		}
-		let category = getQueryString('category') || 'a'
-		getLists(1,10)
-		function getLists(page,limit){
-			if(!page) {
-				page = 1
-			}
-			if(!limit) {
-				limit = 10
-			}
-			$.ajax({
-		    	  url:"books/initBooks",
-		    	  method:"post",
-		    	  data:{
-		    		  "category":category, 
-		    		  "page":page,
-		    		  "limit": limit
-		    	  },
-		    	  success:function(data){
-		    		  console.log(data)
-		    		  let owlhtml;
-		    		  $.each(data.books,function(index,ndata){
-							owlhtml += "<div class=\"new_prod_box col-md-4 col-sm-6\" style=\"border:1px\">"
-							owlhtml += "<div class=\"new_prod_bg\">"
-							owlhtml += " <a href=\"detail.html?bId="+ndata['bId']+"\"><img src=\"img/book_images/"+ndata['bId']+".jpg\" class=\"thumb\"></a>"
-							owlhtml += "<span class=\"price\">￥"+(ndata['bDiscount']/100 *ndata['bPrice']).toFixed(2)+"</span></br>"
-							owlhtml += "<span class=\"discount\">原价:"+ndata['bPrice'] +"</span>"
-							owlhtml += " <a class=\"overflow_text\" href=\"detail.html?bId="+ndata['bId']+"\">"+ndata['bName']+"</a>"
-							owlhtml += "</div></div>"
-								$(".new_products").html(owlhtml);
-						})
-		    	  },
-		    	  error:function(){
-		    		  
-		    	  }
-		      })
-		}
-		
+		category = getQueryString('category') || 'a'
+		getLists()
+
 	})
 	
+	function getLists(page,limit){
+		if(!page) {
+			page = 1
+		}
+		if(!limit) {
+			limit = 10
+		}
+		$.ajax({
+	    	  url:"books/initBooks",
+	    	  method:"post",
+	    	  data:{
+	    		  "category":category, 
+	    		  "page": page,
+	    		  "limit": limit,
+	    		  "discount":discount,
+	    		  "newset":newset,
+	    		  "saleNum":saleNum,
+	    		  "price":price,
+	    		  "lowsetPrice":lowsetPrice,
+	    		  "highestPrice":highestPrice
+	    	  },
+	    	  success:function(data){
+	    		  console.log(data.pageInfo)
+	    		  totalPage = data.pageInfo.pages
+	    		  limit = data.pageInfo.pageSize
+	    		  currpage = data.pageInfo.pageNum
+	    		  $(".papigationPage").html("第"+currpage+"页/共"+totalPage+"页")
+	    		  let owlhtml='';
+	    		  $.each(data.books,function(index,ndata){
+						owlhtml += "<div class=\"new_prod_box col-md-4 col-sm-6\" style=\"border:1px\">"
+						owlhtml += "<div class=\"new_prod_bg\">"
+						owlhtml += " <a href=\"detail.html?bId="+ndata['bId']+"\"><img src=\"img/book_images/"+ndata['bId']+".jpg\" class=\"thumb\"></a>"
+						owlhtml += "<span class=\"price\">￥"+(ndata['bDiscount']/100 *ndata['bPrice']).toFixed(2)+"</span></br>"
+						owlhtml += "<span class=\"discount\">原价:"+ndata['bPrice'] +"</span>"
+						owlhtml += " <a class=\"overflow_text\" href=\"detail.html?bId="+ndata['bId']+"\">"+ndata['bName']+"</a>"
+						owlhtml += "</div></div>"
+						$(".new_products").html(owlhtml);
+					})
+	    	  },
+	    	  error:function(){}
+	      })
+	}
 	
+	function toPage(str) {
+			console.log(str)
+			if(str == "index"){
+				getLists(1,limit)
+			}
+			if(str == "end") {
+				getLists(totalPage,limit)
+			}
+			if(str == "prev"){
+				if(currpage>1) {
+					getLists(currpage-1,limit)
+				}else {
+					alert("已经是第一页")
+					getLists(1,limit)
+				}
+				
+			}
+			if(str == "next") {
+				if(currpage < totalPage) {
+					getLists(currpage+1,limit)
+				}else {
+					alert("已经是最后一页")
+					getLists(totalPage,limit)
+				}
+			}
+		}
+	
+	//是否为正整数  
+  	function isPositiveNum(s){
+    var re = /^[0-9]*[1-9][0-9]*$/ ;  
+    return re.test(s)  
+	} 
+	//是否正数
+  	function validate(num)
+  	{
+  	  var reg = /^\d+(?=\.{0,1}\d+$|$)/
+  	  if(reg.test(num)){return true};
+  	  return false ;  
+  	}
 
-  
+  	$("#pageSize").blur(function(){
+  		var size = $("#pageSize").val()
+  		if(isPositiveNum(size)) {
+  			limit = Number(size)
+  	  		getLists(1,limit)
+  		}else {
+  			alert("请输入大于0的整数值")
+  		}
+  	})
+  	
+  	$("#defaut").click(function(){
+  		clearInfo()
+  		getLists(1,limit)
+  	})
+  	
+  	$("#b_sale_num_asc").click(function(){
+  		clearInfo()
+  		saleNum = 'asc'
+  		getLists(1,limit)
+  	})
+  	
+  	$("#b_sale_num_desc").click(function(){
+  		clearInfo()
+  		saleNum = 'desc'
+  		getLists(1,limit)
+  	})
+  	
+  	$("#b_discount_asc").click(function(){
+  		clearInfo()
+		discount = 'asc'
+	  	getLists(1,limit)
+  	})
+  	
+  	$("#b_discount_desc").click(function(){
+  		clearInfo()
+		discount = 'desc'
+	  	getLists(1,limit)
+  	})
+  	
+  	
+	$("#b_add_time_asc").click(function(){
+		clearInfo()
+		newset = 'asc'
+	  	getLists(1,limit)
+  	})
+  	
+  	$("#b_add_time_asc").click(function(){
+  		clearInfo()
+		newset = 'desc'
+	  	getLists(1,limit)
+  	})	
+  	
+  	$("#b_price_asc").click(function(){
+  		clearInfo()
+  		price = 'asc'
+	  	getLists(1,limit)
+  	})
+  	
+  	$("#b_price_asc").click(function(){
+  		clearInfo()
+  		price = 'desc'
+	  	getLists(1,limit)
+  	})	
+  	
+  	$("#input_submit").click(function(){
+  		clearInfo()
+  		lowsetPrice  = $("#input_left").val()
+  		highestPrice = $("#input_right").val()
+  		console.log(validate(lowsetPrice),validate(highestPrice))
+  		if(validate(lowsetPrice) && validate(highestPrice)) {
+  			getLists(1,limit)
+  		}else{
+  			if(!validate(lowsetPrice) || !validate(highestPrice)) {
+  				alert("请输入大于等于0 的正数")
+  			}else {
+  				alert("请输入价格区间")
+  			}
+  			
+  		}
+  	})
 
-
-  //--------------------------------------------------排序------------------------------------------------
-  var b_sale_num_show=document.getElementById("b_sale_num_show");
-  var b_discount_show=document.getElementById("b_discount_show");
-  var b_add_time_show=document.getElementById("b_add_time_show");
-  var b_price_show=document.getElementById("b_price_show");
-  var b_price_text = document.getElementById("b_price_text")
-
-
-  $("#b_sale_num").hover(function(){
-      b_sale_num_show.style.display="block";
-      this.style.color = "#ff9933"
-    },
-    function(){
-      b_sale_num_show.style.display="none";
-      this.style.color = "#fff"
-    });
-
-  //根据已卖数量排序
-  $("#b_sale_num").click(function(){
-    storage.setItem("sortCat","b_sale_num");
-    storage.setItem("whichSort","desc");
-    sort("b_sale_num","desc");
-  })
-
-  $("#b_discount").hover(function(){
-    b_discount_show.style.display="block";
-    this.style.color = "#ff9933"
-  },function(){
-    b_discount_show.style.display="none";
-    this.style.color = "#fff"
-  })
-
-  //按照折扣查询
-  $("#b_discount").click(function(){
-    //var storage=window.localStorage;
-    storage.setItem("sortCat","b_discount");
-    storage.setItem("whichSort","asc");
-    sort("b_discount","asc");
-  })
-
-  $("#b_add_time").hover(function(){
-    b_add_time_show.style.display="block";
-    this.style.color= "#ff9933"
-  },function(){
-    b_add_time_show.style.display="none";
-    this.style.color = "#fff"
-  })
-
-  //按照添加时间时间查找
-  $("#b_add_time").click(function(){
-    storage.setItem("sortCat","b_add_time");
-    storage.setItem("whichSort","desc");
-    sort("b_add_time","desc");
-  })
-
-  var angle_up=document.getElementById("angle_up");
-  var angle_down=document.getElementById("angle_down");
-  var storage=window.localStorage;
-  if(storage.getItem("flag")==undefined){
-    storage.setItem("flag","asc");
-  }
-  var flag=storage.getItem("flag");
-  $("#angle_up").hover(function () {
-    b_price_show.style.display="block";
-    b_price_show.innerHTML="按照价格升序";
-    angle_up.style.color="#ff9933";
-    b_price_text.style.color = "#ff9933"
-    storage.setItem("flag","asc");
-    return;
-  },function(){
-    angle_up.style.color="#fff";
-    b_price_text.style.color = "#fff"
-    b_price_show.style.display="none";
-  })
-
-  $("#angle_down").hover(function () {
-    b_price_show.style.display="block";
-    b_price_show.innerHTML="按照价格降序";
-    angle_down.style.color="#ff9933";
-    b_price_text.style.color = "#ff9933"
-    storage.setItem("flag","desc");
-    return;
-  },function(){
-    angle_down.style.color="#fff";
-    b_price_text.style.color = "#fff"
-    b_price_show.style.display="none";
-  })
-
-  //按照价格排序
-  $("#b_price").click(function(){
-    var flag=storage.getItem("flag");
-    if(flag=="asc"){
-      storage.setItem("sortCat","b_price");
-      storage.setItem("whichSort","asc");
-      sort("b_price","asc");
-    }
-    if(flag=="desc"){
-      storage.setItem("sortCat","b_price");
-      storage.setItem("whichSort","desc");
-      sort("b_price","desc");
-    }
-  })
-
-
-  //background-color:#de6a5d;color:#ffffff"
-  //按照输入的价格区间查询
-  var submit=document.getElementById("input_button_submit");
-  var reset=document.getElementById("input_button_reset");
-
-  $("#input_button_submit").hover(function(){
-    submit.style.backgroundColor="#d8160f";
-  },function(){
-    submit.style.backgroundColor="#ff9933";
-  })
-  $("#input_button_reset").hover(function(){
-    reset.style.backgroundColor="#5a5856";
-    reset.style.color = "#fff"
-  },function(){
-    reset.style.backgroundColor="#797491";
-    reset.style.color = "#fff"
-  })
-
-  $("#input_left").click(function(){
-    submit.style.display="block";
-    reset.style.display="block";
-  })
-  $("#input_right").click(function(){
-    submit.style.display="block";
-    reset.style.display="block";
-  })
-
-  $("#input_button_submit").click(function(){
-    var left_value=$("#input_left").val();
-    var right_value=$("#input_right").val();
-    //console.log("left:"+left_value+"right:"+right_value);
-    if((left_value==""||left_value=="undefined")&&(right_value==""||right_value=="undefined")){
-      return;
-    }
-    storage.setItem("minPrice",left_value);
-    storage.setItem("maxPrice",right_value);
-    sortBetweenPrice("b_price","desc",left_value,right_value);
-
-  })
-  function sort(sortCat,whichSort){
-    var storage=window.localStorage;
-    var cat=storage.getItem("category");
-    //alert("cat:"+cat+"sortCat:"+sortCat+"whichSort:"+whichSort);
-    $.ajax({
-      url:'sort',
-      data:{"cat":cat,"sortCat":sortCat,"whichSort":whichSort},
-      success:function(){
-        location.href="jsp/category1.jsp";
-      },
-      error:function(){
-
-      }
-    });
-  }
-
-  function sortBetweenPrice(sortCat,whichSort,minPrice,maxPrice){
-    var storage=window.localStorage;
-    var cat=storage.getItem("category");
-
-    $.ajax({
-      url:'sort',
-      data:{"cat":cat,"sortCat":sortCat,"whichSort":whichSort,"minPrice":minPrice,"maxPrice":maxPrice},
-      success:function(){
-        location.href="jsp/category1.jsp";
-      },
-      error:function(){
-
-      }
-    })
-  }
+  	$("#input_reset").click(function(){
+  		$("#input_left").val("")
+  		$("#input_right").val("")
+  	})
+  	
+  	function clearInfo() {
+  		 discount = '';
+  		 saleNum = '';
+  		 newset = '';
+  		 price = '';
+  		 lowsetPrice = '';
+  		 highestPrice = ''
+  	}
+  	
 </script>
 </html>
