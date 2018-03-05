@@ -78,6 +78,7 @@ public class BooksController {
 			Map<String, String> tempMap=new HashMap<>();
 			tempMap.put("bId", books.getbId());
 			tempMap.put("bName", books.getbName());
+			tempMap.put("bPic", books.getbPic());
 			tempMap.put("bDescription", books.getbDescription());
 			tempMap.put("bPrice", books.getbPrice().toString());
 			tempMap.put("bDiscount", books.getbDiscount().toString());

@@ -132,4 +132,13 @@ public class Books {
     public void setbState(Integer bState) {
         this.bState = bState;
     }
+
+	@Override
+	public String toString() {
+		return "Books [bId=" + bId + ", bPic=" + bPic + ", bName=" + bName + ", bPrice=" + bPrice + ", bDiscount=" + bDiscount + ", bAuthor=" + bAuthor + ", bPress=" + bPress
+				+ ", bPressTime=" + bPressTime + ", bAddTime=" + bAddTime + ", bSaleNum="
+				+ bSaleNum+ "]";
+	}
+    
+    
 }

@@ -98,5 +98,8 @@
 		<param-name>log4jRefreshInterval</param-name>
 		<param-value>6000</param-value>
 	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
 </web-app>
 
