@@ -159,7 +159,7 @@ nav .nav-cart img {
     padding: 100px 0 100px 0;
     position: relative;
 }
-/*閬僵*/
+/*闁喚鍍�*/
 #slider:before {
     content: "";
     position: absolute;
@@ -269,7 +269,7 @@ p#back-to-top a{
     text-decoration:none;
     color:#d1d1d1;
     display:block;
-    /*浣跨敤CSS3涓殑transition灞炴�х粰璺宠浆閾炬帴涓殑鏂囧瓧娣诲姞娓愬彉鏁堟灉*/
+    /*娴ｈ法鏁SS3娑擃厾娈憈ransition鐏炵偞锟窖呯舶鐠哄疇娴嗛柧鐐复娑擃厾娈戦弬鍥х摟濞ｈ濮炲〒鎰綁閺佸牊鐏�*/
     -moz-transition:all 1s;
     -webkit-transition:all 1s;
     -o-transition:all 1s;
@@ -312,8 +312,8 @@ p#back-to-top a:hover{
     padding:10px 0px;
 }
 #service .service-item img {
-    width:250px;
-    height:280px;
+    width:180px;
+    height:180px;
 }
 #service .service-item h4 {
     padding-top: 20px;
@@ -400,7 +400,7 @@ p#back-to-top a:hover{
 #testimonial .testimonial-carousel .user img {
     padding-bottom: 0px;
     width: 150px;
-    height: 180px;
+    height: 150px;
 }
 #testimonial .testimonial-carousel .user p {
     padding-bottom: 0px;
@@ -520,7 +520,6 @@ footer .footer-manu ul li a:hover {
 .sort ul{
     list-style:none;
     text-align:center;
-    width: 100%;
     height: 48px;
     line-height: 48px;
 }
@@ -528,19 +527,15 @@ footer .footer-manu ul li a:hover {
     float:left;
 }
 
-.sort ul li:last-child{
-    margin-left: 20px;
-}
-
 .sort ul li .fa {
-    margin-left: 10px;
+    margin-left: 5px;
 }
 
 .sort ul li a{
     float:left;
     display:block;
     height:48px;
-    margin-left:23px;
+    margin-left:13px;
     line-height:48px;
     text-decoration:none;
     color:#fff;
@@ -553,20 +548,40 @@ footer .footer-manu ul li a:hover {
 .split{
     float:left;
     color:#CDC9C9;
-    margin-left:13px;
+    margin-left:8px;
 }
 
 .input1{
     width:65px;
     height:25px;
     border:1px solid #918ac2;
+    padding-left:5px;
+    color:#000;
 }
 
-.input2{
-    width:65px;
-    height:25px;
-    border-color: #918ac2;
+#input_submit {
+    width: 47px;
+    height: 20px;
+    border-radius: 12px;
+    background-color: #ff9933;
+    color: #ffffff;
+    line-height: 20px;
+    outline:none;
+    border:none;
+    margin-left: 10px;
 }
+
+#input_reset {
+    width: 47px;
+    height: 20px;
+    border-radius: 12px;
+    color: #fff;
+    line-height: 20px;
+    background-color: #9c95ba;
+    outline:none;
+    border:none
+}
+
 
 .new_products{
     clear:both;
@@ -613,9 +628,9 @@ footer .footer-manu ul li a:hover {
 }
 
 
-/*鍒嗛〉鍖�*/
+/*閸掑棝銆夐崠锟�*/
 .papigation {
-    margin-top: 40px;
+    margin: 40px 0px;
    text-align: center;
 }
 
@@ -632,43 +647,8 @@ footer .footer-manu ul li a:hover {
     color:#4f445e;
 }
 
-/*璇︽儏椤甸潰*/
-.tipUl li:not(:last-child) {
-    width: 150px;
-    height: 30px;
-    line-height: 30px;
-    background-color: #CDC9C9;
-    position: absolute;
-    display:none
-}
 
-.tipUl li:last-child {
-    position: absolute;
-    left: 700px;
-    top: 35px;
-    z-index: 999;
-}
 
-#b_sale_num_show {
-    left: 50px;
-    top: 50px;
-
-}
-
-#b_discount_show {
-    left: 150px;
-    top: 50px;
-}
-
-#b_add_time_show {
-   left: 250px;
-   top: 50px;
-}
-
-#b_price_show {
-    left: 350px;
-    top: 50px;
-}
 
 #b_price_select_area {
     position: absolute;
@@ -677,26 +657,7 @@ footer .footer-manu ul li a:hover {
     z-index: 999;
 }
 
-#input_button_submit {
-    width: 47px;
-    height: 27px;
-    line-height: 27px;
-    border-radius: 12px;
-    background-color: #ff9933;
-    color: #ffffff;
-    display: none;
-    border: 1px solid #ff9933;
-}
 
-#input_button_reset {
-    width: 47px;
-    height: 27px;
-    line-height: 27px;
-    border-radius: 12px;
-    color: #fff;
-    background-color: #9c95ba;
-    display: none;
-}
 
 
 .datail-title {
@@ -893,7 +854,7 @@ p.more_details{
 }
 
 
-/*鐗逛环椤甸潰*/
+/*閻楅�涚幆妞ょ敻娼�*/
 .special {
     margin-top: 15px;
     width: 100%;
@@ -1045,7 +1006,7 @@ p.more_details{
     font-size: 16px;
     font-family: 'PT Sans', Helvetica, Arial, sans-serif;
     outline: none;
-    padding-left:20px ;/*蹇呴』璁剧疆锛屽惁鍒欐枃鏈湪鑳屾櫙鍥句笂鏂�*/
+    padding-left:20px ;/*韫囧懘銆忕拋鍓х枂閿涘苯鎯侀崚娆愭瀮閺堫剙婀懗灞炬珯閸ュ彞绗傞弬锟�*/
     border-radius:6px ;
     border: 1px solid rgba(0,0,0,.5);
     box-shadow: 0 1px 2px rgba(0,0,0,.1);
@@ -1288,7 +1249,7 @@ textarea {
     font-size: 16px;
     font-family: 'PT Sans', Helvetica, Arial, sans-serif;
     outline: none;
-    padding-left:10px ;/*蹇呴』璁剧疆锛屽惁鍒欐枃鏈湪鑳屾櫙鍥句笂鏂�*/
+    padding-left:10px ;/*韫囧懘銆忕拋鍓х枂閿涘苯鎯侀崚娆愭瀮閺堫剙婀懗灞炬珯閸ュ彞绗傞弬锟�*/
     border-radius:6px ;
     border: 1px solid rgba(0,0,0,.5);
     box-shadow: 0 1px 2px rgba(0,0,0,.1);
@@ -1379,7 +1340,20 @@ textarea {
 .tabbox .ctx li{display:none;list-style:none}
 .tabbox .ctx li:first-child{display:block;list-style:none}
 
+.overflow_text {
+	width: 120px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
 
+.delete_decoration {
+	text-decoration:line-through;
+	color: gray;
+	font-size: 14px;
+	margin-left:10px;
+	font-weight: normal;
+}
 
 
 
