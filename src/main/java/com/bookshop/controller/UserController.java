@@ -214,6 +214,11 @@ public class UserController {
 	@ResponseBody
     public String updateUsers(@RequestBody Map<String, String>req){
         String id = req.get("uAccount");
+        String password=req.get("uPassword");
+        if(StringUtil.isNotEmpty(password)) {
+        	String md5Password=StringUtil.EncoderByMd5(password);
+        	req.put("uPassword", md5Password);
+        }
         try {
             if(StringUtils.isEmpty(id)){
                 return "uAccountNull";
@@ -261,4 +266,26 @@ public class UserController {
         	return "error";
         }
     }
+	
+	@RequestMapping("/logOut")
+	@ResponseBody
+	public String logOut() {
+		Users users=(Users) session.getAttribute("users");
+		
+		if(users!=null) {
+			session.setAttribute("users", null);
+			return "logOutSuccess";
+		}
+		return "error";
+	}
+	
+	@RequestMapping("/loginUAccount")
+	@ResponseBody
+	public String logingUAccount() {
+		Users users=(Users) session.getAttribute("users");
+		if(users!=null) {
+			return users.getuAccount();
+		}
+		return "empty";
+	}
 }

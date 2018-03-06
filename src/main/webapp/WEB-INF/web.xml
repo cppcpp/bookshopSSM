@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	id="WebApp_ID" version="3.0">
 	<welcome-file-list>
-	    <welcome-file>/login.html</welcome-file>
+	    <welcome-file>/index.html</welcome-file>
 	</welcome-file-list>
 	
 	<!-- default：tomcat服务器处理静态资源的默认servlet -->
@@ -46,29 +46,15 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	
-	<!-- SpringSecurity
-	将工作委托给javax.servlet.Filter的一个实现类,这个实现类将注入spring容器
-	拦截发往应用的请求，将请求委托给ID为springSecurityFilterChain的Bean
-	此Bean已经注册到spring上下文中-->
-	<!-- <filter>
-		<filter-name>springSecurityFilterChain</filter-name>
-		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	<!-- 自定义权限过滤器 -->
+	<filter>
+		<filter-name>SecurityFilter</filter-name>
+		<filter-class>com.bookshop.util.SecurityFilter</filter-class>
 	</filter>
 	<filter-mapping>
-		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-name>SecurityFilter</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping> -->
-
-	<!-- 自定义的权限过滤器  -->
-	<!-- <filter>
-		<filter-name>securityFilter</filter-name>
-		<filter-class>com.njxz.exam.intercept.SecurityFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>securityFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping> -->
-		
+	</filter-mapping>
 	
 	<!-- 字符集过滤器 -->
 	<filter>

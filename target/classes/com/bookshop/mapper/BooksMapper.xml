@@ -356,29 +356,29 @@
   	<if test="lowestPrice!=null and highestPrice!=null">
   		and b.b_price BETWEEN  #{lowestPrice} and #{highestPrice}
   	</if>
-  		order by b.b_press_time desc
-  	<if test="saleNum=='desc'">
+  		order by b.b_state desc
+  	<if test='saleNum=="desc"'>
   		,b.b_sale_num desc
   	</if>
-  	<if test="saleNum=='asc'">
+  	<if test='saleNum=="asc"'>
   		,b.b_sale_num asc
   	</if>
-  	<if test="discount=='desc'">
+  	<if test='discount=="desc"'>
   		,b.b_discount desc
   	</if>
-  	<if test="discount=='asc'">
+  	<if test='discount=="asc"'>
   		,b.b_discount asc
   	</if>
-  	<if test="newest=='desc'">
+  	<if test='newest=="desc"'>
   		,b.b_add_time desc
   	</if>
-  	<if test="newest=='asc'">
+  	<if test='newest=="asc"'>
   		,b.b_add_time asc
   	</if>
-  	<if test="price=='desc'">
+  	<if test='price=="desc"'>
   		,b.b_price desc
   	</if>
-  	<if test="price=='asc'">
+  	<if test='price=="asc"'>
   		,b.b_price asc
   	</if>
   </select>
