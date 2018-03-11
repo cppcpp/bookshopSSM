@@ -5,13 +5,14 @@ $(function(){
 		 if (r != null) return unescape(r[2]); 
         return null; 
 	}
-	let bookId = getQueryString('bId')
+	var bookId = getQueryString('bId')
+	var bName,bNums,bPrice,bDiscountprice,bSumprice,bSumdiscountprice
 	if(bookId) {
 		$.ajax({
 			url:'books/booksQry',
 			method:'get',
 			data:{
-				bId:bookId
+				"bId":bookId
 			},
 			success:function(data) {
 				console.log(data)
@@ -19,6 +20,9 @@ $(function(){
 				var html1 = ''
 				$.each(data.books,function(index,ndata){
 					$("#book_name").html(ndata['bName'])
+					bName = ndata['bName']
+					bPrice = ndata['bPrice']
+					bDiscountprice = (ndata['bDiscount']/100 *ndata['bPrice']).toFixed(2)
 					html += "<p class=\"details\">"+ndata["bDescription"]+"</br>";
 					html += "购买信息：已有"+ndata['bSaleNum']+"人购买</p>";
 					html += "<div class=\"price\"><strong>价格:</strong> <span class=\"red\">"+(ndata['bDiscount']/100 *ndata['bPrice']).toFixed(2);
@@ -60,8 +64,31 @@ $(function(){
 	})
 	
 	//获取图书信息  准备存入数据库cart数据表中
-	$("#add_cart").click(function(){
-		
+	$("#add_cart").click(function(){ 
+		bNums = $("#num_text").val()
+		bSumprice = bNums * bPrice
+		bSumdiscountprice = bNums * bDiscountprice
+		var obj = JSON.stringify({
+				"bId":bookId,
+				"bName":bName,
+				"bNums":bNums,
+				"bPrice":bPrice,
+				"bDiscountprice":bDiscountprice,
+				"bSumprice":bSumprice,
+				"bSumdiscountprice":bSumdiscountprice
+			})
+		$.ajax({
+			url:'cart/addCart',
+			type:'post',
+			data:obj,
+			contentType: "application/json; charset=utf-8",
+			success:function(data){
+				console.log(data)
+			},
+			error:function(){
+				
+			}
+		})
 	})
 	
 })

@@ -47,6 +47,7 @@
             <li><a href="special.html">特价</a></li>
             <li><a href="mineInfo.html">我的</a></li>
             <li><a href="about.html">关于我们</a></li>
+            <li><a href="contact.html">联系我们</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
@@ -165,11 +166,12 @@
       <div class="col-md-12">
         <div class="footer-manu">
           <ul>
-            <li><a href="#">首页</a></li>
-            <li><a href="#">书城</a></li>
-            <li><a href="#">特价</a></li>
-            <li><a href="#">我的</a></li>
-            <li><a href="#">联系我们</a></li>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="category.html">书城</a></li>
+            <li><a href="special.html">特价</a></li>
+            <li><a href="mine.html">我的</a></li>
+            <li><a href="about.html">关于我们</a></li>
+            <li><a href="contact.html">联系我们</a></li>
           </ul>
         </div>
         <p>Copyright &copy; Design & SHY</p>
@@ -210,14 +212,15 @@
     		  var newsethtml = ""
     			  if(data.recommendFourBooks) {
       				$.each(data.recommendFourBooks,function(index,ndata){
-      					newsethtml += "<li> "
+      					newsethtml += "<li><a href=\"detail.html?bId="+ndata['bId']+"\">"
       					newsethtml += "<div class=\"block\">";
       					newsethtml += " <h4 class=\"counter\">"+ndata['bName']+"</h4>"
-      					newsethtml += " <span><img src=\"img/book_images/"+ndata['bId']+".jpg\" alt=\"Pepole\"></span>"
-      					newsethtml += "</div></li>"
+      					newsethtml += " <span> <img src=\"img/book_images/"+ndata['bPic']+"\" alt=\"Pepole\"></span>"
+      					newsethtml += "</div></a></li>"
       				})
       				$(".counter-box").append(newsethtml);
       		  }else{
+      			  console.log('暂无推荐')
       			$(".counter-box").append('暂无推荐');
       		  }
     		  
@@ -226,18 +229,18 @@
     		  if(data.bestSaleFourBooks || data.discountFourBooks) {
     			  $.each(data.bestSaleFourBooks,function(index,ndata){
     				tab1 += "<div class=\"col-sm-6 col-md-3\"> <div class=\"service-item\">"
-    				tab1 += " <img src=\"img/book_images/"+ndata['bId']+".jpg\">"
+    				tab1 += " <img src=\"img/book_images/"+ndata['bPic']+"\" alt=\"Pepole\">"
     				tab1 += "<h4>"+ndata['bName']+"</h4>"
     				tab1 += " <p>"+ ndata['bDescription']+"</p>"
-    				tab1 += "<p><a href=\"bookDetail\""+ndata['bId']+">-详情-</a></p>"
+    				tab1 += "<p><a href=\"detail.html?bId="+ndata['bId']+"\">-详情-</a></p>"
     				tab1 += "</div></div>"
   				})
   				 $.each(data.discountFourBooks,function(index,ndata){
   					tab2 += "<div class=\"col-sm-6 col-md-3\"> <div class=\"service-item\">"
-  					tab2 += " <img src=\"img/book_images/"+ndata['bId']+".jpg\">"
+  					tab2 += "<img src=\"img/book_images/"+ndata['bPic']+"\">"
   					tab2 += "<h4>"+ndata['bName']+"</h4>"
   					tab2 += " <p>"+ ndata['bDescription']+"</p>"
-  					tab2 += "<p><a href=\"bookDetail\""+ndata['bId']+">-详情-</a></p>"
+  					tab2 += "<p><a href=\"detail.html?bId="+ndata['bId']+"\">-详情-</a></p>"
   					tab2 += "</div></div>"
   				}) 
   				$(".tab1").append(tab1);
@@ -263,11 +266,11 @@ function customDataSuccess(data){
 	  var owlhtml = ""
 	  if(data.newsetThreeBooks) {
 				$.each(data.newsetThreeBooks,function(index,ndata){
-					owlhtml += "<div> <img src='img/new.png' alt='IMG'><p>"+ndata['bDescription']+"</p>"
+					owlhtml += "<div><a href=\"detail.html?bId="+ndata['bId']+"\"> <img src='img/new.png' alt='IMG'><p>"+ndata['bDescription']+"</p>"
 					owlhtml += "<div class=\"user\">"
-					owlhtml += " <img src=\"img/book_images/"+ndata['bId']+".jpg\" alt=\"Pepole\">"
+					owlhtml += " <img src=\"img/book_images/"+ndata['bPic']+"\" alt=\"Pepole\">"
 					owlhtml += " <p><span>"+ndata['bName']+"</span>"+ ndata['bAuthor']+"</p>"
-					owlhtml += "</div></div>"
+					owlhtml += "</div></a></div>"
 						$("#testimonial-slider").html(owlhtml);
 				})
 		

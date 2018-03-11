@@ -1,6 +1,6 @@
 body{
     /*min-width:600px ;*/
-    /*width: expression(document.body,clientWidth<600?"600px":"auto");*//*ie最小宽度写法*/
+    /*width: expression(document.body,clientWidth<600?"600px":"auto");*//*ie鏈�灏忓搴﹀啓娉�*/
     margin: 0px;
     padding: 0px;
     color: #4f445e;
@@ -24,7 +24,7 @@ body{
     background-attachment: fixed;
     color: #fff;
     text-align: center;
-    position: relative;/*需要加这个属性，给遮罩*/
+    position: relative;/*闇�瑕佸姞杩欎釜灞炴�э紝缁欓伄缃�*/
     z-index:1;
 }
 
@@ -82,7 +82,7 @@ body{
 #main{
     width: 360px;
     position: relative;
-    /*居中*/
+    /*灞呬腑*/
     margin: 20px -180px;
     left: 50%;
 }
@@ -93,14 +93,15 @@ body{
     padding: 20px;
     background: linear-gradient(to right, #9893af, #86829a, #685d7d, #4f445e, #685d7d);
     height: 60px;
-    position: fixed;
-    bottom:0px;
+    position:relative;
+    top:30px;
 }
 #header, #contents, #footer{
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
 }
-input[type="text"],input[type="password"],input[type="email"],input[type="tel"]{
+input[type="text"],input[type="password"],
+input[type="email"],input[type="tel"]{
     display:block;
     width: 300px;
     height: 42px;
@@ -109,7 +110,7 @@ input[type="text"],input[type="password"],input[type="email"],input[type="tel"]{
     font-size: 14px;
     font-family: 'PT Sans', Helvetica, Arial, sans-serif;
     outline: none;
-    padding-left:40px ;/*必须设置，否则文本在背景图上方*/
+    padding-left:40px ;/*蹇呴』璁剧疆锛屽惁鍒欐枃鏈湪鑳屾櫙鍥句笂鏂�*/
     border-radius:6px ;
     border: 1px solid rgba(0,0,0,.5);
     box-shadow: 0 1px 2px rgba(0,0,0,.1);
@@ -215,7 +216,7 @@ button:focus{
 }
 input[type="checkbox"]{
     display: inline-block;
-    opacity: 0;/*隐藏复选框*/
+    opacity: 0;/*闅愯棌澶嶉�夋*/
     position: relative;
     cursor: pointer;
     box-sizing: border-box;
@@ -234,7 +235,7 @@ input[type="checkbox"]{
     box-sizing: border-box;
 
 }
-/*复选框自定义样式*/
+/*澶嶉�夋鑷畾涔夋牱寮�*/
 .checkbox label:before{
     content: "";
     position: relative;
@@ -247,8 +248,8 @@ input[type="checkbox"]{
     background: rgba(255,255,255,0.5);
     display: inline-block;
 }
-/*相邻兄弟结合符,有相同的父元素 对紧接在另一个元素后的元素的设置*/
-/*必选隐藏在背后的复选框选中后，才设置第二个元素*/
+/*鐩搁偦鍏勫紵缁撳悎绗�,鏈夌浉鍚岀殑鐖跺厓绱� 瀵圭揣鎺ュ湪鍙︿竴涓厓绱犲悗鐨勫厓绱犵殑璁剧疆*/
+/*蹇呴�夐殣钘忓湪鑳屽悗鐨勫閫夋閫変腑鍚庯紝鎵嶈缃浜屼釜鍏冪礌*/
 .checkbox input[type="checkbox"]:checked + label:after{
     position: relative;
     display: inline-block;
@@ -271,5 +272,8 @@ input[type="checkbox"]{
 }
 .text-center a:link{
     color: gray;
+}
 
+.form_row {
+	margin-bottom:10px;
 }
