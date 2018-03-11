@@ -16,11 +16,8 @@ function Yetii() {
 		interval: null,
 		tabclass: 'tab',
 		activeclass: 'active'
-	
 	};
-	
 	for (var n in arguments[0]) { this.defaults[n]=arguments[0][n]; };	
-	
 	this.getTabs = function() {
         
 		

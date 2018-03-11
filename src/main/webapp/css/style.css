@@ -124,7 +124,7 @@ nav .navbar-brand img {
 
 nav .nav-cart-area {
     position: absolute;
-   right:20px;
+   right:40px;
    top:90px;
    
 }
@@ -133,6 +133,7 @@ nav .nav-cart{
     border-radius: 50%;
     border: 1px solid #5b4445;
     padding: 10px 8px;
+    z-index:999
 }
 
 nav .nav-cart img {
@@ -594,6 +595,7 @@ footer .footer-manu ul li a:hover {
 .new_prod_box{
     text-align:center;
     padding:5px;
+    height:240px;
 }
 
 .new_prod_box a{

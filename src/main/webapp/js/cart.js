@@ -1,8 +1,8 @@
+var multiDeleteArr = []
+var flag = false;
+var currentName;
 $(function(){
-	
-	getCartList()
-	var multiDeleteArr = []
-	var flag = false
+  getCartList()
   $("body").on("click",".selectSub",function(){
 	  currentName = this.getAttribute('name')
 	  if(this.checked){
@@ -22,7 +22,6 @@ $(function(){
 			  multiDeleteArr.splice(multiDeleteArr.indexOf(currentName),1)
 		  }
 	  }
-
   })
 	
   //购物车中的增加数量的功能
@@ -117,7 +116,7 @@ $(function(){
 		var ids=[]
 		ids.push(id)
 		var obj = {
-			'ids':JSON.stringify(ids)
+			'ids':ids
 		}
 		$.ajax({
 			url:'cart/deleteCart',
@@ -132,21 +131,19 @@ $(function(){
 			}
 		})
 		
-		
-		
 	})
 	 $("body").on('click','.cart-multiDelete',function() {
+		 let obj = {ids:multiDeleteArr}
 			if(multiDeleteArr.length) {
 				$.ajax({
 					url:'cart/deleteCart',
 					type:'post',
 					contentType: "application/json; charset=utf-8",
-					data:{
-						ids:JSON.stringify(multiDeleteArr)
-					},
-					
+					data:JSON.stringify(obj),
+				
 					success:function(){
-						
+						$("#table_body").html("");
+						getCartList()
 					},
 					error:function(){
 						
@@ -160,17 +157,16 @@ $(function(){
 
 function getCartList(){
 	$.ajax({
-		url:'cart/cartQry',
+		url:'cart/initCart',
 		type:'get',
 		/*data:{
 			'uAccount':uAccount
 		},*/
 		success:function(data){
-			var html = ''
+			var html = '';
 			$.each(data.cartList,function(index,cdata){
-				html +=	"<tr index="+index+" id="+cdata['bId']+"><td><input type=\"checkbox\" class=\"selectSub\" name="+cdata['bId']+"></td>"
-				/*html += "<td><img class=\"table-img\" src=\"img/book_images/"+cdata['bPic']+"></td>"*/
-				html += "<td><img class=\"table-img\" src='img/book_images/a2.jpg'></td>"
+				html +=	"<tr index="+index+" id="+cdata['cId']+"><td><input type=\"checkbox\" class=\"selectSub\" name="+cdata['cId']+"></td>"
+				html += "<td><img class=\"table-img\" src=\"img/book_images/"+cdata['bPic']+"\" /></td>"
 				html += "<td>"+cdata['bName']+"</td>"
 				html += " <td class=\"cart-price\">"+cdata['bPrice']+"</td>"
 				html += " <td class=\"dis_price\">"+cdata['bDiscountprice']+"</td>"
@@ -180,8 +176,8 @@ function getCartList(){
 				html += " <input type=\"button\" value=\"+\" class=\"plus\"/>"
 				html += " </td>"
 				html += "<td class=\"sum_money\">"+cdata['bSumdiscountprice']+"</td>"
-				html += "<td style=\"width: 100px;\"><button class=\"cart-delete2 delete\">删除</button></td></tr>"
-			})
+				html += "<td style=\"width: 100px;\"><button class=\"cart-delete2 delete\">删除</button></td></tr>";
+			});
 			$("#table_body").append(html)
 		},
 		error:function(){
@@ -199,12 +195,31 @@ $("#selectAll").click(function () {
     for(var i = 0;i<m.length;i++){
     	sumPrice += Number(m[i].innerHTML);
     }
+    var check = document.getElementsByClassName("selectSub");
+    
+    for(var i = 0;i<check.length;i++){
+    	var flag2= false
+    	if(multiDeleteArr.length){
+			  for(var j=0;j<multiDeleteArr.length;j++){
+				  if(check[i].getAttribute('name') ==multiDeleteArr[j]){
+					  flag2=true;
+					  break;
+				  }
+			  }
+		  }
+		  if(!flag){
+			  multiDeleteArr.push(check[i].getAttribute('name')) 
+		  }
+		  
+    }
+    console.log(multiDeleteArr)
     $(".ac_money").html(sumPrice.toFixed(2));
     $(".selectSub").prop("checked", true);
     $(".selectSub").click(function () {
       getSumPrice()
     });
   } else {
+	  multiDeleteArr = []
     var sum = 0.00;
     $(".selectSub").prop("checked", false);
     $(".ac_money").html(sum.toFixed(2));

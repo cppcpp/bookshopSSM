@@ -15,7 +15,6 @@ $(function(){
 				"bId":bookId
 			},
 			success:function(data) {
-				console.log(data)
 				var html = '';
 				var html1 = ''
 				var tab1 = ''
@@ -30,7 +29,6 @@ $(function(){
 					html += "<span class=\"delete_decoration\">原价："+ndata['bPrice']+"</span></div>";
 					html1 += "<a href=\"#\" ><img style=\"width:150px;height: 150px;\" src=\"img/book_images/"+ndata['bId']+".jpg\" /></a>";
 					html1 += "<br /><br /><img src=\"img/zoom.gif\" /></a>"
-					
 					//图书详情
 					tab1 += "<p class=\"more_details\">图书名称："+ndata['bName']+"</p>"
 					tab1 += " <ul class=\"demo-list\">"
@@ -45,12 +43,38 @@ $(function(){
 					$("#book_detail").html(html);
 					$(".prod_img").html(html1);
 					$("#tab1").html(tab1)
+					
 				})
 			},
 			error: function() {
 				
 			}
 		})
+		
+		$.ajax({
+			url:'books/initBooks',
+			type:'get',
+			data:{
+				category: bookId.substr(0,1),
+				limit:4
+			},
+			success:function (data){
+				var tab2 = ''
+				$.each(data.books,function(index,ndata){
+					tab2 += "<div class=\"col-md-4\">"
+					tab2 += "<div class=\"new_prod_box\">"	
+					tab2 += " <a href=\"detail.html?bId="+ndata['bId']+"\" style=\"white-space:nowrap;text-overflow:ellipsis;overflow: hidden;width: 100px;\">"+ndata['bName']+"</a>"
+					tab2 += " <a href=\"detail.html?bId="+ndata['bId']+"\"><img src=\"img/book_images/"+ndata['bPic']+"\" class=\"thumb\" border=\"0\" width=\"90px\" height=\"90px\"/></a>"
+					tab2 +="</div></div>"
+				})
+				$("#tab2").html(tab2)
+			},
+			error:function(){
+				
+			}
+			
+		})
+		$("#tab2").css('height','300px')
 	}
 	
 	//图书详细信息  增加和减少图书

@@ -12,7 +12,7 @@
 <body>
 <header>
   <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <ul class="col-md-2 col-sm-4 col-xs-6 sol-xs-offset-6 sol-sm-offset-8 col-md-offset-10 clearfix">
+    <ul class="col-md-2 col-sm-4 col-xs-6 sol-xs-offset-6 sol-sm-offset-8 col-md-offset-10 clearfix" id="top-bar">
       <li><a href="login.html">登录</a></li>
       <li><a href="register.html">注册</a></li>
     </ul>
@@ -54,7 +54,6 @@
   </div>
   <div class="nav-cart-area">
     <a href="cart.html"><span class="nav-cart"><img src="img/icon-cart.png"></span></a>
-    <span class="cart-num">3</span>
   </div>
 </nav>
 
@@ -170,7 +169,7 @@ $(function(){
 		page = 1
 	  }
 	  if(!limit) {
-		limit = 10
+		limit = 5
 	  }
 	  $.ajax({
 	   	  url:"books/specialOfferBooks",
@@ -181,9 +180,9 @@ $(function(){
 	    		  "limit": limit,
 			  },
 	   	  success:function(data){
-	   		/* totalPage = data.pageInfo.pages
+	   	    totalPage = data.pageInfo.pages
   		  	limit = data.pageInfo.pageSize
-  		  	currpage = data.pageInfo.pageNum */
+  		  	currpage = data.pageInfo.pageNum 
   		 	$(".papigationPage").html("第"+currpage+"页/共"+totalPage+"页")
  		 
 	   		 let html = ''
@@ -203,6 +202,19 @@ $(function(){
 	     });
 	}
 	
+//是否为正整数  
+	function isPositiveNum(s){
+		var re = /^[0-9]*[1-9][0-9]*$/ ;  
+		return re.test(s)  
+	} 
+//是否正数
+	function validate(num)
+	{
+	  var reg = /^\d+(?=\.{0,1}\d+$|$)/
+	  if(reg.test(num)){return true};
+	  return false ;  
+	}
+
 	$("#pageSize").blur(function(){
 		var size = $("#pageSize").val()
 		if(isPositiveNum(size)) {
