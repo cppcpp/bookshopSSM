@@ -18,6 +18,7 @@ $(function(){
 				console.log(data)
 				var html = '';
 				var html1 = ''
+				var tab1 = ''
 				$.each(data.books,function(index,ndata){
 					$("#book_name").html(ndata['bName'])
 					bName = ndata['bName']
@@ -30,9 +31,20 @@ $(function(){
 					html1 += "<a href=\"#\" ><img style=\"width:150px;height: 150px;\" src=\"img/book_images/"+ndata['bId']+".jpg\" /></a>";
 					html1 += "<br /><br /><img src=\"img/zoom.gif\" /></a>"
 					
-                   
+					//图书详情
+					tab1 += "<p class=\"more_details\">图书名称："+ndata['bName']+"</p>"
+					tab1 += " <ul class=\"demo-list\">"
+					tab1 += "<li>图书作者："+ndata['bAuthor']+"</li>"
+					tab1 += "<li>图书出版时间："+ndata["bPressTime"]+"</li>"
+					tab1 += "<li>图书出版社："+ndata["bPress"]+"</li>"
+					tab1 += "<li>图书原价："+ndata["bPrice"]+"</li>"
+					var dis = ndata["bDiscount"] == 100 ?'无折扣':ndata["bDiscount"]+'折'
+					tab1 += "<li>图书打折情况："+dis+"</li>"
+					tab1 += "<li>图书服务情况："+ndata['bService']+"</li>"
+               
 					$("#book_detail").html(html);
 					$(".prod_img").html(html1);
+					$("#tab1").html(tab1)
 				})
 			},
 			error: function() {

@@ -124,8 +124,9 @@ nav .navbar-brand img {
 
 nav .nav-cart-area {
     position: absolute;
-    right: 50px;
-    top: 90px;
+   right:20px;
+   top:90px;
+   
 }
 
 nav .nav-cart{
@@ -966,7 +967,7 @@ p.more_details{
     margin-right: 30px;
 }
 
-.cart-submit{
+.cart-submit,.cart-multiDelete{
     background:#734633;
     border: 1px solid #734633;
     border-radius: 5px;
@@ -979,6 +980,7 @@ p.more_details{
     right: 50px;
     color:white;
     height:25px;
+    margin:5px;
 }
 
 

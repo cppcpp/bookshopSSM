@@ -1,66 +1,32 @@
 $(function(){
-  //前台---------
-  //前台购物车中复选框中的全选与反选
-  $("#selectAll").click(function () {
-    if (this.checked) {
-      var num = 0,n=0;
-      var m = document.getElementsByClassName("sum_money");
-      for(var i = 0;i<m.length;i++){
-        num += Number(m[i].innerHTML);
-      }
-      //alert(this.checked);
-      $(".ac_money").html(num.toFixed(2));
-      $(".selectSub").prop("checked", true);
+	
+	getCartList()
+	var multiDeleteArr = []
+	var flag = false
+  $("body").on("click",".selectSub",function(){
+	  currentName = this.getAttribute('name')
+	  if(this.checked){
+		  if(multiDeleteArr.length){
+			  for(var i=0;i<multiDeleteArr.length;i++){
+				  if(currentName ==multiDeleteArr[i]){
+					  flag=true;
+					  break;
+				  }
+			  }
+		  }
+		  if(!flag){
+			  multiDeleteArr.push(currentName) 
+		  }
+	  }else {
+		  if(multiDeleteArr.indexOf(currentName) != -1){
+			  multiDeleteArr.splice(multiDeleteArr.indexOf(currentName),1)
+		  }
+	  }
 
-      $(".selectSub").click(function () {
-        $(".selectAll").prop("checked", false);
-
-        var no = this.parentNode.parentNode;
-        //alert(no);
-        var td = no.childNodes;
-        //alert(td[11].innerHTML);
-        /*var shu = td[11].childNodes;
-        //alert(shu[3].value);
-        shu[3].value = 0;*/
-        //alert(td[13].innerHTML);
-        n = Number(num) - Number(td[13].innerHTML);
-
-        $(".ac_money").html(n.toFixed(2));
-
-      });
-
-    } else {
-      //alert(this.checked);
-      var r = 0.00;
-      $(".selectSub").prop("checked", false);
-      $(".ac_money").html(r.toFixed(2));
-    }
-  });
-
-
-  //购物车  当所有子复选框都选中  总的复选框也同样选中
-  $(".selectSub").change(function () {
-    $(".selectAll").prop("checked", false);
-    var total = 0;
-    var compare = 0,n = 0;
-    $(".selectSub").each(function () {
-      compare += 1;
-      if (this.checked) {
-        total += 1;
-        var no = this.parentNode.parentNode;
-        var td = no.childNodes;
-        n += Number(td[13].innerHTML);
-      }
-    });
-    if (total == compare) {
-      $(".selectAll").prop("checked", true);
-
-    }
-    $(".ac_money").html(n.toFixed(2));
-  });
-
-  //购物车中的增加和减少数量的功能
-  $(".plus").click(function(){
+  })
+	
+  //购物车中的增加数量的功能
+  $("body").on('click','.plus',function(){
     //获取总价列
     var sum_money = this.parentNode.nextSibling;
     console.log(sum_money)
@@ -96,11 +62,11 @@ $(function(){
     if(subCheck[0].checked){
       $(".ac_money").html(d.toFixed(2));
     }
-
+    getSumPrice()
   })
 
-  //购物车中的增加和减少数量的功能
-  $(".desc").click(function(){
+  //购物车中减少数量的功能
+  $("body").on("click",".desc",function(){
     //获取总价列
     var sum_money = this.parentNode.nextSibling;
     while(sum_money.nodeName=="#text"){
@@ -135,201 +101,134 @@ $(function(){
     if(subCheck[0].checked){
       $(".ac_money").html(d.toFixed(2));
     }
+    getSumPrice()
   });
 
-
-
-
-
-  //后台管理员
-	//js全选功能
-	$("#choseAll").click(function(){
-		//当状态是选中时
-		if($(this).is(':checked')){
-			$('input:checkbox').each(function() {
-		        $(this).attr('checked', true);
-			});
-		}else{
-			$('input:checkbox').each(function() {
-		        $(this).attr('checked', false);
-			});
-		}
-	});
-
-	var flag=0;
-	function deleteBook(id){
-		$.ajax({
-			url:'deleteBook?id='+id,
-			type:"get",
-			async: false,
-			success:function(data){
-				if(data=="success"){
-					//alert("删除成功");
-					flag=1;
-				}
-				else if(data=="fail"){
-					alert("失败！！！！！");
-				}
-			},
-			error:function(XMLHttpRequest,textStatus, errorThrown){
-	       	 alert(XMLHttpRequest.status);//200正常响应
-	         alert(XMLHttpRequest.readyState);//4处理状态正常接收
-	         alert(XMLHttpRequest.responseText);//返回响应文本
-	         alert(textStatus);
-	     }
-		});
-	}
-
-	//单个删除
-	$(".singleDelete").click(function(){
-		var b_id=this.name;
-		deleteBook(b_id);
-		if(flag==1){
-		//删除成功后页面跳转
-		location.href ="booksList"; 
-		}
-	})
-
-
-	//多个删除
-	$("#mulDelete").click(function(){
-		$('input:checkbox').each(function() {
-	        if($(this).is(':checked')){
-	        	var temp=$(this).val();
-	        	//alert(temp);
-	        	deleteBook(temp);
-	        }
-		});
-		location.href="booksList";
-	});
-
-	//增加输入图书信息验证
-	function checkBookId(){
-		var inputId=$("#b_id").val();
-		$.ajax({
-			type:'get',
-			url:'booksIdCheck',
-			data:inputId,
-			success:function(data){
-				if(data=="exit"){
-					alert("id已经存在，请重新输入");
-				}
-			},
-			error:function(){
-			}
-		});
-	}
-
-
-
-    
-
-    
-    //点击编辑的按钮
-    $(".edit-text").click(function() {
-    var title = this.title.trim();
-		var tr = this.parentNode.parentNode;
-		var td = tr.childNodes;
-		var price = td[7].innerHTML.trim();
-		var dis_price = td[9].innerHTML.trim();
-		var inputs = td[11].childNodes;
-		if(checkYN(inputs[1])){
-			//完成编辑，存入数据库中
-			inputs[3].disabled = true;
-			inputs[1].style.display = "none";
-			inputs[5].style.display = "none";
-			this.value = "编辑";
-			var v = inputs[3].value;
-			cartRequest = createRequest();
-			var url = "cartservlet?number="+v+"&b_id="+title+"&price="+price+"&dis_price="+dis_price;
-			cartRequest.open("GET",url, true);
-			cartRequest.onreadystatechange = cartHandle;
-			cartRequest.send(null);
-
-		}else{
-			//开始编辑
-			inputs[3].disabled = false;
-			inputs[1].style.display = "inline";
-			inputs[5].style.display = "inline";
-			this.value = "完成";
-		}
-
-	})
-	
-	//检验 数据库的数量是否在编辑的状态
-	function checkYN(ele) {
-    	//alert(ele.style.dispaly);
-		if(ele.style.display=="inline"){
-			return true;
-		}
-		if(ele.style.display=="none"){
-			return false;
-		}
-	}
-    
-    
-    //ajax异步请求对象 
-    function createRequest(){
-    	try {
-    		var request = new XMLHttpRequest();
-    	} catch (tryMS) {
-    		try {
-    			request = new ActiveXObject("Msxml2.XMLHTTP");
-    		} catch (otherMS) {
-    			try {
-    				request = new ActiveXObject("Microsoft.XMLHTTP");
-    			} catch (failed) {
-    				request = null;
-    			}
-    		}
-    	}
-    	return request;
-    }
-    
-    function cartHandle() {
-    	if(cartRequest.readyState==4){
-			if(cartRequest.status==200){
-				if(cartRequest.responseText.trim()=="okay"){
-					//alert("写入session成功");
-				}
-			}
-		}
-	}
-
-
     //购物车中的删除
-    $(".delete").click(function() {
+    $("body").on('click','.delete',function() {
 		var tr = this.parentNode.parentNode;
 		var td = tr.childNodes;
-		//alert(tr.title);
-		var index = Number(tr.title);
+		var index = Number(tr.getAttribute('index'));
 		var table = document.getElementById("cart-table");
 		table.deleteRow(index+1);
 		//删除表格后  session中的cart值需要改变  ajax请求
 		//获取当前的b_id
-		b_idImg = td[3].childNodes;
-		var s = b_idImg[0].src;
-		var str = s.split("/");
-		var b_ida = str[str.length-1];
-		var b_idb = b_ida.split(".");
-		var b_id = b_idb[0];
-		//alert(b_id);
-		deleteRequest = createRequest();
-		var url = "delete?b_id="+b_id;
-		deleteRequest.open("GET",url,true);
-		deleteRequest.onreadystatechange = deletehandler;
-		deleteRequest.send(null);
+		var id = tr.getAttribute('id')
+		var ids=[]
+		ids.push(id)
+		var obj = {
+			'ids':JSON.stringify(ids)
+		}
+		$.ajax({
+			url:'cart/deleteCart',
+			contentType: "application/json; charset=utf-8",
+			type:'post',
+			data:JSON.stringify(obj),
+			success:function(){
+				
+			},
+			error:function(){
+				
+			}
+		})
+	})
+	 $("body").on('click','.cart-multiDelete',function() {
+			if(multiDeleteArr.length) {
+				$.ajax({
+					url:'cart/deleteCart',
+					type:'post',
+					contentType: "application/json; charset=utf-8",
+					data:{
+						ids:JSON.stringify(multiDeleteArr)
+					},
+					success:function(){
+						
+					},
+					error:function(){
+						
+					}
+				})
+			}else{
+				alert("请选择要删除的图书")
+			}
+		})
+})
+
+function getCartList(){
+	$.ajax({
+		url:'cart/cartQry',
+		type:'get',
+		/*data:{
+			'uAccount':uAccount
+		},*/
+		success:function(data){
+			var html = ''
+			$.each(data.cartList,function(index,cdata){
+				html +=	"<tr index="+index+" id="+cdata['bId']+"><td><input type=\"checkbox\" class=\"selectSub\" name="+cdata['bId']+"></td>"
+				/*html += "<td><img class=\"table-img\" src=\"img/book_images/"+cdata['bPic']+"></td>"*/
+				html += "<td><img class=\"table-img\" src='img/book_images/a2.jpg'></td>"
+				html += "<td>"+cdata['bName']+"</td>"
+				html += " <td class=\"cart-price\">"+cdata['bPrice']+"</td>"
+				html += " <td class=\"dis_price\">"+cdata['bDiscountprice']+"</td>"
+				html += " <td style=\"width: 120px;\">"
+				html += "<input type=\"button\" value=\"-\" class=\"desc\"/>"
+				html += " <input type=\"text\" value="+cdata['bNums']+" class=\"num-text\" name=\"book_num\" disabled=\"disabled\"/>"
+				html += " <input type=\"button\" value=\"+\" class=\"plus\"/>"
+				html += " </td>"
+				html += "<td class=\"sum_money\">"+cdata['bSumdiscountprice']+"</td>"
+				html += "<td style=\"width: 100px;\"><button class=\"cart-delete2 delete\">删除</button></td></tr>"
+			})
+			$("#table_body").append(html)
+		},
+		error:function(){
+			
+		}
 		
 	})
-	
-	
-	function deletehandler() {
-		if(deleteRequest.readyState==4){
-			if(deleteRequest.status==200){
-				console.log("删除成功");
-			}
+}
+
+//前台购物车中复选框中的全选与反选
+$("#selectAll").click(function () {
+  if (this.checked) {
+    var sumPrice = 0;
+    var m = document.getElementsByClassName("sum_money");
+    for(var i = 0;i<m.length;i++){
+    	sumPrice += Number(m[i].innerHTML);
+    }
+    $(".ac_money").html(sumPrice.toFixed(2));
+    $(".selectSub").prop("checked", true);
+    $(".selectSub").click(function () {
+      getSumPrice()
+    });
+  } else {
+    var sum = 0.00;
+    $(".selectSub").prop("checked", false);
+    $(".ac_money").html(sum.toFixed(2));
+  }
+});
+
+//计算总价
+function getSumPrice(){
+	var sum = 0.00,num=0;
+	$(".selectSub").each(function(){
+		if(this.checked == true){
+			num +=1
+			var no = this.parentNode.parentNode;
+		    var td = no.childNodes;
+			sum += Number(td[9].innerHTML)
+		}else {
+			$(".selectAll").prop("checked", false);
 		}
+	})
+
+	if(num == $(".selectSub").length){
+	   $(".selectAll").prop("checked", true);
 	}
+	$(".ac_money").html(sum.toFixed(2));
+}
+
+$("body").on('change','.selectSub',function(){
+	getSumPrice()
 })
 
 

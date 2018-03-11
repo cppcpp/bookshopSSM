@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <link href="css/style.css" rel="stylesheet" type="text/css">
@@ -41,7 +41,7 @@
           <div class="collapse navbar-collapse nav-collapsed-area" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right clearfix">
               <li><a href="index.html">首页</a></li>
-              <li><a href="categroy.html">书城</a></li>
+              <li><a href="category.html">书城</a></li>
               <li><a href="special.html">特价</a></li>
               <li><a href="mineInfo.html">我的</a></li>
               <li><a href="about.html">关于我们</a></li>
@@ -97,88 +97,30 @@
           <div class="nav-title"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;购物车</div>
         </div>
         <div class="row">
-          <form action="order" method="get">
             <table border="1" class="cart-table" id="cart-table">
+            <thead>
               <tr class="cart_title">
                 <th><input type="checkbox" name="book-select" class="selectAll" id="selectAll"></th>
                 <th>图片</th>
                 <th>书名</th>
                 <th>原单价</th>
-                <th>折后单价</th>
+                <th>折后价</th>
                 <th>数量</th>
                 <th>总价</th>
                 <th>操作</th>
-              </tr>
-              <!--
-
-              <c:forEach var="cart" items="${sessionScope.carts}"  varStatus="currentStatus">
-                	<tr title="${currentStatus.index}">
-                		<%-- <input type="hidden" value="${cart.b_sumdiscountprice}" /> --%>
-                		<td><input type="checkbox" class="selectSub" name="${cart.b_id}" checked/></td>
-						<td><img src="book_images/${cart.b_id}.jpg" class="cart-img"></td>
-						<td>${cart.b_name}</td>
-						<td class="price">${cart.b_price}</td>
-						<td class="dis_price">${cart.b_discountprice}</td>
-						<td style="width:70px;">
-							<input type="button" value="-" class="desc" style="display: none;"/>
-	                    	<input type="text" value="${cart.b_nums}" class="num-text" name="book_num" disabled="disabled"/>
-	                    	<input type="button" value="+" class="plus" style="display: none;"/>
-						</td>
-						<td class="sum_money">${cart.b_sumdiscountprice}</td>
-						<td><input type="button" value="编辑" class="cart-delete edit-text" title="${cart.b_id}"/></td>
-						<td><input type="button" value="删除" class="cart-delete2" id="delete"/></td>
-
-						<%-- <c:out value="book_images/${cart.b_id}.jpg" ></c:out> --%>
-					</tr>
-                </c:forEach>
-
-              -->
-              <tr>
-                <td><input type="checkbox" class="selectSub"></td>
-                <td><img class="table-img" src="img/book_images/c1.jpg"></td>
-                <td>中国</td>
-                <td class="cart-price">66</td>
-                <td class="dis_price">56</td>
-                <td style="width: 120px;">
-                  <input type="button" value="-" class="desc"/>
-                  <input type="text" value="1" class="num-text" name="book_num" disabled="disabled"/>
-                  <input type="button" value="+" class="plus"/>
-                </td>
-                <td class="sum_money">56</td>
-               <!-- <td>
-                  <button class="cart-delete edit-text">编辑</button>
-                </td>-->
-                <td style="width: 100px;">
-                  <button class="cart-delete2" class="delete">删除</button>
-                </td>
-              </tr>
-
-              <tr>
-                <td><input type="checkbox" class="selectSub"></td>
-                <td><img class="table-img" src="img/book_images/c2.jpg"></td>
-                <td>多土中国多多土中国多土中国土中国多土中国多多土中国多土中国土中国</td>
-                <td class="cart-price">98</td>
-                <td class="dis_price">88</td>
-                <td>
-                  <input type="button" value="-" class="desc"/>
-                  <input type="text" value="1" class="num-text" name="book_num" disabled="disabled"/>
-                  <input type="button" value="+" class="plus"/>
-                </td>
-                <td class="sum_money">88</td>
-
-                <td>
-                  <button class="cart-delete2" class="delete">删除</button>
-                </td>
-              </tr>
-
-              <tr>
+        	</tr>
+			</thead>
+			<tbody id="table_body">
+			</tbody>
+			<tfoot>
+              <tr class="sum_total">
                 <td colspan="7" class="cart_total"><span class="cart-red">实付(不含运费)</span></td>
-                <td class="ac_money">88</td>
+                <td class="ac_money">0</td>
               </tr>
-
+			</tfoot>
             </table>
+            <input class="cart-multiDelete" type="button" value="多条删除">
             <input class="cart-submit" type="submit" value="下单 &gt;">
-          </form>
         </div>
       </div>
     </div>
