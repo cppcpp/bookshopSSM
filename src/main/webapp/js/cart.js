@@ -141,6 +141,7 @@ $(function(){
 					data:{
 						ids:JSON.stringify(multiDeleteArr)
 					},
+					
 					success:function(){
 						
 					},
