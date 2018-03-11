@@ -102,12 +102,20 @@ public class BooksController {
 	//查询特价图书
 	@RequestMapping("/specialOfferBooks")
 	@ResponseBody
-	public Map specialOfferBooks(@RequestParam(name="bookNum",defaultValue="4")Integer bookNum) {
+	public Map specialOfferBooks(
+			@RequestParam(name="page",required=false)String page,
+			@RequestParam(name="limit",required=false)String limit) {
 		Map<String, Object> resultMap=new HashMap<>();
 		
-		List<Books> books= booksService.getdiscountBook(bookNum);
+		int pageNum =  page == null ? 1 : Integer.parseInt(page);
+        int pageSize =  limit == null ? 4 : Integer.parseInt(limit);
 		
+		PageHelper.startPage(pageNum, pageSize);
+		List<Books> books= booksService.getdiscountBook(pageSize);
+		
+		PageInfo<Books> pageInfo=new PageInfo<>(books);
 		resultMap.put("specialOfferBooks", books);
+		resultMap.put("pageInfo", pageInfo);
 		
 		return resultMap;
 	}

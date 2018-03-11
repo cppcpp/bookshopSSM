@@ -1,6 +1,5 @@
 package com.bookshop.util;
 
-import static org.hamcrest.CoreMatchers.nullValue;
 
 import java.io.IOException;
 import javax.servlet.Filter;
@@ -9,7 +8,6 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -31,7 +29,7 @@ public class SecurityFilter implements Filter {
 		System.out.println("uri::"+uri);
 		String path=uri.substring(10);
 		System.out.println("path:::"+path);
-		Users user= (Users) req.getSession().getAttribute("user");
+		Users user= (Users) req.getSession().getAttribute("users");
 		System.out.println("use:"+user);
 		
 		//登录页面，放行

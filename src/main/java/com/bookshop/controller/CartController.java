@@ -1,5 +1,4 @@
-package com.bookshop.controller;import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+package com.bookshop.controller;import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;import javax.servlet.http.HttpSession;import org.apache.commons.lang3.StringUtils;import org.springframework.beans.factory.annotation.Autowired;
@@ -7,11 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;import org.springframework.web.bind.annotation.ResponseBody;
-import com.bookshop.modle.Cart;
-import com.bookshop.modle.CartExample;import com.bookshop.modle.Users;import com.bookshop.service.CartService;import com.bookshop.util.StringUtil;
+import org.springframework.web.bind.annotation.RequestParam;import org.springframework.web.bind.annotation.ResponseBody;import com.bookshop.modle.Books;import com.bookshop.modle.Cart;
+import com.bookshop.modle.CartExample;import com.bookshop.modle.CartExample.Criteria;import com.bookshop.modle.Users;import com.bookshop.service.BooksService;import com.bookshop.service.CartService;import com.bookshop.util.StringUtil;
 @Controller@RequestMapping("/cart")public class CartController {
-	@Autowired	CartService cartService;		@Autowired	HttpSession session;	
+	@Autowired	CartService cartService;		@Autowired	BooksService bookService;		@Autowired	HttpSession session;	
     @RequestMapping(value="/cartQry",method=RequestMethod.GET)    @ResponseBody
     public Map cartQry(
              @RequestParam(name="cId",required=false)String cId,
@@ -36,14 +34,13 @@ import com.bookshop.modle.CartExample;import com.bookshop.modle.Users;import c
         cartExmMap.put("bSumprice", bSumprice);
         cartExmMap.put("bSumdiscountprice", bSumdiscountprice);
         CartExample example = cartService.createCartExm(cartExmMap);
-        List<Cart> cartList = cartService.selectByExample(example);
+        List<Cart> cartList = cartService.selectByExample(example);        Books tempBooks;
         for (Cart cart : cartList) {
             Map<String,Object> tMap = new HashMap<>();
             tMap.put("cId", cart.getcId());
             tMap.put("uAccount", cart.getuAccount());
             tMap.put("bId", cart.getbId());
-            tMap.put("bName", cart.getbName());
-            if(cart.getbNums()!=null){
+            tMap.put("bName", cart.getbName());            //通过bId找到bPic保存            tempBooks=bookService.selectByPrimaryKey(cart.getbId());            if(tempBooks!=null) {            	tMap.put("bPic", tempBooks.getbPic());            }else {            	//该书籍不存在，返回            	resultMap.put("bookIsNotExist", "该书籍不存在");            }            if(cart.getbNums()!=null){
                 tMap.put("bNums", cart.getbNums().toString());
             }
             if(cart.getbPrice()!=null){
@@ -62,8 +59,8 @@ import com.bookshop.modle.CartExample;import com.bookshop.modle.Users;import c
         }
            
         resultMap.put("cartList", mapList);        return resultMap;
-    }
-    //添加到购物车    //返回：成功：success  失败：error    @RequestMapping(value="/addCart",method=RequestMethod.POST)    @ResponseBody
+    }        //初始化购物车接口    @RequestMapping("/initCart")    @ResponseBody    public Map initCart() {    	Map<String, Object> resultMap=new HashMap<>();    	List<Map> mapList = new ArrayList<>();    	    	Users users=(Users) session.getAttribute("users");    	if(users==null) {    		resultMap.put("userNotExitsError", "用户还未登录，请登录");    		return resultMap;    	}    	String uAccount=users.getuAccount();    	CartExample example=new CartExample();    	Criteria criteria= example.createCriteria();    	criteria.andUAccountEqualTo(uAccount);    	List<Cart> cartList= cartService.selectByExample(example);    			 Books tempBooks;	     for (Cart cart : cartList) {	         Map<String,Object> tMap = new HashMap<>();	         tMap.put("cId", cart.getcId());	         tMap.put("uAccount", cart.getuAccount());	         tMap.put("bId", cart.getbId());	         tMap.put("bName", cart.getbName());	         //通过bId找到bPic保存	         tempBooks=bookService.selectByPrimaryKey(cart.getbId());	         if(tempBooks!=null) {	         	tMap.put("bPic", tempBooks.getbPic());	         }else {	         	//该书籍不存在，返回	         	resultMap.put("bookIsNotExist", "该书籍不存在");	         }	         if(cart.getbNums()!=null){	             tMap.put("bNums", cart.getbNums().toString());	         }	         if(cart.getbPrice()!=null){	             tMap.put("bPrice", cart.getbPrice().toString());	         }	         if(cart.getbDiscountprice()!=null){	             tMap.put("bDiscountprice", cart.getbDiscountprice().toString());	         }	         if(cart.getbSumprice()!=null){	             tMap.put("bSumprice", cart.getbSumprice().toString());	         }	         if(cart.getbSumdiscountprice()!=null){	             tMap.put("bSumdiscountprice", cart.getbSumdiscountprice().toString());	         }	         mapList.add(tMap);	     }	        	     resultMap.put("cartList", mapList);	     return resultMap;    }
+    //统计登录用户购物车个数的接口    @RequestMapping("/countOfCart")    @ResponseBody    public String countOfCart() {    	Users users=(Users) session.getAttribute("users");    	if(users==null) {    		return "userNotExitsError";    	}    	String uAccount=users.getuAccount();    	CartExample example=new CartExample();    	Criteria criteria= example.createCriteria();    	criteria.andUAccountEqualTo(uAccount);    	List<Cart> cartList= cartService.selectByExample(example);    	    	return cartList.size()+"";    }        //添加到购物车    //返回：成功：success  失败：error    @RequestMapping(value="/addCart",method=RequestMethod.POST)    @ResponseBody
     public String addCart(@RequestBody Map<String, String>req){
         String id = req.get("cId");        String uAccount=req.get("uAccount");
         try {
@@ -105,7 +102,6 @@ import com.bookshop.modle.CartExample;import com.bookshop.modle.Users;import c
     //返回值：ids+删除成功    ids+删除失败  idsNull：未传入id列表  error：系统异常    @RequestMapping(value="/deleteCart",method=RequestMethod.POST)    @ResponseBody
     public String deleteCart(@RequestBody Map<String, Object>req){
         List<String> idList = (List<String>) req.get("ids");
-        Map<String, Object> resultMap = new HashMap<>();
         String strSuc = "";
         String strFail = "";
         String strNotExist = "";                try {
