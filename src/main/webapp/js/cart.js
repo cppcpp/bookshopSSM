@@ -131,6 +131,9 @@ $(function(){
 				
 			}
 		})
+		
+		
+		
 	})
 	 $("body").on('click','.cart-multiDelete',function() {
 			if(multiDeleteArr.length) {
