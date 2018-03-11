@@ -23,4 +23,9 @@ public class BooksTest extends BaseTest{
 		//System.out.println(booksList);
 	}
 	
+	
+	@Test
+	public void specialOfferBooks() {
+		booksService.getdiscountBook(4);
+	}
 }
