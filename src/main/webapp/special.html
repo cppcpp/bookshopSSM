@@ -107,34 +107,20 @@
         </div>
 
         <div class="row">
-          <div class="col-md-12">
-            <div class="special">
-              <div class="special-left">
-                <img src="img/book_images/a1.jpg"></img>
-              </div>
-              <div class="special-right">
-                <h4>《共产党宣言》</h4>
-                <p class="special-content">《皮囊》是一部有着小说阅读质感的散文集，也是一本“认心又认人”的书,是一部有着小说阅读质感的散文集,是一部有是一部有着小说阅读质感的散文集是一部有着小说阅读质感的散文集着小说阅读质感的散文集是一部有着小说阅读质感的散文集是一部有着小说阅读质感的散文集。</p>
-                <p><a href="">-更多-</a></p>
-              </div>
-            </div>
-
-            <div class="special">
-              <div class="special-left">
-                <img src="img/book_images/a2.jpg"></img>
-              </div>
-              <div class="special-right">
-                <h4>《马克恩师合集》</h4>
-                <p class="special-content">《马克恩师合集》是一读质感的散文集是一部有着小说阅读质感的散文集是一部有着小说阅读质感的散文集。</p>
-                <p><a href="">-更多-</a></p>
-              </div>
-            </div>
-
-
+          <div class="col-md-12 special_area">
+           
           </div>
-
-
         </div>
+        
+         <div class="row papigation">
+          <span class="papigation-button" onclick="toPage('index')">首页</span>
+          <span class="papigation-button" onclick="toPage('prev')">上一页</span>
+          <span class="papigation-button" onclick="toPage('next')">下一页</span>
+          <span class="papigation-button" onclick="toPage('end')">尾页</span>
+          <span class="papigationPage">第1页／共1页</span>
+          <span>设置每页&nbsp;<input type="text" id="pageSize" style="width: 30px;">&nbsp;条</span>
+        </div>
+        
       </div>
     </div>
   </div>
@@ -164,12 +150,91 @@
 
 </body>
 </html>
-<script src="js/prototype.js" type="text/javascript"></script>
-<script src="js/scriptaculous.js?load=effects" type="text/javascript"></script>
-<script src="js/lightbox.js" type="text/javascript"></script>
 <script type="text/javascript" src="js/java.js"></script>
 <script src="js/jquery-2.2.4.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/details.js"></script>
 <script src="js/utils.js"></script>
+<script type="text/javascript">
+var totalPage,currpage,limit
+$(function(){
+	let bookNum = 4
+	 
+})
+
+	function getLists(page,limit){
+	  if(!page) {
+		page = 1
+	  }
+	  if(!limit) {
+		limit = 10
+	  }
+	  $.ajax({
+	   	  url:"books/specialOfferBooks",
+	   	  method:"post",
+		   	data:{
+				  "bookNum":bookNum, 
+				  "page": page,
+	    		  "limit": limit,
+			  },
+	   	  success:function(data){
+	   		totalPage = data.pageInfo.pages
+  		  	limit = data.pageInfo.pageSize
+  		  	currpage = data.pageInfo.pageNum
+  		 	$(".papigationPage").html("第"+currpage+"页/共"+totalPage+"页")
+ 		 
+	   		 let html = ''
+	   		 $.each(data.specialOfferBooks,function(index,ndata){
+	   			 html += "<div class=\"special\"> <div class=\"special-left\">";
+	   	   		 html += "<img src=\"img/book_images/"+ndata['bPic']+"\"></img></div>";
+	   	   		 html += " <div class=\"special-right\">";
+	   	   		 html += "<h4>"+ndata['bName']+"</h4>"
+	   	   		 html += " <p class=\"special-content\">"+ndata['bDescription']+"</p>"
+	   	   		 html += "<p><a href=\"detail.html?bId="+ndata['bId']+"\">-更多-</a></p></div></div>"
+	   	   		 $(".special_area").html(html)
+	   		 })   		
+	   	  },
+	   	  error:function(){
+	   		  
+	   	  }
+	     });
+	}
+	
+	$("#pageSize").blur(function(){
+		var size = $("#pageSize").val()
+		if(isPositiveNum(size)) {
+			limit = Number(size)
+	  		getLists(1,limit)
+		}else {
+			alert("请输入大于0的整数值")
+		}
+	})
+
+	function toPage(str) {
+
+		if(str == "index"){
+			getLists(1,limit)
+		}
+		if(str == "end") {
+			getLists(totalPage,limit)
+		}
+		if(str == "prev"){
+			if(currpage>1) {
+				getLists(currpage-1,limit)
+			}else {
+				alert("已经是第一页")
+				getLists(1,limit)
+			}
+			
+		}
+		if(str == "next") {
+			if(currpage < totalPage) {
+				getLists(currpage+1,limit)
+			}else {
+				alert("已经是最后一页")
+				getLists(totalPage,limit)
+			}
+		}
+		}
+</script>
 

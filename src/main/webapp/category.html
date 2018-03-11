@@ -311,13 +311,13 @@
   	
   	$("#b_discount_asc").click(function(){
   		clearInfo()
-		discount = 'asc'
+		discount = 'desc'
 	  	getLists(1,limit)
   	})
   	
   	$("#b_discount_desc").click(function(){
   		clearInfo()
-		discount = 'desc'
+		discount = 'asc'
 	  	getLists(1,limit)
   	})
   	
@@ -328,7 +328,7 @@
 	  	getLists(1,limit)
   	})
   	
-  	$("#b_add_time_asc").click(function(){
+  	$("#b_add_time_desc").click(function(){
   		clearInfo()
 		newset = 'desc'
 	  	getLists(1,limit)
@@ -340,7 +340,7 @@
 	  	getLists(1,limit)
   	})
   	
-  	$("#b_price_asc").click(function(){
+  	$("#b_price_desc").click(function(){
   		clearInfo()
   		price = 'desc'
 	  	getLists(1,limit)

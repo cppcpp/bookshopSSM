@@ -4,6 +4,7 @@
   <title></title>
   <link href="css/font-awesome.min.css" rel="stylesheet" />
   <link href="css/login.css" rel="stylesheet" />
+  
 </head>
 <body>
 <div id="container">
@@ -146,7 +147,7 @@
   //提交按钮的ajax提交
   $("#register").click(function(){
 	let radioValue  = $("input[name='role']:checked").val()
-      if($("#register_username").val() && $("#register_passwd").val() && $("#confirmPwd").val() && $("#phone").val()){
+      if($("#register_username").val() && $("#register_passwd").val() && $("#confirmPwd").val() && $("#phone").val() &&radioValue){
           requestRegister = createRequest();
           var url = getDate();
           requestRegister.open("GET",url,true);

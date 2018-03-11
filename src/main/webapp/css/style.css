@@ -159,7 +159,7 @@ nav .nav-cart img {
     padding: 100px 0 100px 0;
     position: relative;
 }
-/*闁喚鍍�*/
+/*闂侇剦鍠氶崓锟�*/
 #slider:before {
     content: "";
     position: absolute;
@@ -269,7 +269,7 @@ p#back-to-top a{
     text-decoration:none;
     color:#d1d1d1;
     display:block;
-    /*娴ｈ法鏁SS3娑擃厾娈憈ransition鐏炵偞锟窖呯舶鐠哄疇娴嗛柧鐐复娑擃厾娈戦弬鍥х摟濞ｈ濮炲〒鎰綁閺佸牊鐏�*/
+    /*濞达綀娉曢弫顥㏒S3濞戞搩鍘惧▓鎲坮ansition閻忕偟鍋為敓绐栧懐鑸堕悹鍝勭枃濞村棝鏌ч悙顒�澶嶅☉鎿冨幘濞堟垿寮崶褏鎽熸繛锝堫嚙婵偛銆掗幇顒�缍侀柡浣哥墛閻忥拷*/
     -moz-transition:all 1s;
     -webkit-transition:all 1s;
     -o-transition:all 1s;
@@ -628,7 +628,7 @@ footer .footer-manu ul li a:hover {
 }
 
 
-/*閸掑棝銆夐崠锟�*/
+/*闁告帒妫濋妴澶愬礌閿燂拷*/
 .papigation {
     margin: 40px 0px;
    text-align: center;
@@ -854,7 +854,7 @@ p.more_details{
 }
 
 
-/*閻楅�涚幆妞ょ敻娼�*/
+/*闁绘锟芥稓骞嗗銈囨暬濞硷拷*/
 .special {
     margin-top: 15px;
     width: 100%;
@@ -869,6 +869,7 @@ p.more_details{
 }
 
 .special-right {
+	min-width: 80%;
     padding: 5px 15px;
     border: 1px solid #d2d2d2;
     border-radius: 8px;
@@ -1006,7 +1007,7 @@ p.more_details{
     font-size: 16px;
     font-family: 'PT Sans', Helvetica, Arial, sans-serif;
     outline: none;
-    padding-left:20px ;/*韫囧懘銆忕拋鍓х枂閿涘苯鎯侀崚娆愭瀮閺堫剙婀懗灞炬珯閸ュ彞绗傞弬锟�*/
+    padding-left:20px ;/*闊洤鎳橀妴蹇曟媼閸撗呮瀭闁挎稑鑻幆渚�宕氬▎鎰�柡鍫墮濠�顏堟嚄鐏炵偓鐝柛銉ュ綖缁楀倿寮敓锟�*/
     border-radius:6px ;
     border: 1px solid rgba(0,0,0,.5);
     box-shadow: 0 1px 2px rgba(0,0,0,.1);
@@ -1249,7 +1250,7 @@ textarea {
     font-size: 16px;
     font-family: 'PT Sans', Helvetica, Arial, sans-serif;
     outline: none;
-    padding-left:10px ;/*韫囧懘銆忕拋鍓х枂閿涘苯鎯侀崚娆愭瀮閺堫剙婀懗灞炬珯閸ュ彞绗傞弬锟�*/
+    padding-left:10px ;/*闊洤鎳橀妴蹇曟媼閸撗呮瀭闁挎稑鑻幆渚�宕氬▎鎰�柡鍫墮濠�顏堟嚄鐏炵偓鐝柛銉ュ綖缁楀倿寮敓锟�*/
     border-radius:6px ;
     border: 1px solid rgba(0,0,0,.5);
     box-shadow: 0 1px 2px rgba(0,0,0,.1);
