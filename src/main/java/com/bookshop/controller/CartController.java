@@ -102,7 +102,6 @@ import com.bookshop.modle.CartExample;import com.bookshop.modle.CartExample.Cri
     //返回值：ids+删除成功    ids+删除失败  idsNull：未传入id列表  error：系统异常    @RequestMapping(value="/deleteCart",method=RequestMethod.POST)    @ResponseBody
     public String deleteCart(@RequestBody Map<String, Object>req){
         List<String> idList = (List<String>) req.get("ids");
-        Map<String, Object> resultMap = new HashMap<>();
         String strSuc = "";
         String strFail = "";
         String strNotExist = "";                try {
