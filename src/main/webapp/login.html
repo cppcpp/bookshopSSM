@@ -162,9 +162,16 @@ border: 1px solid rgba(0,0,0,.5)!important;
     		  }
     		  
     		  //登录成功--重定向到index
-    		  if(data.loginSuccess){
+    		  /* if(data.loginSuccess){
+    			  window.location="index.html"
+    		  } */
+    		  if(data.buyer){
     			  window.location="index.html"
     		  }
+    		  if(data.seller){
+    			  window.location="admin_manage.html";
+    		  }
+    		  
     		  
     	  },
     	  error:function(){

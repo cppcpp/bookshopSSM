@@ -1,5 +1,7 @@
 package com.bookshop.controller;
 
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -154,13 +156,26 @@ public class UserController {
 		String md5Password=StringUtil.EncoderByMd5(password);
 		criteria.andUPasswordEqualTo(md5Password);
 		
-		int count=usersService.countByExample(example);
-		if(count!=1) {
+		List<Users> usersList=usersService.selectByExample(example);
+		if(usersList.size()<1) {
 			resultMap.put("loginError", "用户名或密码错误");
 			return resultMap;
 		}
+		Users tempUsers=usersList.get(0);
+		//resultMap.put("loginSuccess","登录成功");
+		if(tempUsers.getuRole()==null) {
+			resultMap.put("userRoleIsNull", "用户权限为空，请检查");
+			return resultMap;
+		}
 		
-		resultMap.put("loginSuccess","登录成功");
+		if(tempUsers.getuRole().equals("0")) {
+			resultMap.put("buyer","买家");
+		}
+		
+		if(tempUsers.getuRole().equals("1")) {
+			resultMap.put("seller", "卖家");
+		}
+		
 		Users users=new Users(userName,password);
 		//登录成功，保存session
 		session.setAttribute("users", users);
@@ -287,5 +302,55 @@ public class UserController {
 			return users.getuAccount();
 		}
 		return "empty";
+	}
+	
+	//获取用户信息
+	@RequestMapping("/getUsersInfo")
+	@ResponseBody
+	public Map getUsersInfo() {
+		Map<String, String> resultMap=new HashMap<>();
+		Users sessionUsers=(Users) session.getAttribute("users");
+		if(sessionUsers==null) {
+			resultMap.put("notLogin", "用户还未登录，请登录");
+			return resultMap;
+		}
+		
+		Users users=usersService.selectByPrimaryKey(sessionUsers.getuAccount());
+		if(users==null) {
+			resultMap.put("userNull", "该用户不存在，请检查");
+			return resultMap;
+		}
+		if(users.getuAccount()!=null) {
+			resultMap.put("uAccount", users.getuAccount());
+		}else {
+			resultMap.put("uAccount", "");
+		}
+		
+		if(users.getuMail()!=null) {
+			resultMap.put("uMail",users.getuMail());
+		}else {
+			resultMap.put("uMail","");
+		}
+		
+		if(users.getuName()!=null) {
+			resultMap.put("uName", users.getuName());
+		}else {
+			resultMap.put("uName", "");
+		}
+		
+		if(users.getuPhone()!=null) {
+			resultMap.put("uPassword",users.getuPassword());
+		}else {
+			resultMap.put("uPassword","");
+		}
+		
+		if(users.getuPhone()!=null) {
+			resultMap.put("uPhone", users.getuPhone());
+		}else {
+			resultMap.put("uPhone", "");
+		}
+		
+		
+		return resultMap;
 	}
 }
