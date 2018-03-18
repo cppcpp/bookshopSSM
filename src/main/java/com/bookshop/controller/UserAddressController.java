@@ -71,11 +71,11 @@ public class UserAddressController {
     }
     @RequestMapping(value="/updateUserAddress",method=RequestMethod.POST)    @ResponseBody
     public String updateUserAddress(@RequestBody Map<String, String>req){
-        String id = req.get("uaddrId");
+        String id = req.get("uaddrId");        String uIsdefault=req.get("uIsdefault");//默认地址        Users users= (Users) session.getAttribute("users");
+        
         try {
             if(StringUtils.isEmpty(id)){
-                return "uaddrIdNull";
-            }
+                return "uaddrIdNull";            }                        if(users==null) {            	return "userNotLogin";            }                      //是默认地址--移除之前的默认地址			if(StringUtil.isNotEmpty(uIsdefault)) {				if(uIsdefault.equals("1")) {					UserAddressExample example=new UserAddressExample();					Criteria criteria= example.createCriteria();					criteria.andUAccountEqualTo(users.getuAccount());										List<UserAddress> list= userAddressSV.selectByExample(example);					for(UserAddress userAddress:list) {						userAddress.setuIsdefault(0);						if(userAddressSV.updateByPrimaryKey(userAddress)!=1) {							return "error";						}					}									}			}            
             UserAddress userAddress = userAddressSV.createUserAddress(req);
             if (userAddressSV.updateByPrimaryKeySelective(userAddress) == 1) {
                 return "success";
