@@ -1,9 +1,12 @@
 var multiDeleteArr = []
-var selectedGoods = {}
+var selectedGoods = []
 var flag = false;
 var currentName;
 $(function(){
   getCartList()
+  
+   
+  
   $("body").on("click",".selectSub",function(){
 	  currentName = this.getAttribute('name')
 	  if(this.checked){
@@ -104,15 +107,7 @@ $(function(){
     getSumPrice()
   });
 
-  $("body").on('click',".cart-submit",function(){
-	  var obj = {}
-	  if(multiDeleteArr.length){
-		 localStorage.setItem('goods',JSON.stringify(obj))
-	  }else {
-		  alert("请选择商品")
-	  }
-	 
-  })
+ 
   
     //购物车中的删除
     $("body").on('click','.delete',function() {
@@ -135,7 +130,8 @@ $(function(){
 			type:'post',
 			data:JSON.stringify(obj),
 			success:function(){
-				
+				$("#table_body").html("");
+				getCartList()
 			},
 			error:function(){
 				
@@ -180,7 +176,7 @@ function getCartList(){
 			$.each(data.cartList,function(index,cdata){
 				html +=	"<tr index="+index+" id="+cdata['cId']+"><td><input type=\"checkbox\" class=\"selectSub\" name="+cdata['cId']+"></td>"
 				html += "<td><img class=\"table-img\" src=\"img/book_images/"+cdata['bPic']+"\" /></td>"
-				html += "<td>"+cdata['bName']+"</td>"
+				html += "<td class='bname'>"+cdata['bName']+"</td>"
 				html += " <td class=\"cart-price\">"+cdata['bPrice']+"</td>"
 				html += " <td class=\"dis_price\">"+cdata['bDiscountprice']+"</td>"
 				html += " <td style=\"width: 120px;\">"
@@ -198,6 +194,35 @@ function getCartList(){
 		}
 		
 	})
+	$("body").on('click',".cart-submit",function(){
+	  var obj = {}
+	  selectedGoods = []
+	  $("input:checkbox:checked").each(function(index,element){
+		  if($(this).attr('name') == 'book-select'){
+			  console.log('no need 表头不需要')
+		  }else {
+			  let bId = $(this).attr('name');
+			  let imgSrc = $(this).parent().next().find(".table-img").attr('src');
+			  let bname = $(this).parent().siblings().eq(1).html();
+			  let bPrice =  $(this).parent().siblings().eq(2).html();
+			  let bDiscountprice =  $(this).parent().siblings().eq(3).html();
+			  let bNum = $(this).parent().siblings().eq(4).find(".num-text").val();
+			  let bSumdiscountprice = $(this).parent().siblings().eq(5).html();
+			  let bSumprice = bPrice * bNum
+			  obj = {"bId":bId,"imgSrc":imgSrc,"bName":bname,"bPrice":bPrice,"bDiscountprice":bDiscountprice,"bNum":bNum,"bSumdiscountprice":bSumdiscountprice,"bSumprice":bSumprice};
+			  selectedGoods.push(obj)
+		  }
+	  })
+	  console.log(selectedGoods)
+	  if(multiDeleteArr.length && selectedGoods.length){
+		  sessionStorage.setItem("selectedGoods",JSON.stringify(selectedGoods))
+		  sessionStorage.setItem("selectedIds",JSON.stringify(multiDeleteArr))
+		  setTimeout("javascript:location.href='confirmOrder.html'", 1000); 
+	  }else {
+		  alert("请选择商品")
+	  }
+	 
+  })
 }
 
 //前台购物车中复选框中的全选与反选

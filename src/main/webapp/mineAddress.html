@@ -120,6 +120,34 @@
               <input type="submit" value="确定" class="add_address_button" name="add">
             </div>
           </div>
+          
+          <!-- 修改 -->
+            <div class="edit-address">
+            <div class="circle" >X</div>
+            <div class="mini-form-input">
+              <label>收货人：</label>
+              <input type="text" value="" id="editReciver">
+            </div>
+
+            <div class="mini-form-input">
+              <label>收货地址：</label>
+              <textarea id="editAddress"></textarea>
+            </div>
+
+            <div class="mini-form-input">
+              <label>收货人电话：</label>
+              <input type="text" value="" id="editPhone">
+            </div>
+
+            <div class="mini-form-input">
+              <label>设为默认：</label>
+              <input type="checkbox" id="isEditDefault">
+            </div>
+            <div class="mini-form-input">
+              <input type="hidden" value="" name="uAddrId">
+              <input type="submit" value="确定" class="edit_address_button" name="edit">
+            </div>
+          </div>
       </div>
 
     </div>
@@ -168,50 +196,20 @@
       $(".circles").click(function() {
           $(".new-address").slideUp();
       })
-      var uAccount = '';
-      $.ajax({
-			url:'user/getUsersInfo',
-			type:'get',
-			success:function(data){
-			  if(data.uAccount){
-				  uAccount = data.uAccount
-				  $.ajax({
-			    	  url:"userAdress/userAddressQry",
-			    	  type:'get',
-			    	  data:{
-			    		  uAccount:uAccount
-			    	  },
-			    	  success:function(data){
-			    		  if(data.userAdressList &&data.userAdressList.length){
-			    			  var html = ''
-			    			  $.each(data.userAdressList,function(index,adata){
-				    			 if(adata['uIsdefault'] == 0) {
-				    				 adata['uIsdefault'] = '否'
-				    			 }
-				    			 if(adata['uIsdefault'] == 1) {
-				    				 adata['uIsdefault'] = '是'
-				    			 }
-				    			 
-						    	  html += "  <div class=\"exist-address\">"
-						    	  html +="<div class=\"mini-form-input\"><label>收货人：</label>"+adata['oReceiver']+"</div>"
-						    	  html +="<div class=\"mini-form-input\"><label>收货地址：</label>"+adata['uAddress']+"</div>"
-						    	  html +="<div class=\"mini-form-input\"><label>收货人电话：</label>"+adata['oPhone']+"</div>"  
-				    		 	  html +="<div class=\"mini-form-input\"><label>是否默认：</label>"+adata['uIsdefault']+"</div></br>"
-				    		  	  html +="<div class=\"mini-form-input\"> <input type=\"button\" value=\"修改\"><input type=\"button\" value=\"删除\"></div></div>"
-				    		  })
-				    		  $("#MineAllNew").append(html)
-				    		  
-			    		  }
-			    	  }
-			      })
-			  }
-		}
-	})
       
+      $(".circle").click(function() {
+          $(".edit-address").slideUp();
+      })
+      
+      var uAccount = '';
+      getAddressLists()
+
+     
+     //add new address
 	$(".add_address_button").click(function(){
 		console.log($("#addReciver").val(), $("#addAddress").val(),$("#addPhone").val(),$("#isDefault").is(":checked"))
 		if(!$("#addReciver").val()|| !$("#addAddress").val() ||!$("#addPhone").val()){
-			alert('请完善收获地址')
+			alert('请完善收货地址')
 		}else{
 			let obj = {
 					'uAddress':$("#addAddress").val(),
@@ -225,14 +223,117 @@
 				contentType: "application/json; charset=utf-8",
 				data:JSON.stringify(obj),
 				success:function(data){
-				console.log(data)	
+				  $(".new-address").slideUp();
+				  getAddressLists()	
 				}
 			})
 		}
 		
 	})
+	//删除地址
+	$("body").on("click",".delete",function(){
+		let ids = []
+		if (confirm("确认删除该地址")==true){ 
+			let id = $(this).parent().parent().attr('name')
+			ids.push(id)
+			  $.ajax({
+				  url:'userAdress/deleteUserAddress',
+				  type:'post',
+				  data:JSON.stringify({
+					  "ids":ids
+				  }),
+				  contentType: "application/json; charset=utf-8",
+				  success:function(data){
+					  getAddressLists()	
+				  }
+			  
+			  }) 
+			 }else{ 
+			  return false; 
+			 } 
+	})
+	var editId ;
+	//修改地址
+		$("body").on("click",".edit",function(){
+			editId = $(this).parent().parent().attr('name')
+			$("#editReciver").val($(this).parent().siblings().eq(0).find('.oReceiver').html())
+			$("#editAddress").val($(this).parent().siblings().eq(1).find('.uAddress').html())
+			$("#editPhone").val($(this).parent().siblings().eq(2).find('.oPhone').html())
+			if($(this).parent().siblings().eq(3).find('.isEditDefault').html() == '是'){
+				$("#isEditDefault").attr('checked',true)
+			}else{
+				$("#isEditDefault").attr('checked',false)
+			}
+			$(".edit-address").slideDown();
+		
+	})
+	  
+	  $("body").on('click','.edit_address_button',function(){
+		if(!$("#editReciver").val()|| !$("#editAddress").val() ||!$("#editPhone").val()){
+			alert('请完善收货地址')
+		}else{
+		  $.ajax({
+			  url:'userAdress/updateUserAddress',
+			  type:'post',
+			  data:JSON.stringify({
+				  "uaddrId":editId,
+				  'uAddress':$("#editAddress").val(),
+				  'oPhone':$("#editPhone").val(),
+				  "uIsdefault":$("#isEditDefault").is(":checked")? 1:0,
+				  "oReceiver":$("#editReciver").val()	
+			  }),
+			  contentType: "application/json; charset=utf-8",
+			  success:function(data){
+				  $(".edit-address").slideUp();
+				  getAddressLists()
+			  }
+		  
+		  }) 
+		}
+		
+	})
       
   })
-
+    function getAddressLists(){
+    	 $.ajax({
+ 			url:'user/getUsersInfo',
+ 			type:'get',
+ 			success:function(data){
+ 			  if(data.uAccount){
+ 				  uAccount = data.uAccount
+ 				  $.ajax({
+ 			    	  url:"userAdress/userAddressQry",
+ 			    	  type:'get',
+ 			    	  data:{
+ 			    		  uAccount:uAccount
+ 			    	  },
+ 			    	  success:function(data){
+ 			    		  if(data.userAdressList &&data.userAdressList.length){
+ 			    			  var html = ''
+ 			    			  $("#MineAllNew").html('')
+ 			    			  $.each(data.userAdressList,function(index,adata){
+ 				    			 if(adata['uIsdefault'] == 0) {
+ 				    				 adata['uIsdefault'] = '否'
+ 				    			 }
+ 				    			 if(adata['uIsdefault'] == 1) {
+ 				    				 adata['uIsdefault'] = '是'
+ 				    			 }
+ 				    			 
+ 						    	  html += "  <div class=\"exist-address\" name="+adata['uaddrId']+">"
+ 						    	  html +="<div class=\"mini-form-input\"><label>收货人：</label><span class=\"oReceiver\">"+adata['oReceiver']+"</span></div>"
+ 						    	  html +="<div class=\"mini-form-input\"><label>收货地址：</label><span class=\"uAddress\">"+adata['uAddress']+"</span></div>"
+ 						    	  html +="<div class=\"mini-form-input\"><label>收货人电话：</label><span class=\"oPhone\">"+adata['oPhone']+"</span></div>"  
+ 				    		 	  html +="<div class=\"mini-form-input\"><label>是否默认：</label><span class=\"isEditDefault\">"+adata['uIsdefault']+"</span></div></br>"
+ 				    		  	  html +="<div class=\"mini-form-input\"> <input type=\"button\" value=\"修改\" class=\"edit\"><input type=\"button\" value=\"删除\" class=\"delete\"></div></div>"
+ 				    		  })
+ 				    		  $("#MineAllNew").append(html)
+ 				    		  
+ 			    		  }
+ 			    	  }
+ 			      })
+ 			  }
+ 		}
+ 	})
+    }
 
 </script>
