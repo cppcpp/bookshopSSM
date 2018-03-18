@@ -1,4 +1,4 @@
-package com.bookshop.controller;import java.util.ArrayList;
+package com.bookshop.controller;import static org.mockito.Matchers.intThat;import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;import javax.servlet.http.HttpSession;import org.apache.commons.lang3.StringUtils;import org.springframework.beans.factory.annotation.Autowired;
@@ -62,23 +62,18 @@ import com.bookshop.modle.CartExample;import com.bookshop.modle.CartExample.Cri
     }        //初始化购物车接口    @RequestMapping("/initCart")    @ResponseBody    public Map initCart(@RequestParam(name="page",required=false)String page,    		@RequestParam(name="limit",required=false)String limit) {    	Map<String, Object> resultMap=new HashMap<>();    	List<Map> mapList = new ArrayList<>();    	    	int pageNum =  page == null ? 1 : Integer.parseInt(page);        int pageSize =  limit == null ? 10 : Integer.parseInt(limit);    	    	Users users=(Users) session.getAttribute("users");    	if(users==null) {    		resultMap.put("userNotExitsError", "用户还未登录，请登录");    		return resultMap;    	}    	String uAccount=users.getuAccount();    	CartExample example=new CartExample();    	Criteria criteria= example.createCriteria();    	criteria.andUAccountEqualTo(uAccount);    	PageHelper.startPage(pageNum, pageSize);    	List<Cart> cartList= cartService.selectByExample(example);    			 Books tempBooks;	     for (Cart cart : cartList) {	         Map<String,Object> tMap = new HashMap<>();	         tMap.put("cId", cart.getcId());	         tMap.put("uAccount", cart.getuAccount());	         tMap.put("bId", cart.getbId());	         tMap.put("bName", cart.getbName());	         //通过bId找到bPic保存	         tempBooks=bookService.selectByPrimaryKey(cart.getbId());	         if(tempBooks!=null) {	         	tMap.put("bPic", tempBooks.getbPic());	         }else {	         	//该书籍不存在，返回	         	resultMap.put("bookIsNotExist", "该书籍不存在");	         }	         if(cart.getbNums()!=null){	             tMap.put("bNums", cart.getbNums().toString());	         }	         if(cart.getbPrice()!=null){	             tMap.put("bPrice", cart.getbPrice().toString());	         }	         if(cart.getbDiscountprice()!=null){	             tMap.put("bDiscountprice", cart.getbDiscountprice().toString());	         }	         if(cart.getbSumprice()!=null){	             tMap.put("bSumprice", cart.getbSumprice().toString());	         }	         if(cart.getbSumdiscountprice()!=null){	             tMap.put("bSumdiscountprice", cart.getbSumdiscountprice().toString());	         }	         mapList.add(tMap);	     }	     PageInfo<Cart> pageInfo=new PageInfo<>(cartList);  	     resultMap.put("cartList", mapList);	     resultMap.put("pageInfo", pageInfo);	     return resultMap;    }
     //统计登录用户购物车个数的接口    @RequestMapping("/countOfCart")    @ResponseBody    public String countOfCart() {    	Users users=(Users) session.getAttribute("users");    	if(users==null) {    		return "userNotExitsError";    	}    	String uAccount=users.getuAccount();    	CartExample example=new CartExample();    	Criteria criteria= example.createCriteria();    	criteria.andUAccountEqualTo(uAccount);    	List<Cart> cartList= cartService.selectByExample(example);    	    	return cartList.size()+"";    }        //添加到购物车    //返回：成功：success  失败：error    @RequestMapping(value="/addCart",method=RequestMethod.POST)    @ResponseBody
     public String addCart(@RequestBody Map<String, String>req){
-        String id = req.get("cId");        String uAccount=req.get("uAccount");
+        String id = req.get("cId");        String uAccount=req.get("uAccount");        String bId=req.get("bId");
         try {
             //判断非空字段是否为空 以及设置创建时间
             if(StringUtils.isEmpty(id)){
                 id = StringUtil.seqGenerate().toString();
                 req.put("cId", id.toString());
-            }            //用户账户            if(StringUtil.isEmpty(uAccount)) {            	Users users= (Users) session.getAttribute("users");            	if(users==null) {            		return "userNotLogin";            	}            	            	uAccount=users.getuAccount();            	req.put("uAccount", uAccount);            }            
-            Cart cart = cartService.createCart(req);
-          
-            if (cartService.insertSelective(cart) == 1) {
-                return "success";
-            }else {
-                return "error";
-            }
+            }                        //书籍Id--必须            if(bId==null) {            	return "bIdNull";            }                        //用户账户            if(StringUtil.isEmpty(uAccount)) {            	Users users= (Users) session.getAttribute("users");            	if(users==null) {            		return "userNotLogin";            	}            	            	uAccount=users.getuAccount();            	req.put("uAccount", uAccount);            }            
+            Cart cart = cartService.createCart(req);                        //同一用户将同一本书再次加入购物车处理            CartExample example=new CartExample();            Criteria criteria= example.createCriteria();            criteria.andUAccountEqualTo(uAccount);            criteria.andBIdEqualTo(bId);                        //此本书数据库中已存在            List<Cart> cartListTemp=cartService.selectByExample(example);            if(cartListTemp.size()==1) {            	Cart cartTemp=cartListTemp.get(0);            	int num=cartTemp.getbNums();            	num+=1;            	cartTemp.setbNums(num);            	            	if(cartService.updateByPrimaryKey(cartTemp)==1) {            		return "success";            	}else {            		return "error";            	}            }                        if(cartListTemp.size()>1) {            	return "error";            }                      if(cartListTemp.size()==0) {            	if (cartService.insertSelective(cart) == 1) {                    return "success";                }else {                    return "error";                }            }
+            
         } catch (Exception e) {
             return "error";
-        }
+        }                return "error";
     }
     //更新购物车    //返回值：lossId：缺少主键   success：更新成功  error：更新失败        @RequestMapping(value="/updateCart",method=RequestMethod.POST)    @ResponseBody
     public String updateCart(@RequestBody Map<String, String>req){
