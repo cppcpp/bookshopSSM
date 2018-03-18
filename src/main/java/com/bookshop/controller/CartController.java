@@ -68,7 +68,7 @@ import com.bookshop.modle.CartExample;import com.bookshop.modle.CartExample.Cri
             if(StringUtils.isEmpty(id)){
                 id = StringUtil.seqGenerate().toString();
                 req.put("cId", id.toString());
-            }            //用户账户            if(StringUtil.isEmpty(uAccount)) {            	Users users= (Users) session.getAttribute("users");            	uAccount=users.getuAccount();            	req.put("uAccount", uAccount);            }            
+            }            //用户账户            if(StringUtil.isEmpty(uAccount)) {            	Users users= (Users) session.getAttribute("users");            	if(users==null) {            		return "userNotLogin";            	}            	            	uAccount=users.getuAccount();            	req.put("uAccount", uAccount);            }            
             Cart cart = cartService.createCart(req);
           
             if (cartService.insertSelective(cart) == 1) {

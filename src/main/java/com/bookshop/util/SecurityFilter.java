@@ -48,9 +48,7 @@ public class SecurityFilter implements Filter {
 					path.equals("mineAccount.html")||
 					path.equals("mineAddress.html")||
 					path.equals("mineInfo.html")||
-					path.equals("mineOrders.html")||
-					path.equals("cart/addCart")
-					) {
+					path.equals("mineOrders.html")) {
 				res.sendRedirect("/bookshop/login.html");
 				return;
 			}

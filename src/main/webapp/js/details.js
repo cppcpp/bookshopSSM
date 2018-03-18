@@ -120,6 +120,10 @@ $(function(){
 			contentType: "application/json; charset=utf-8",
 			success:function(data){
 				console.log(data)
+				if(data=="userNotLogin"){
+					window.location="login.html"
+				}
+				
 			},
 			error:function(){
 				
