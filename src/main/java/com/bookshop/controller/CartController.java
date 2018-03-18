@@ -20,10 +20,10 @@ import com.bookshop.modle.CartExample;import com.bookshop.modle.CartExample.Cri
              @RequestParam(name="bPrice",required=false)String bPrice,
              @RequestParam(name="bDiscountprice",required=false)String bDiscountprice,
              @RequestParam(name="bSumprice",required=false)String bSumprice,
-             @RequestParam(name="bSumdiscountprice",required=false)String bSumdiscountprice){    	Map<String, Object> resultMap=new HashMap<>();
+             @RequestParam(name="bSumdiscountprice",required=false)String bSumdiscountprice,             @RequestParam(name="page",required=false)String page, 			 @RequestParam(name="limit",required=false)String limit){    	Map<String, Object> resultMap=new HashMap<>();
         List<Map> mapList = new ArrayList<>();
         Map<String, String> cartExmMap = new HashMap<>();
-        
+                int pageNum =  page == null ? 1 : Integer.parseInt(page);	    int pageSize =  limit == null ? 10 : Integer.parseInt(limit);	    
         cartExmMap.put("cId", cId);
         cartExmMap.put("uAccount", uAccount);
         cartExmMap.put("bId", bId);
@@ -33,7 +33,7 @@ import com.bookshop.modle.CartExample;import com.bookshop.modle.CartExample.Cri
         cartExmMap.put("bDiscountprice", bDiscountprice);
         cartExmMap.put("bSumprice", bSumprice);
         cartExmMap.put("bSumdiscountprice", bSumdiscountprice);
-        CartExample example = cartService.createCartExm(cartExmMap);
+        CartExample example = cartService.createCartExm(cartExmMap);                PageHelper.startPage(pageNum, pageSize);
         List<Cart> cartList = cartService.selectByExample(example);        Books tempBooks;
         for (Cart cart : cartList) {
             Map<String,Object> tMap = new HashMap<>();
@@ -55,9 +55,8 @@ import com.bookshop.modle.CartExample;import com.bookshop.modle.CartExample.Cri
             if(cart.getbSumdiscountprice()!=null){
                 tMap.put("bSumdiscountprice", cart.getbSumdiscountprice().toString());
             }
-            mapList.add(tMap);
-        }
-           
+            mapList.add(tMap);        }
+                PageInfo<Cart> pageInfo=new PageInfo<>(cartList);        resultMap.put("pageInfo", pageInfo);
         resultMap.put("cartList", mapList);        return resultMap;
     }        //初始化购物车接口    @RequestMapping("/initCart")    @ResponseBody    public Map initCart(@RequestParam(name="page",required=false)String page,    		@RequestParam(name="limit",required=false)String limit) {    	Map<String, Object> resultMap=new HashMap<>();    	List<Map> mapList = new ArrayList<>();    	    	int pageNum =  page == null ? 1 : Integer.parseInt(page);        int pageSize =  limit == null ? 10 : Integer.parseInt(limit);    	    	Users users=(Users) session.getAttribute("users");    	if(users==null) {    		resultMap.put("userNotExitsError", "用户还未登录，请登录");    		return resultMap;    	}    	String uAccount=users.getuAccount();    	CartExample example=new CartExample();    	Criteria criteria= example.createCriteria();    	criteria.andUAccountEqualTo(uAccount);    	PageHelper.startPage(pageNum, pageSize);    	List<Cart> cartList= cartService.selectByExample(example);    			 Books tempBooks;	     for (Cart cart : cartList) {	         Map<String,Object> tMap = new HashMap<>();	         tMap.put("cId", cart.getcId());	         tMap.put("uAccount", cart.getuAccount());	         tMap.put("bId", cart.getbId());	         tMap.put("bName", cart.getbName());	         //通过bId找到bPic保存	         tempBooks=bookService.selectByPrimaryKey(cart.getbId());	         if(tempBooks!=null) {	         	tMap.put("bPic", tempBooks.getbPic());	         }else {	         	//该书籍不存在，返回	         	resultMap.put("bookIsNotExist", "该书籍不存在");	         }	         if(cart.getbNums()!=null){	             tMap.put("bNums", cart.getbNums().toString());	         }	         if(cart.getbPrice()!=null){	             tMap.put("bPrice", cart.getbPrice().toString());	         }	         if(cart.getbDiscountprice()!=null){	             tMap.put("bDiscountprice", cart.getbDiscountprice().toString());	         }	         if(cart.getbSumprice()!=null){	             tMap.put("bSumprice", cart.getbSumprice().toString());	         }	         if(cart.getbSumdiscountprice()!=null){	             tMap.put("bSumdiscountprice", cart.getbSumdiscountprice().toString());	         }	         mapList.add(tMap);	     }	     PageInfo<Cart> pageInfo=new PageInfo<>(cartList);  	     resultMap.put("cartList", mapList);	     resultMap.put("pageInfo", pageInfo);	     return resultMap;    }
     //统计登录用户购物车个数的接口    @RequestMapping("/countOfCart")    @ResponseBody    public String countOfCart() {    	Users users=(Users) session.getAttribute("users");    	if(users==null) {    		return "userNotExitsError";    	}    	String uAccount=users.getuAccount();    	CartExample example=new CartExample();    	Criteria criteria= example.createCriteria();    	criteria.andUAccountEqualTo(uAccount);    	List<Cart> cartList= cartService.selectByExample(example);    	    	return cartList.size()+"";    }        //添加到购物车    //返回：成功：success  失败：error    @RequestMapping(value="/addCart",method=RequestMethod.POST)    @ResponseBody

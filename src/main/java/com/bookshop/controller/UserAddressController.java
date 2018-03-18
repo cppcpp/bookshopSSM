@@ -2,7 +2,7 @@ package com.bookshop.controller;import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;import javax.servlet.http.HttpSession;import org.apache.commons.lang3.StringUtils;import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Map;import javax.servlet.http.HttpSession;import org.apache.commons.lang3.StringUtils;import org.springframework.beans.factory.annotation.Autowired;import org.springframework.http.StreamingHttpOutputMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bookshop.modle.UserAddress;
-import com.bookshop.modle.UserAddressExample;import com.bookshop.modle.Users;import com.bookshop.service.UserAddressService;import com.bookshop.util.StringUtil;import com.github.pagehelper.PageInfo;
+import com.bookshop.modle.UserAddressExample;import com.bookshop.modle.UserAddressExample.Criteria;import com.bookshop.modle.Users;import com.bookshop.service.UserAddressService;import com.bookshop.util.StringUtil;import com.github.pagehelper.PageInfo;
 @Controller@RequestMapping("/userAdress")
 public class UserAddressController {
 	@Autowired	UserAddressService userAddressSV;		@Autowired	HttpSession session;
@@ -55,13 +55,9 @@ public class UserAddressController {
         return resultMap;
     }
     @RequestMapping(value="/addUserAddress",method=RequestMethod.POST)    @ResponseBody
-    public String addUserAddress(@RequestBody Map<String, String>req){        String id = req.get("uaddrId");        String uAccount=req.get("uAccount");
-        try {
-            //判断非空字段是否为空 以及设置创建时间
-            if(StringUtils.isEmpty(id)){
-                id = StringUtil.seqGenerate().toString();
-                req.put("uaddrId", id.toString());
-            }                        if(StringUtil.isEmpty(uAccount)) {            	Users users=(Users) session.getAttribute("users");            	uAccount=users.getuAccount();            }            if(StringUtil.isEmpty(uAccount)) {            	return "notLogin";            }            
+    public String addUserAddress(@RequestBody Map<String, String>req){        String id = req.get("uaddrId");        String uAccount=req.get("uAccount");        String oPhone=req.get("oPhone"),uAddress=req.get("uAddress"),oReceiver=req.get("uAddress");        String uIsdefault=req.get("uIsdefault");//默认地址        
+        try {        	//判字符串空        	if(StringUtil.isEmpty(oPhone)) {        		return "uPhoneNull";        	}else {        		if(oPhone.length()>11) {        			return "uPhoneLengthTooLong";        		}        	}        	        	if(StringUtil.isEmpty(uAddress)) {        		return "uAddressNull";        	}else {        		if(uAddress.length()>50) {        			return "uAddressLengthTooLong";        		}        	}        	        	if(StringUtil.isEmpty(oReceiver)) {        		return "oReceiverNull";        	}else {        		if(oReceiver.length()>10) {        			return "oReceiverLengthTooLong";        			        		}        	}        	        	//判断非空字段是否为空 以及设置创建时间            if(StringUtils.isEmpty(id)){                id = StringUtil.seqGenerate().toString();                req.put("uaddrId", id.toString());            }                        if(StringUtil.isEmpty(uAccount)) {            	Users users=(Users) session.getAttribute("users");            	uAccount=users.getuAccount();            	req.put("uAccount", uAccount);            }            if(StringUtil.isEmpty(uAccount)) {            	return "notLogin";            }                    	        	//是默认地址--移除之前的默认地址        	if(StringUtil.isNotEmpty(uIsdefault)) {        		if(uIsdefault.equals("1")) {        			UserAddressExample example=new UserAddressExample();        			Criteria criteria= example.createCriteria();        			criteria.andUAccountEqualTo(uAccount);        			        			List<UserAddress> list= userAddressSV.selectByExample(example);        			for(UserAddress userAddress:list) {        				userAddress.setuIsdefault(0);        				if(userAddressSV.updateByPrimaryKey(userAddress)!=1) {        					return "error";        				}        			}        			        		}        	}        	
+            
             UserAddress userAddress = userAddressSV.createUserAddress(req);
           
             if (userAddressSV.insertSelective(userAddress) == 1) {
@@ -118,5 +114,5 @@ public class UserAddressController {
             }
         } catch (Exception e) {
         	return "error";        }
-    }
+    }        //获取用户的默认地址    @RequestMapping("/getUserDefaultAddress")    @ResponseBody    public Map getUserDefaultAddress() {    	Map<String, Object> resultMap=new HashMap<>();    	UserAddress defaultUserAddress=null;    	    	Users users=(Users) session.getAttribute("users");    	    	if(users==null) {    		resultMap.put("userNotLogin", "用户还未登录");    		return resultMap;    	}    	    	String uAccount=users.getuAccount();    	    	UserAddressExample example=new UserAddressExample();		Criteria criteria= example.createCriteria();		criteria.andUAccountEqualTo(uAccount);		criteria.andUIsdefaultEqualTo(1);				List<UserAddress> list= userAddressSV.selectByExample(example);    	if(list.size()>=1) {    		defaultUserAddress=list.get(0);    		resultMap.put("defaultUserAddress", defaultUserAddress);    	}else {    		resultMap.put("defaultUserAddress", null);    	}    	    	return resultMap;    }
 }

@@ -186,8 +186,12 @@
 			    			  var html = ''
 			    			  $.each(data.userAdressList,function(index,adata){
 				    			 if(adata['uIsdefault'] == 0) {
+				    				 adata['uIsdefault'] = '否'
+				    			 }
+				    			 if(adata['uIsdefault'] == 1) {
 				    				 adata['uIsdefault'] = '是'
 				    			 }
+				    			 
 						    	  html += "  <div class=\"exist-address\">"
 						    	  html +="<div class=\"mini-form-input\"><label>收货人：</label>"+adata['oReceiver']+"</div>"
 						    	  html +="<div class=\"mini-form-input\"><label>收货地址：</label>"+adata['uAddress']+"</div>"
@@ -212,7 +216,7 @@
 			let obj = {
 					'uAddress':$("#addAddress").val(),
 					'oPhone':$("#addPhone").val(),
-					"ulsdefault":$("#isDefault").is(":checked")? 1:0,
+					"uIsdefault":$("#isDefault").is(":checked")? 1:0,
 					"oReceiver":$("#addReciver").val()	
 				}
 			$.ajax({
