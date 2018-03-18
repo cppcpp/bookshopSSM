@@ -83,103 +83,22 @@
         <div class="row">
           <div class="nav-title"><i class="glyphicon glyphicon-sort-by-order"></i>&nbsp;&nbsp;所有订单</div>
         </div>
-        <div class="row">
-          <form action="MineAllNew">
-            <div class="order-container">
-              <div class="order-top">
-                <div class="order-top-left">
-                  <div>订单编号：<span>2380168687910</span></div>
-                  <div>订单时间：<span>2017-10-09 12:13:14</span></div>
-                  <div>收货人：<span>shy</span></div>
-                </div>
-                <div class="order-top-right">
-                  <div>等待付款</div>
-                </div>
-              </div>
-              <div class="order-content">
-                <div class="order-content-detail">
-                  <div class="detail-list-item">
-                    <img src="img/book_images/f1.jpg">
-                    <span class="order-content-detail-bookname">共享经济</span>
-                    <div class="order-content-detail-right">
-                      <span class="order-content-detail-bookprice">¥120</span>
-                      <span class="order-content-detail-bookoldprice">¥120</span>
-                      <span class="order-content-detail-booknum">x3</span>
-                    </div>
-                  </div>
-                  <!--清除浮动-->
-                  <div class="clear"></div>
-
-                  <div class="detail-list-item">
-                    <img src="img/book_images/f1.jpg">
-                    <span class="order-content-detail-bookname">共享经济</span>
-                    <div class="order-content-detail-right">
-                      <span class="order-content-detail-bookprice">¥120</span>
-                      <span class="order-content-detail-bookoldprice">¥120</span>
-                      <span class="order-content-detail-booknum">x3</span>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-              <div class="order-bottom">
-                <div><input type="submit" value="删除" class="pass_button"></div>
-                <div>共2件商品&nbsp;&nbsp;合计：¥240</div>
-              </div>
-            </div>
-
-
-            <div class="order-container">
-              <div class="order-top">
-                <div class="order-top-left">
-                  <div>订单编号：<span>2380168687910</span></div>
-                  <div>订单时间：<span>2017-10-09 12:13:14</span></div>
-                  <div>收货人：<span>shy</span></div>
-                </div>
-                <div class="order-top-right">
-                  <div>等待付款</div>
-                </div>
-              </div>
-              <div class="order-content">
-                <div class="order-content-detail">
-                  <div class="detail-list-item">
-                    <img src="img/book_images/f1.jpg">
-                    <span class="order-content-detail-bookname">共享经济</span>
-                    <div class="order-content-detail-right">
-                      <span class="order-content-detail-bookprice">¥120</span>
-                      <span class="order-content-detail-bookoldprice">¥120</span>
-                      <span class="order-content-detail-booknum">x3</span>
-                    </div>
-                  </div>
-                  <!--清除浮动-->
-                  <div class="clear"></div>
-
-                  <div class="detail-list-item">
-                    <img src="img/book_images/f1.jpg">
-                    <span class="order-content-detail-bookname">共享经济</span>
-                    <div class="order-content-detail-right">
-                      <span class="order-content-detail-bookprice">¥120</span>
-                      <span class="order-content-detail-bookoldprice">¥120</span>
-                      <span class="order-content-detail-booknum">x3</span>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-              <div class="order-bottom">
-                <div><i class="fa fa-trash-o"></i></div>
-                <div>共2件商品&nbsp;&nbsp;合计：¥240</div>
-              </div>
-            </div>
-
-          </form>
+        <div class="row" id="mine_order_lists">
+         
         </div>
       </div>
 
     </div>
   </div>
 </section>
-
+ <div class="row papigation">
+    <span class="papigation-button" onclick="toPage('index')">首页</span>
+    <span class="papigation-button" onclick="toPage('prev')">上一页</span>
+    <span class="papigation-button" onclick="toPage('next')">下一页</span>
+    <span class="papigation-button" onclick="toPage('end')">尾页</span>
+    <span class="papigationPage">第1页／共8页</span>
+    <span>设置每页&nbsp;<input type="text" id="pageSize" style="width: 30px;">&nbsp;条</span>
+</div>
 
 
 <!-- footer Start -->
@@ -208,12 +127,126 @@
 <script src="js/jquery-2.2.4.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script>
+var totalPage,currpage,limit
   $(function () {
     $(".subnav li").hover(function () {
       $(".subnav li").removeClass("activeLI")
     },function () {
       $("#mineOrders").addClass("activeLI")
     })
+    getLists()
+    
+    $("body").on('click','.order_delete',function() {
+    	var obj = {
+			'ids':[$(this).parent().attr('name')]
+		}
+    	$.ajax({
+			url:'orders/deleteOrders',
+			contentType: "application/json; charset=utf-8",
+			type:'post',
+			data:JSON.stringify(obj),
+			success:function(){
+				getLists()
+			},
+			error:function(){
+				
+			}
+		}) 
+	})
   })
+  function getLists(page,limit){
+		if(!page) {
+			page = 1
+		}
+		if(!limit) {
+			limit = 10
+		}
+		$.ajax({
+	    	url:'orders/ordersQry',
+	    	type:'post',
+	    	data:JSON.stringify({ 
+	    		"page": page,
+	    		"limit": limit,
+	    		  }),
+	    	contentType: "application/json; charset=utf-8",
+	    	success:function(data){
+	    		 totalPage = data.pageInfo.pages
+	    		  limit = data.pageInfo.pageSize
+	    		  currpage = data.pageInfo.pageNum
+	    		  $(".papigationPage").html("第"+currpage+"页/共"+totalPage+"页")
+	    		var html = ""
+	    		$.each(data.orderList,function(index,odata){
+	    	    		html += " <div class=\"order-container\">"
+	    	    		html += " <div class=\"order-top\">"
+	    	    		html += "<div class=\"order-top-left\">"
+	    	    		html += "<div>订单编号：<span>"+odata['oId']+"</span></div>"
+	    	    		html += "<div>订单时间：<span>"+odata['oTime']+"</span></div>"
+	    	    		html += " <div>收货人：<span>"+odata['uReceiver']+"</span></div></div>"
+	    	    		html += "<div class=\"order-top-right\"><div>等待付款</div></div></div>"
+	    	    		html += "<div class=\"order-content\"><div class=\"order-content-detail\">"
+	    	    		$.each(odata.orderDetailsList,function(index,ddata){
+	    	    			html += "<div class=\"detail-list-item\">"
+	    	    	    	html += "<img src=\"img/book_images/"+ddata['bPic']+"\">"
+	    	    	    	html += "<span class=\"order-content-detail-bookname\">"+ddata['bName']+"</span>"
+	    	    			html +="<div class=\"order-content-detail-right\">"
+	    	    			html += " <span class=\"order-content-detail-bookprice\">"+ddata['bSumdiscountprice']+"</span>"
+	    	    			html += "<span class=\"order-content-detail-bookoldprice\">"+ddata['bSumprice']+"</span>"
+	    	    			html += "<span class=\"order-content-detail-booknum\">"+ddata['bNums']+"</span>"
+	    	    			html += "</div> </div>"
+	    	    			html +=" <div class=\"clear\"></div>"
+	    	    		})
+	    	    		html +="</div> </div>"
+	    	    		html +=" <div class=\"order-bottom\">"
+	    	    		html += "<div name="+odata['oId']+"><input type=\"submit\" value=\"删除\" class=\"pass_button order_delete\"></div>"
+	                	html += "<div>共"+odata['oNum']+"件商品&nbsp;&nbsp;合计：¥"+odata['oPrice']+"</div></div></div> "
+	                
+	    	    	})
+	    	    	$("#mine_order_lists").html(html)
+	    	}
+	    })
+	}
+	
+	function toPage(str) {
+			console.log(str)
+			if(str == "index"){
+				getLists(1,limit)
+			}
+			if(str == "end") {
+				getLists(totalPage,limit)
+			}
+			if(str == "prev"){
+				if(currpage>1) {
+					getLists(currpage-1,limit)
+				}else {
+					alert("已经是第一页")
+					getLists(1,limit)
+				}
+				
+			}
+			if(str == "next") {
+				if(currpage < totalPage) {
+					getLists(currpage+1,limit)
+				}else {
+					alert("已经是最后一页")
+					getLists(totalPage,limit)
+				}
+			}
+		}
+	
+	//是否为正整数  
+  	function isPositiveNum(s){
+    var re = /^[0-9]*[1-9][0-9]*$/ ;  
+    return re.test(s)  
+	} 
+	
+  	$("#pageSize").blur(function(){
+  		var size = $("#pageSize").val()
+  		if(isPositiveNum(size)) {
+  			limit = Number(size)
+  	  		getLists(1,limit)
+  		}else {
+  			alert("请输入大于0的整数值")
+  		}
+  	})
 </script>
 <script src="js/utils.js"></script>

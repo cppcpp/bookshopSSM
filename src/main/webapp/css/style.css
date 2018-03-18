@@ -1298,7 +1298,7 @@ textarea {
     width: 600px;
     height: auto;
     position: fixed;
-    top: 50%;
+    top: 30%;
     left: 50%;
     background: #7c6354;
     padding-top: 45px;
@@ -1317,7 +1317,7 @@ textarea {
     margin-left: 20px;
     margin-bottom: 20px;
 }
-.add_address_button,.edit_address_button{
+.add_address_button,.edit_address_button,.edit_default_address{
     border: 1px solid #de6a5d;
     border-radius: 5px;
     -moz-border-radius: 5px;

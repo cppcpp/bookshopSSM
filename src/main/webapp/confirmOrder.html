@@ -137,22 +137,12 @@
 </section>
 
 <div class="address-all">
-  <div class="circles">X</div>
+  <div class="circle">X</div>
   <!--遍历所有的已有地址-->
-  <form id="order_address">
-   <!-- <c:forEach var="otherAddress" items="${requestScope.allAddress}" varStatus="currentStatus">-->
-      <div>
-        <div class="address-info">
-          <!--${currentStatus.index }-->
-          <input type="radio" name="cate" class="radio_address" value="">
-          <span>收货人：</span><span>${otherAddress.o_receiver}</span><br/>
-          <span>收货地址：</span><span>${otherAddress.u_address }</span><br/>
-          <span>联系方式：</span><span>${otherAddress.o_phone}</span>
-        </div>
+      <div id="exist-lists">
+       
       </div>
-   <!-- </c:forEach>-->
-  </form>
-  <div class="address-b"><input type="button" value="确定" class="add_address_button"></div>
+  <div class="address-b"><input type="button" value="确定" class="edit_default_address"></div>
 </div>
 
 	<div class="add_address" style="color:#000">
@@ -221,12 +211,64 @@ var oNum = 0,oPrice=0,uAddress='',uReceiver='',oPhone='',oCheaper=0,ids=[],order
       $(".circles").click(function() {
           $(".add_address").slideUp();
       })
+      
+       $(".circle").click(function() {
+          $(".address-all").slideUp();
+      })
+      
+      $("#other_address").click(function(){
+    	  $(".address-all").slideDown();
+    	  var html= ""
+          $.ajax({
+ 			url:'user/getUsersInfo',
+ 			type:'get',
+ 			success:function(data){
+ 			  if(data.uAccount){
+ 				  uAccount = data.uAccount
+ 				  $.ajax({
+ 			    	  url:"userAdress/userAddressQry",
+ 			    	  type:'get',
+ 			    	  data:{
+ 			    		  uAccount:uAccount
+ 			    	  },
+ 			    	  success:function(data){
+ 			    		  if(data.userAdressList &&data.userAdressList.length){
+ 			    			  var html = ''
+ 			    			  $("#exist-lists").html('')
+ 			    			  $.each(data.userAdressList,function(index,adata){
+ 				    			 if(adata['uIsdefault'] == 0) {
+ 				    				adata['uIsdefault'] = '否'
+ 				    				html += "  <div class=\"address-info\" name="+adata['uaddrId']+">"
+ 		 						    html +="<input type=\"radio\" name=\"cate\" class=\"radio_address\" value="+adata['uaddrId']+">"
+ 		 						    html +="<br/><span>收货人：</span><span class=\"oReceiver\">"+adata['oReceiver']+"</span><br/>"
+ 		 						    html +="<span>收货地址：</span><span  class=\"uAddress\">"+adata['uAddress']+"</span><br/>"  
+ 		 				    		html +="<span>联系方式：</span><span class=\"oPhone\">"+adata['oPhone']+"</span>"
+ 		 				    		html +="</div><br/>"
+ 				    			 }
+ 				    			 if(adata['uIsdefault'] == 1) {
+ 				    				adata['uIsdefault'] = '是'
+ 				    				html += "  <div class=\"address-info\" name="+adata['uaddrId']+">"
+ 		 						    html +="<input type=\"radio\" name=\"cate\" class=\"radio_address\" value="+adata['uaddrId']+" checked>"
+ 		 						    html +="<br/><span>收货人：</span><span class=\"oReceiver\">"+adata['oReceiver']+"</span><br/>"
+ 		 						    html +="<span>收货地址：</span><span  class=\"uAddress\">"+adata['uAddress']+"</span><br/>"  
+ 		 				    		html +="<span>联系方式：</span><span class=\"oPhone\">"+adata['oPhone']+"</span>"
+ 		 				    		html +="</div><br/>"
+ 				    			 }
+ 				    		  })
+ 				    		  $("#exist-lists").append(html)
+ 			    		  }
+ 			    	  }
+ 			      })
+ 			  }
+ 		}
+ 	})
+  })
+      
       if(sessionStorage.getItem("selectedGoods")){
     	  var lists = JSON.parse(sessionStorage.getItem("selectedGoods"))
     	  var html = ''
     	  orderDetails = []
     	  $.each(lists,function(index,data){
-    		  console.log(data)
 			html += "<tr>"
 			html +="<td><img class=\"table-img\" src="+data['imgSrc']+"></td>"
     		html += " <td>"+data['bName']+"</td>" 
@@ -241,7 +283,7 @@ var oNum = 0,oPrice=0,uAddress='',uReceiver='',oPhone='',oCheaper=0,ids=[],order
     				"bNums":data['bNum'],
     				"bPrice":data['bPrice'],
     				"bDiscountprice":data['bDiscountprice'],
-    				"bSumprice":data['bSumprice'],
+    				"bSumprice":data['bSumprice']+"",
     				"bSumdiscountprice":data['bSumdiscountprice']
     		}
     		  orderDetails.push(obj)
@@ -299,9 +341,29 @@ var oNum = 0,oPrice=0,uAddress='',uReceiver='',oPhone='',oCheaper=0,ids=[],order
 			contentType: "application/json; charset=utf-8",
 			data:JSON.stringify(obj),
 			success:function(){
-				
+				window.location="mineOrders.html"
 			}
 		})
+	})
+	
+	$("body").on("click","input:radio[name=\"cate\"]",function(){
+		let receiver = $(this).siblings().eq(2).text()
+		let phone = $(this).siblings().eq(8).text()
+		let address =  $(this).siblings().eq(5).text()
+		$(".edit_default_address").click(function(){
+			uReceiver = receiver
+			oPhone = phone
+			uAddress =address
+			var html = ""
+				html += "<div class=\"item-row\">"
+				html += "<span>收货人：&nbsp;&nbsp;"+uReceiver+"</span>"
+				html += " <span>"+oPhone+"</span></div>"
+				html += "<div>"+uAddress+"</div>"
+				$(".address-container").html(html) 
+				
+				 $(".address-all").slideUp();
+		})
+		
 	})
   })
 </script>

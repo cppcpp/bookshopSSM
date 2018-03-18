@@ -49,7 +49,7 @@ public class SecurityFilter implements Filter {
 					path.equals("mineAddress.html")||
 					path.equals("mineInfo.html")||
 					path.equals("mineOrders.html")) {
-				res.sendRedirect("/bookshop/login.html");
+					res.sendRedirect("/bookshop/login.html");
 				return;
 			}
 		}

@@ -130,4 +130,8 @@ $(function(){
 		})
 	})
 	
+	$(".now_order").click(function(){
+		
+	})
+	
 })

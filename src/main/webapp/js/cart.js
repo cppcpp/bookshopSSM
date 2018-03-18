@@ -2,11 +2,9 @@ var multiDeleteArr = []
 var selectedGoods = []
 var flag = false;
 var currentName;
+var totalPage,currpage,limit
 $(function(){
   getCartList()
-  
-   
-  
   $("body").on("click",".selectSub",function(){
 	  currentName = this.getAttribute('name')
 	  if(this.checked){
@@ -163,18 +161,30 @@ $(function(){
 		})
 })
 
-function getCartList(){
+function getCartList(page,limit){
+		if(!page) {
+			page = 1
+		}
+		if(!limit) {
+			limit = 10
+		}
 	$.ajax({
 		url:'cart/initCart',
-		type:'get',
-		/*data:{
-			'uAccount':uAccount
-		},*/
+		type:'post',
+		data:{
+		  "page": page,
+  		  "limit": limit,
+		},
 		success:function(data){
 			console.log(data)
+			totalPage = data.pageInfo.pages
+			limit = data.pageInfo.pageSize
+	    	currpage = data.pageInfo.pageNum
+	    	$(".papigationPage").html("第"+currpage+"页/共"+totalPage+"页")
 			var html = '';
 			$.each(data.cartList,function(index,cdata){
-				html +=	"<tr index="+index+" id="+cdata['cId']+"><td><input type=\"checkbox\" class=\"selectSub\" name="+cdata['cId']+"></td>"
+				console.log(cdata)
+				html +=	"<tr index="+index+" id="+cdata['cId']+"><td><input type=\"checkbox\" class=\"selectSub\" name="+cdata['bId']+"></td>"
 				html += "<td><img class=\"table-img\" src=\"img/book_images/"+cdata['bPic']+"\" /></td>"
 				html += "<td class='bname'>"+cdata['bName']+"</td>"
 				html += " <td class=\"cart-price\">"+cdata['bPrice']+"</td>"
@@ -187,13 +197,14 @@ function getCartList(){
 				html += "<td class=\"sum_money\">"+cdata['bSumdiscountprice']+"</td>"
 				html += "<td style=\"width: 100px;\"><button class=\"cart-delete2 delete\">删除</button></td></tr>";
 			});
-			$("#table_body").append(html)
+			$("#table_body").html(html)
 		},
 		error:function(){
 			
 		}
 		
 	})
+	
 	$("body").on('click',".cart-submit",function(){
 	  var obj = {}
 	  selectedGoods = []
@@ -201,6 +212,7 @@ function getCartList(){
 		  if($(this).attr('name') == 'book-select'){
 			  console.log('no need 表头不需要')
 		  }else {
+			  console.log("!!!",$(this).attr('name'));
 			  let bId = $(this).attr('name');
 			  let imgSrc = $(this).parent().next().find(".table-img").attr('src');
 			  let bname = $(this).parent().siblings().eq(1).html();
@@ -213,7 +225,6 @@ function getCartList(){
 			  selectedGoods.push(obj)
 		  }
 	  })
-	  console.log(selectedGoods)
 	  if(multiDeleteArr.length && selectedGoods.length){
 		  sessionStorage.setItem("selectedGoods",JSON.stringify(selectedGoods))
 		  sessionStorage.setItem("selectedIds",JSON.stringify(multiDeleteArr))
@@ -250,7 +261,6 @@ $("#selectAll").click(function () {
 		  }
 		  
     }
-    console.log(multiDeleteArr)
     $(".ac_money").html(sumPrice.toFixed(2));
     $(".selectSub").prop("checked", true);
     $(".selectSub").click(function () {
@@ -287,5 +297,47 @@ function getSumPrice(){
 $("body").on('change','.selectSub',function(){
 	getSumPrice()
 })
+	function toPage(str) {
+			console.log(str)
+			if(str == "index"){
+				getCartList(1,limit)
+			}
+			if(str == "end") {
+				getCartList(totalPage,limit)
+			}
+			if(str == "prev"){
+				if(currpage>1) {
+					getCartList(currpage-1,limit)
+				}else {
+					alert("已经是第一页")
+					getCartList(1,limit)
+				}
+				
+			}
+			if(str == "next") {
+				if(currpage < totalPage) {
+					getCartList(currpage+1,limit)
+				}else {
+					alert("已经是最后一页")
+					getCartList(totalPage,limit)
+				}
+			}
+		}
+	
+	//是否为正整数  
+  	function isPositiveNum(s){
+    var re = /^[0-9]*[1-9][0-9]*$/ ;  
+    return re.test(s)  
+	} 
+	
+  	$("#pageSize").blur(function(){
+  		var size = $("#pageSize").val()
+  		if(isPositiveNum(size)) {
+  			limit = Number(size)
+  	  		getCartList(1,limit)
+  		}else {
+  			alert("请输入大于0的整数值")
+  		}
+  	})
 
 
