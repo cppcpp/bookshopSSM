@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.bookshop.modle.Users;
 import com.bookshop.modle.UsersExample;
@@ -282,16 +283,38 @@ public class UserController {
         }
     }
 	
+	/*@RequestMapping("/logOut")
+	public void logOut() {
+		
+		try {
+			Users users=(Users) session.getAttribute("users");
+			
+			if(users!=null) {
+				session.setAttribute("users", null);
+				//return "logOutSuccess";
+			}
+			response.sendRedirect("/bookshop/login.html");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}*/
+	
 	@RequestMapping("/logOut")
-	@ResponseBody
-	public String logOut() {
+	public ModelAndView logOut() {
+		ModelAndView mav=new ModelAndView();
+		
 		Users users=(Users) session.getAttribute("users");
 		
 		if(users!=null) {
 			session.setAttribute("users", null);
-			return "logOutSuccess";
+			//return "logOutSuccess";
 		}
-		return "error";
+		
+		mav.setViewName("redirect:/login.html");
+		
+		return mav;
+		
 	}
 	
 	@RequestMapping("/loginUAccount")
@@ -349,7 +372,6 @@ public class UserController {
 		}else {
 			resultMap.put("uPhone", "");
 		}
-		
 		
 		return resultMap;
 	}

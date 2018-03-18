@@ -87,27 +87,17 @@
           <form action="MineAllNew">
             <div class="form-input">
               <label>账&nbsp;&nbsp;&nbsp;&nbsp;户：</label>
-              <input type="text" value="12345678" readonly>
+              <input type="text" value="12345678" id="uAccount" readonly>
               <span class="account-tip">不支持修改</span>
             </div>
 
             <div class="form-input">
-              <label>昵&nbsp;&nbsp;&nbsp;&nbsp;称：</label>
-              <input type="text" value="shy">
-            </div>
-
-            <div class="form-input">
               <label>手机号：</label>
-              <input type="tel" value="15050612800">
+              <input type="tel" value="15050612800" id="uPhone">
             </div>
 
             <div class="form-input">
-              <label>邮&nbsp;&nbsp;&nbsp;&nbsp;箱：</label>
-              <input type="email" value="9747109033@qq.com">
-            </div>
-
-            <div class="form-input">
-              <input type="button" value="提交">
+              <input type="button" value="提交" id="updateInfoSubmit">
             </div>
 
           </form>
@@ -153,5 +143,31 @@
     },function () {
       $("#mineInfo").addClass("activeLI")
     })
+ 	$.ajax({
+			url:'user/getUsersInfo',
+			type:'get',
+			success:function(data){
+			  if(data.uAccount){
+				console.log(data.uAccount)
+				$("#uAccount").attr("value",data.uAccount)
+			  }
+			  if(data.uPhone){
+				  console.log(data.uPhone)
+				$("#uPhone").attr('value',data.uPhone)
+			  }
+		}
+	})
+	$("#updateInfoSubmit").click(function(){
+		let obj = {uPhone:$("#uPhone").val(),uAccount:$("#uAccount").val()}
+		$.ajax({
+			url:'user/updateUsers',
+			type:'post',
+			data:JSON.stringify(obj),
+			contentType: "application/json; charset=utf-8",
+			success:function(data){
+			 console.log(data)
+		}
+	})
+	})
   })
 </script>

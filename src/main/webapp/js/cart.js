@@ -1,4 +1,5 @@
 var multiDeleteArr = []
+var selectedGoods = {}
 var flag = false;
 var currentName;
 $(function(){
@@ -103,6 +104,16 @@ $(function(){
     getSumPrice()
   });
 
+  $("body").on('click',".cart-submit",function(){
+	  var obj = {}
+	  if(multiDeleteArr.length){
+		 localStorage.setItem('goods',JSON.stringify(obj))
+	  }else {
+		  alert("请选择商品")
+	  }
+	 
+  })
+  
     //购物车中的删除
     $("body").on('click','.delete',function() {
 		var tr = this.parentNode.parentNode;
@@ -132,6 +143,7 @@ $(function(){
 		})
 		
 	})
+	//多条删除
 	 $("body").on('click','.cart-multiDelete',function() {
 		 let obj = {ids:multiDeleteArr}
 			if(multiDeleteArr.length) {
@@ -163,6 +175,7 @@ function getCartList(){
 			'uAccount':uAccount
 		},*/
 		success:function(data){
+			console.log(data)
 			var html = '';
 			$.each(data.cartList,function(index,cdata){
 				html +=	"<tr index="+index+" id="+cdata['cId']+"><td><input type=\"checkbox\" class=\"selectSub\" name="+cdata['cId']+"></td>"

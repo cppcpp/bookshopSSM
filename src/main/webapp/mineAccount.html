@@ -88,8 +88,8 @@
 
             <div class="form-input">
               <label>修改密码：</label>
-              <input type="password" value="123455">
-              <input type="button"  class="small-btn" value="修改">
+              <input type="password" value="123455" id="uPassword">
+              <input type="button"  class="small-btn" value="修改" id="updatePasswd">
             </div>
 
 
@@ -136,5 +136,30 @@
     },function () {
       $("#mineAccount").addClass("activeLI")
     })
+    let uAccount;
+    
+    $.ajax({
+			url:'user/getUsersInfo',
+			type:'get',
+			success:function(data){
+				uAccount = data.uAccount
+				$("#uPassword").val(data.uPassword)
+		}
+	})
+	 
+    
+    $("#updatePasswd").click(function(){
+    	let obj = {'uAccount':uAccount,'uPassword':$("#uPassword").val()}
+		$.ajax({
+			url:'user/updateUsers',
+			type:'post',
+			data:JSON.stringify(obj),
+			contentType: "application/json; charset=utf-8",
+			success:function(data){
+			 console.log(data)
+		}
+	})
+    })
+    
   })
 </script>

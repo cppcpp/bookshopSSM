@@ -89,92 +89,37 @@
         </div>
         <div class="row">
           <!--循环已有收货地址遍历 样式再次修改 修改對應地址-->
-          <form action="MineAllNew">
-            <div class="exist-address">
-              <div class="mini-form-input">
-                <label>收货人：</label>
-                <input type="text" value="shy">
-              </div>
-
-              <div class="mini-form-input">
-                <label>收货地址：</label>
-                <textarea>曹家渡17872号</textarea>
-              </div>
-
-              <div class="mini-form-input">
-                <label>收货人电话：</label>
-                <input type="text" value="1575423333">
-              </div>
-
-              <div class="mini-form-input">
-                <label>是否默认：</label>
-                <input type="checkbox" value="1">
-              </div>
-              <div class="mini-form-input">
-                <input type="button" value="修改">
-                <input type="button" value="删除">
-              </div>
-            </div>
-          </form>
-
-          <form action="addressAction">
-            <div class="exist-address">
-              <div class="mini-form-input">
-                <label>收货人：</label>
-                <input type="text" value="shy">
-              </div>
-
-              <div class="mini-form-input">
-                <label>收货地址：</label>
-                <textarea>曹家渡17872号</textarea>
-              </div>
-
-              <div class="mini-form-input">
-                <label>收货人电话：</label>
-                <input type="text" value="1575423333">
-              </div>
-
-              <div class="mini-form-input">
-                <label>是否默认：</label>
-                <input type="checkbox" value="1">
-              </div>
-              <div class="mini-form-input">
-                <input type="button" value="修改">
-                <input type="button" value="删除">
-              </div>
-            </div>
-          </form>
-
+          <div id="MineAllNew">
+        
+          </div>
         </div>
         <!--  点击增加按钮，增加收货地址的div-->
-        <form action="addressAction" method="post">
           <div class="new-address">
             <div class="circles" >X</div>
             <div class="mini-form-input">
               <label>收货人：</label>
-              <input type="text" value="">
+              <input type="text" value="" id="addReciver">
             </div>
 
             <div class="mini-form-input">
               <label>收货地址：</label>
-              <textarea></textarea>
+              <textarea id="addAddress"></textarea>
             </div>
 
             <div class="mini-form-input">
               <label>收货人电话：</label>
-              <input type="text" value="">
+              <input type="text" value="" id="addPhone">
             </div>
 
             <div class="mini-form-input">
-              <label>是否默认：</label>
-              <input type="checkbox" value="1">
+              <label>设为默认：</label>
+              <input type="checkbox" id="isDefault">
             </div>
             <div class="mini-form-input">
               <input type="hidden" value="" name="uAddrId">
               <input type="submit" value="确定" class="add_address_button" name="add">
             </div>
           </div>
-        </form>
       </div>
 
     </div>
@@ -223,6 +168,66 @@
       $(".circles").click(function() {
           $(".new-address").slideUp();
       })
+      var uAccount = '';
+      $.ajax({
+			url:'user/getUsersInfo',
+			type:'get',
+			success:function(data){
+			  if(data.uAccount){
+				  uAccount = data.uAccount
+				  $.ajax({
+			    	  url:"userAdress/userAddressQry",
+			    	  type:'get',
+			    	  data:{
+			    		  uAccount:uAccount
+			    	  },
+			    	  success:function(data){
+			    		  if(data.userAdressList &&data.userAdressList.length){
+			    			  var html = ''
+			    			  $.each(data.userAdressList,function(index,adata){
+				    			 if(adata['uIsdefault'] == 0) {
+				    				 adata['uIsdefault'] = '是'
+				    			 }
+						    	  html += "  <div class=\"exist-address\">"
+						    	  html +="<div class=\"mini-form-input\"><label>收货人：</label>"+adata['oReceiver']+"</div>"
+						    	  html +="<div class=\"mini-form-input\"><label>收货地址：</label>"+adata['uAddress']+"</div>"
+						    	  html +="<div class=\"mini-form-input\"><label>收货人电话：</label>"+adata['oPhone']+"</div>"  
+				    		 	  html +="<div class=\"mini-form-input\"><label>是否默认：</label>"+adata['uIsdefault']+"</div></br>"
+				    		  	  html +="<div class=\"mini-form-input\"> <input type=\"button\" value=\"修改\"><input type=\"button\" value=\"删除\"></div></div>"
+				    		  })
+				    		  $("#MineAllNew").append(html)
+				    		  
+			    		  }
+			    	  }
+			      })
+			  }
+		}
+	})
+      
+	$(".add_address_button").click(function(){
+		console.log($("#addReciver").val(), $("#addAddress").val(),$("#addPhone").val(),$("#isDefault").is(":checked"))
+		if(!$("#addReciver").val()|| !$("#addAddress").val() ||!$("#addPhone").val()){
+			alert('请完善收获地址')
+		}else{
+			let obj = {
+					'uAddress':$("#addAddress").val(),
+					'oPhone':$("#addPhone").val(),
+					"ulsdefault":$("#isDefault").is(":checked")? 1:0,
+					"oReceiver":$("#addReciver").val()	
+				}
+			$.ajax({
+				url:'userAdress/addUserAddress',
+				type:'post',
+				contentType: "application/json; charset=utf-8",
+				data:JSON.stringify(obj),
+				success:function(data){
+				console.log(data)	
+				}
+			})
+		}
+		
+	})
+      
   })
 
 

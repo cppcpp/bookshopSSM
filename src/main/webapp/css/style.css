@@ -1002,7 +1002,7 @@ p.more_details{
     width: 100px;
 }
 
-.form-input input[type="text"],input[type="password"],input[type="email"],input[type="tel"]{
+.form-input input[type="text"],input[type="password"],input[type="tel"]{
     display:inline-block;
     width: 300px;
     height: 42px;
