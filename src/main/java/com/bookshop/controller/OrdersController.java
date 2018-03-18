@@ -31,7 +31,7 @@ import com.github.pagehelper.PageInfo;
         int pageNum =  page == null ? 1 : Integer.parseInt(page);
         int pageSize =  limit == null ? 10 : Integer.parseInt(limit);
         Map<String, String> ordersExmMap = new HashMap<>();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");        OrderDetailExample orderDetailExample=new OrderDetailExample();        com.bookshop.modle.OrderDetailExample.Criteria criteria=orderDetailExample.createCriteria();        List<OrderDetail> orderDetailsList;        
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");        List<OrderDetail> orderDetailsList;        
         ordersExmMap.put("oId", oId);
         ordersExmMap.put("oNum", oNum);
         ordersExmMap.put("oPrice", oPrice);
@@ -63,7 +63,7 @@ import com.github.pagehelper.PageInfo;
             tMap.put("uReceiver", orders.getuReceiver());
             if(orders.getoCheaper()!=null){
                 tMap.put("oCheaper", orders.getoCheaper().toString());
-            }            //订单中包含几本书--即订单详情            criteria.andOIdEqualTo(orders.getoId());            orderDetailsList=orderDetailService.selectByExample(orderDetailExample);            tMap.put("orderDetailsList", orderDetailsList);            mapList.add(tMap);
+            }            //订单中包含几本书--即订单详情	            OrderDetailExample orderDetailExample=new OrderDetailExample();            com.bookshop.modle.OrderDetailExample.Criteria criteria=orderDetailExample.createCriteria();            criteria.andOIdEqualTo(orders.getoId());            orderDetailsList=orderDetailService.selectByExample(orderDetailExample);            tMap.put("orderDetailsList", orderDetailsList);            mapList.add(tMap);
         }        resultMap.put("orderList", mapList);            //分页信息        PageInfo<Orders> pageInfo=new PageInfo<>(ordersList);        resultMap.put("pageInfo", pageInfo);        
        return resultMap;
     }
