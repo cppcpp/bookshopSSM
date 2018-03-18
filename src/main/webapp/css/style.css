@@ -1222,7 +1222,7 @@ textarea {
     padding: 20px;
 }
 
-.new-address{
+.new-address,.edit-address{
     display:none;
     width: 600px;
     height: 250px;
@@ -1317,7 +1317,7 @@ textarea {
     margin-left: 20px;
     margin-bottom: 20px;
 }
-.add_address_button{
+.add_address_button,.edit_address_button{
     border: 1px solid #de6a5d;
     border-radius: 5px;
     -moz-border-radius: 5px;

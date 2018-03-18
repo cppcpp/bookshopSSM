@@ -119,14 +119,13 @@ $(function(){
 			data:obj,
 			contentType: "application/json; charset=utf-8",
 			success:function(data){
-				console.log(data)
 				if(data=="userNotLogin"){
 					window.location="login.html"
+				}else {
+					window.location = "detail.html?bId="+bookId
 				}
-				
 			},
 			error:function(){
-				
 			}
 		})
 	})
