@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;import com.bookshop.modle.OrderDetail;import com.bookshop.modle.OrderDetailExample;import com.bookshop.modle.Orders;
-import com.bookshop.modle.OrdersExample;import com.bookshop.modle.UserAddress;import com.bookshop.modle.UserAddressExample;import com.bookshop.modle.UserAddressExample.Criteria;import com.bookshop.modle.Users;import com.bookshop.service.CartService;import com.bookshop.service.OrderDetailService;import com.bookshop.service.OrdersService;import com.bookshop.service.UserAddressService;import com.bookshop.util.StringUtil;
+import org.springframework.web.bind.annotation.ResponseBody;import com.bookshop.modle.Books;import com.bookshop.modle.OrderDetail;import com.bookshop.modle.OrderDetailExample;import com.bookshop.modle.Orders;
+import com.bookshop.modle.OrdersExample;import com.bookshop.modle.UserAddress;import com.bookshop.modle.UserAddressExample;import com.bookshop.modle.UserAddressExample.Criteria;import com.bookshop.modle.Users;import com.bookshop.service.BooksService;import com.bookshop.service.CartService;import com.bookshop.service.OrderDetailService;import com.bookshop.service.OrdersService;import com.bookshop.service.UserAddressService;import com.bookshop.util.StringUtil;
 import com.github.pagehelper.PageInfo;
 @Controller@RequestMapping("/orders")public class OrdersController {
     @Autowired
-    OrdersService ordersSV;        @Autowired    OrderDetailService orderDetailService;        @Autowired    HttpSession session;        @Autowired    UserAddressService userAdressService;        @Autowired    CartService cartService;
+    OrdersService ordersSV;        @Autowired    OrderDetailService orderDetailService;        @Autowired    HttpSession session;        @Autowired    UserAddressService userAdressService;        @Autowired    CartService cartService;        @Autowired    BooksService booksService;
 
-    @RequestMapping(value="/ordersQry",method=RequestMethod.GET)    @ResponseBody
+    @RequestMapping(value="/ordersQry")    @ResponseBody
     public Map ordersQry(
              @RequestParam(name="oId",required=false)String oId,
              @RequestParam(name="oNum",required=false)String oNum,
@@ -63,7 +63,7 @@ import com.github.pagehelper.PageInfo;
             tMap.put("uReceiver", orders.getuReceiver());
             if(orders.getoCheaper()!=null){
                 tMap.put("oCheaper", orders.getoCheaper().toString());
-            }            //订单中包含几本书--即订单详情	            OrderDetailExample orderDetailExample=new OrderDetailExample();            com.bookshop.modle.OrderDetailExample.Criteria criteria=orderDetailExample.createCriteria();            criteria.andOIdEqualTo(orders.getoId());            orderDetailsList=orderDetailService.selectByExample(orderDetailExample);            tMap.put("orderDetailsList", orderDetailsList);            mapList.add(tMap);
+            }            //订单中包含几本书--即订单详情	            OrderDetailExample orderDetailExample=new OrderDetailExample();            com.bookshop.modle.OrderDetailExample.Criteria criteria=orderDetailExample.createCriteria();            criteria.andOIdEqualTo(orders.getoId());            orderDetailsList=orderDetailService.selectByExample(orderDetailExample);            List<Map<String, String>> orderDetailsList2=new ArrayList<>();            for(OrderDetail orderDetail:orderDetailsList) {            	Map<String, String> tempMap=new HashMap<>();            	tempMap.put("oDId", orderDetail.getoDId().toString());            	tempMap.put("oId", orderDetail.getoId().toString());            	tempMap.put("bId", orderDetail.getbId().toString());            	tempMap.put("bName", orderDetail.getbName().toString());            	tempMap.put("bNums", orderDetail.getbNums().toString());            	tempMap.put("bPrice", orderDetail.getbPrice().toString());            	tempMap.put("bDiscountprice", orderDetail.getbDiscountprice().toString());            	tempMap.put("bSumprice",orderDetail.getbSumprice().toString().toLowerCase());            	tempMap.put("bSumdiscountprice", orderDetail.getbSumdiscountprice().toString());            	            	if(StringUtil.isNotEmpty(orderDetail.getbId())) {            		Books books= booksService.selectByPrimaryKey(orderDetail.getbId().toString());            		if(books==null) {            			resultMap.put("booksNull", "书籍信息为空");            			return resultMap;            		}            		tempMap.put("bPic", books.getbPic());            	}            	orderDetailsList2.add(tempMap);            }                        tMap.put("orderDetailsList", orderDetailsList2);            mapList.add(tMap);
         }        resultMap.put("orderList", mapList);            //分页信息        PageInfo<Orders> pageInfo=new PageInfo<>(ordersList);        resultMap.put("pageInfo", pageInfo);        
        return resultMap;
     }
