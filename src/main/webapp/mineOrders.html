@@ -164,11 +164,10 @@ var totalPage,currpage,limit
 		$.ajax({
 	    	url:'orders/ordersQry',
 	    	type:'post',
-	    	data:JSON.stringify({ 
+	    	data:{ 
 	    		"page": page,
-	    		"limit": limit,
-	    		  }),
-	    	contentType: "application/json; charset=utf-8",
+	    		"limit": limit
+	    	},
 	    	success:function(data){
 	    		 totalPage = data.pageInfo.pages
 	    		  limit = data.pageInfo.pageSize
