@@ -6,7 +6,7 @@ var totalPage,currpage,limit
 $(function(){
   getCartList()
   $("body").on("click",".selectSub",function(){
-	  currentName = this.getAttribute('name')
+	  currentName = this.parentNode.parentNode.getAttribute('id')
 	  if(this.checked){
 		  if(multiDeleteArr.length){
 			  for(var i=0;i<multiDeleteArr.length;i++){
@@ -30,7 +30,6 @@ $(function(){
   $("body").on('click','.plus',function(){
     //获取总价列
     var sum_money = this.parentNode.nextSibling;
-    console.log(sum_money)
     while(sum_money.nodeName=="#text"){
       sum_money = sum_money.nextSibling;
     }
@@ -176,14 +175,12 @@ function getCartList(page,limit){
   		  "limit": limit,
 		},
 		success:function(data){
-			console.log(data)
 			totalPage = data.pageInfo.pages
 			limit = data.pageInfo.pageSize
 	    	currpage = data.pageInfo.pageNum
 	    	$(".papigationPage").html("第"+currpage+"页/共"+totalPage+"页")
 			var html = '';
 			$.each(data.cartList,function(index,cdata){
-				console.log(cdata)
 				html +=	"<tr index="+index+" id="+cdata['cId']+"><td><input type=\"checkbox\" class=\"selectSub\" name="+cdata['bId']+"></td>"
 				html += "<td><img class=\"table-img\" src=\"img/book_images/"+cdata['bPic']+"\" /></td>"
 				html += "<td class='bname'>"+cdata['bName']+"</td>"
@@ -212,7 +209,7 @@ function getCartList(page,limit){
 		  if($(this).attr('name') == 'book-select'){
 			  console.log('no need 表头不需要')
 		  }else {
-			  console.log("!!!",$(this).attr('name'));
+			  let cId = $(this).parent().parent().attr('id');
 			  let bId = $(this).attr('name');
 			  let imgSrc = $(this).parent().next().find(".table-img").attr('src');
 			  let bname = $(this).parent().siblings().eq(1).html();
@@ -221,7 +218,7 @@ function getCartList(page,limit){
 			  let bNum = $(this).parent().siblings().eq(4).find(".num-text").val();
 			  let bSumdiscountprice = $(this).parent().siblings().eq(5).html();
 			  let bSumprice = bPrice * bNum
-			  obj = {"bId":bId,"imgSrc":imgSrc,"bName":bname,"bPrice":bPrice,"bDiscountprice":bDiscountprice,"bNum":bNum,"bSumdiscountprice":bSumdiscountprice,"bSumprice":bSumprice};
+			  obj = {"cId":cId,"bId":bId,"imgSrc":imgSrc,"bName":bname,"bPrice":bPrice,"bDiscountprice":bDiscountprice,"bNum":bNum,"bSumdiscountprice":bSumdiscountprice,"bSumprice":bSumprice};
 			  selectedGoods.push(obj)
 		  }
 	  })
@@ -257,7 +254,7 @@ $("#selectAll").click(function () {
 			  }
 		  }
 		  if(!flag){
-			  multiDeleteArr.push(check[i].getAttribute('name')) 
+			  multiDeleteArr.push(check[i].parentNode.parentNode.getAttribute('id')) 
 		  }
 		  
     }
@@ -298,7 +295,6 @@ $("body").on('change','.selectSub',function(){
 	getSumPrice()
 })
 	function toPage(str) {
-			console.log(str)
 			if(str == "index"){
 				getCartList(1,limit)
 			}

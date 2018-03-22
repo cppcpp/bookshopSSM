@@ -1,3 +1,4 @@
+var uAddress='',uReceiver='',oPhone='',orderDetails=[];
 $(function(){
 	function getQueryString(name) {
 		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)","i")
@@ -65,8 +66,8 @@ $(function(){
 					tab2 += "<div class=\"new_prod_box\">"	
 					tab2 += " <a href=\"detail.html?bId="+ndata['bId']+"\" style=\"white-space:nowrap;text-overflow:ellipsis;overflow: hidden;width: 100px;\">"+ndata['bName']+"</a>"
 					tab2 += " <a href=\"detail.html?bId="+ndata['bId']+"\"><img src=\"img/book_images/"+ndata['bPic']+"\" class=\"thumb\" border=\"0\" width=\"90px\" height=\"90px\"/></a>"
-					tab2 +="</div></div>"
-				})
+					tab2 +="</div></div>";
+				});
 				$("#tab2").html(tab2)
 			},
 			error:function(){
@@ -130,8 +131,55 @@ $(function(){
 		})
 	})
 	
-	$(".now_order").click(function(){
-		
-	})
+		//得默认地址
+  	$.ajax({
+			url:'userAdress/getUserDefaultAddress',
+			type:'get',
+			success:function(data){
+				if(data.defaultUserAddress ){
+					uReceiver = data.defaultUserAddress.oReceiver;
+					oPhone = data.defaultUserAddress.oPhone;
+					uAddress = data.defaultUserAddress.uAddress;
+				}
+			
+			}
+  		})
+	
+	$("#now_order").click(function(){
+		bNums = $("#num_text").val();
+		bSumprice = bNums * bPrice;
+		bSumdiscountprice = bNums * bDiscountprice;
+		let obj = {
+				"bId":bookId,
+				'bName':bName,
+				"bNums":bNums,
+				"bPrice":bPrice,
+				"bDiscountprice":bDiscountprice,
+				"bSumprice":bSumprice,
+				"bSumdiscountprice":bSumdiscountprice
+		};
+		orderDetails.push(obj);
+		let objects = {'orderDetails':orderDetails,
+				"oNum":bNums,
+				"oPrice":bSumdiscountprice,
+				"uAddress":uAddress,
+				"uReceiver":uReceiver,
+				"oPhone":oPhone,
+				"oCheaper":(bSumprice-bSumdiscountprice).toFixed(2)}
+		$.ajax({
+			url:'orders/addOrders',
+			type:'post',
+			contentType: "application/json; charset=utf-8",
+			data:JSON.stringify(objects),
+			success:function(data){
+			
+				if(data=="userNotLogin"){
+					window.location="login.html"
+				}else {
+					/* window.location="mineOrders.html" */
+				}
+			}
+		})
+	});
 	
 })

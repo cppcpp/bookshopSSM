@@ -334,14 +334,14 @@ var oNum = 0,oPrice=0,uAddress='',uReceiver='',oPhone='',oCheaper=0,ids=[],order
   		})
       
 	$(".order-ok").click(function(){
-		let obj = {'orderDetails':orderDetails,'ids':ids,"oNum":oNum,"oPrice":oPrice,"uAddress":uAddress,"uReceiver":uReceiver,"oPhone":oPhone,"oCheaper":oCheaper.toFixed(2)}
+		let objects = {'orderDetails':orderDetails,'ids':ids,"oNum":oNum,"oPrice":oPrice,"uAddress":uAddress,"uReceiver":uReceiver,"oPhone":oPhone,"oCheaper":oCheaper.toFixed(2)}
 		$.ajax({
 			url:'orders/addOrders',
 			type:'post',
 			contentType: "application/json; charset=utf-8",
-			data:JSON.stringify(obj),
+			data:JSON.stringify(objects),
 			success:function(){
-				window.location="mineOrders.html"
+				  window.location="mineOrders.html"  
 			}
 		})
 	})
