@@ -1,6 +1,8 @@
 package com.bookshop.modle;
 
-public class Users {
+import java.io.Serializable;
+
+public class Users implements Serializable{
     private String uAccount;
 
     private String uName;

@@ -7,7 +7,7 @@ $(function(){
         return null; 
 	}
 	var bookId = getQueryString('bId')
-	var bName,bNums,bPrice,bDiscountprice,bSumprice,bSumdiscountprice
+	var bName,bNums,bPrice,bDiscountprice,bSumprice,bSumdiscountprice;
 	if(bookId) {
 		$.ajax({
 			url:'books/booksQry',
@@ -153,10 +153,10 @@ $(function(){
 				"bId":bookId,
 				'bName':bName,
 				"bNums":bNums,
-				"bPrice":bPrice,
-				"bDiscountprice":bDiscountprice,
-				"bSumprice":bSumprice,
-				"bSumdiscountprice":bSumdiscountprice
+				"bPrice":bPrice+"",
+				"bDiscountprice":bDiscountprice+"",
+				"bSumprice":bSumprice+"",
+				"bSumdiscountprice":bSumdiscountprice+""
 		};
 		orderDetails.push(obj);
 		let objects = {'orderDetails':orderDetails,
