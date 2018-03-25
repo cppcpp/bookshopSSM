@@ -75,9 +75,9 @@
           </div>
           <div class="categrory-content">
             <ul class="list">
-                <a href="category.html?category=a" ><li><i class="glyphicon glyphicon-eye-open"></i>马列主义、毛泽东思想(A)</li></a>
-              <a href="category.html?category=b" ><li><i class="glyphicon glyphicon-bookmark"></i>哲学(B)</li></a>
-              <a href="category.html?category=c" ><li><i class="glyphicon glyphicon-book"></i>社会科学(C)</li></a>
+              <a href="category.html?category=a"><li><i class="glyphicon glyphicon-eye-open"></i>马列主义、毛泽东思想(A)</li></a>
+              <a href="category.html?category=b"><li><i class="glyphicon glyphicon-bookmark"></i>哲学(B)</li></a>
+              <a href="category.html?category=c"><li><i class="glyphicon glyphicon-book"></i>社会科学(C)</li></a>
               <a href="category.html?category=d"><li><i class="glyphicon glyphicon-text-width"></i>政治、法律(D)</li></a>
               <a href="category.html?category=e"><li><i class="glyphicon glyphicon-fire"></i>军事(E)</li></a>
               <a href="category.html?category=f"><li><i class="glyphicon glyphicon-asterisk"></i>经济(F)</li></a>
@@ -102,8 +102,6 @@
   </div>
 </section>
 <div class="row"></div>
-
-
 <section id="testimonial">
   <div class="container">
     <div class="row">
@@ -116,8 +114,6 @@
     <div class="col-md-6">
         <div class="testimonial-carousel">
           <div id="testimonial-slider" class="owl-carousel">
-           
-          
           </div>
         </div>
       </div>
@@ -130,7 +126,6 @@
           </ul>
         </div>
       </div>
-      
     </div>
   </div>
 </section>
@@ -154,10 +149,8 @@
         </ul>
     </div>
 	</div>
-   
   </div>
 </section>
-
 <!-- footer Start -->
 <footer>
   <div class="container">
@@ -178,106 +171,10 @@
     </div>
   </div>
 </footer>
-
-
-
-
 </body>
 </html>
-
 <script src="js/jquery-2.2.4.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/index.js"></script>
-
-<script>
-  $(function(){
-	  $("#testimonial-slider").owlCarousel({
-	        items: 3,
-	        navigation: true,
-	        navigationText: ["",""],
-	        dataType : 'jsonp',
-	    	jsonp: 'jsonpCallback',
-	        jsonPath : 'initIndexPage',
-	        jsonSuccess : customDataSuccess,
-	        autoPlay: true,
-	        singleItem: true
-	  });
-	  //统计购物车个数
-
-	  
-	  $.ajax({
-    	  url:"initIndexPage",
-    	  method:"get",
-    	  dataType:"json",
-    	  success:function(data){
-    		  var newsethtml = ""
-    			  if(data.recommendFourBooks && data.recommendFourBooks.length) {
-      				$.each(data.recommendFourBooks,function(index,ndata){
-      					newsethtml += "<li><a href=\"detail.html?bId="+ndata['bId']+"\">"
-      					newsethtml += "<div class=\"block\">";
-      					newsethtml += " <h4 class=\"counter\">"+ndata['bName']+"</h4>"
-      					newsethtml += " <span> <img src=\"img/book_images/"+ndata['bPic']+"\" alt=\"Pepole\"></span>"
-      					newsethtml += "</div></a></li>"
-      				})
-      				$(".counter-box").append(newsethtml);
-      		  }else{
-      			  console.log('暂无推荐')
-      			$(".counter-box").append('暂无推荐');
-      		  }
-    		  
-    	
-    		  var tab1 = '',tab2 = ''
-    		  if(data.bestSaleFourBooks || data.discountFourBooks) {
-    			  $.each(data.bestSaleFourBooks,function(index,ndata){
-    				tab1 += "<div class=\"col-sm-6 col-md-3\"> <div class=\"service-item\">"
-    				tab1 += " <img src=\"img/book_images/"+ndata['bPic']+"\" alt=\"Pepole\">"
-    				tab1 += "<h4>"+ndata['bName']+"</h4>"
-    				tab1 += " <p>"+ ndata['bDescription']+"</p>"
-    				tab1 += "<p><a href=\"detail.html?bId="+ndata['bId']+"\">-详情-</a></p>"
-    				tab1 += "</div></div>"
-  				})
-  				 $.each(data.discountFourBooks,function(index,ndata){
-  					tab2 += "<div class=\"col-sm-6 col-md-3\"> <div class=\"service-item\">"
-  					tab2 += "<img src=\"img/book_images/"+ndata['bPic']+"\">"
-  					tab2 += "<h4>"+ndata['bName']+"</h4>"
-  					tab2 += " <p>"+ ndata['bDescription']+"</p>"
-  					tab2 += "<p><a href=\"detail.html?bId="+ndata['bId']+"\">-详情-</a></p>"
-  					tab2 += "</div></div>"
-  				}) 
-  				$(".tab1").append(tab1);
-    			$(".tab2").append(tab2);
-    		  }
-    		
-    	  },
-    	  error:function(){
-    		  
-    	  }
-      });
-	  $(".tabbox .tab a").mouseover(function(){
-			$(this).addClass('on').siblings().removeClass('on');
-			var index = $(this).index();
-			$('.tabbox .ctx li').hide();
-			$('.tabbox .ctx li:eq('+index+')').show();
-		});
-		
-  });
-</script>
-<script>
-function customDataSuccess(data){
-	  var owlhtml = ""
-	  if(data.newsetThreeBooks) {
-				$.each(data.newsetThreeBooks,function(index,ndata){
-					owlhtml += "<div><a href=\"detail.html?bId="+ndata['bId']+"\"> <img src='img/new.png' alt='IMG'><p>"+ndata['bDescription']+"</p>"
-					owlhtml += "<div class=\"user\">"
-					owlhtml += " <img src=\"img/book_images/"+ndata['bPic']+"\" alt=\"Pepole\">"
-					owlhtml += " <p><span>"+ndata['bName']+"</span>"+ ndata['bAuthor']+"</p>"
-					owlhtml += "</div></a></div>"
-						$("#testimonial-slider").html(owlhtml);
-				})
-		
-		  }
-}
-</script>
 <script src="js/owl.carousel.min.js"></script>
-<script src="js/main.js"></script>
 <script src="js/utils.js"></script>

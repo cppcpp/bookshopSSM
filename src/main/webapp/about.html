@@ -8,7 +8,6 @@
   <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <link href="css/style.css" rel="stylesheet" type="text/css">
   <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
-  <link href="css/owl.carousel.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <header>
@@ -20,7 +19,6 @@
   </div>
   <div style="clear:both"></div>
 </header>
-
 <nav>
   <div class="container">
     <div class="row col-md-12">
@@ -37,7 +35,6 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-
           </div>
           <!-- id 关联上面的折叠 -->
           <div class="collapse navbar-collapse nav-collapsed-area" id="bs-example-navbar-collapse-1">
@@ -58,13 +55,10 @@
     <span class="nav-cart"><img src="img/icon-cart.png"></span>
   </div>
 </nav>
-
-
 <!--back to top-->
 <p id="back-to-top">
   <a href="#top"><img src="img/top_arrow1.png"/></a>
 </p>
-
 <!-- Wrapper Start -->
 <section id="intro">
   <div class="container">
@@ -81,19 +75,15 @@
           <p> 最后，如果你是一个爱心人，就请为我们的图书系统捐赠吧，让我们为山区的孩子送去一点知识的希望，让我们看到他们学习的快乐，如果你是书籍爱好者，恰巧你又是那么的有爱心，就请联系我们～～～
           </p>
         </div>
-      </div><!-- .col-md-7 close -->
+      </div>
       <div class="col-md-5 col-sm-12">
         <div class="block">
           <img src="img/wrapper-img.jpg" alt="Img">
         </div>
-      </div><!-- .col-md-5 close -->
+      </div>
     </div>
   </div>
 </section>
-
-
-
-
 <!-- footer Start -->
 <footer>
   <div class="container">
@@ -114,43 +104,8 @@
     </div>
   </div>
 </footer>
-
-
-
-
 </body>
 </html>
-
 <script src="js/jquery-2.2.4.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="js/index.js"></script>
-<script src="js/owl.carousel.min.js"></script>
-<script src="js/main.js"></script>
 <script src="js/utils.js"></script>
-<script>
-  $(function(){
-    //当滚动条的位置处于距顶部100像素以下时，跳转链接出现，否则消失
-    $(function () {
-      $(window).scroll(function(){
-        if ($(window).scrollTop()>100){
-          $("#back-to-top").fadeIn(1500);
-        }
-        else
-        {
-          $("#back-to-top").fadeOut(1500);
-        }
-      });
-
-      //当点击跳转链接后，回到页面顶部位置
-      $("#back-to-top").click(function(){
-        //$('body,html').animate({scrollTop:0},1000);
-        if ($('html').scrollTop()) {
-          $('html').animate({ scrollTop: 0 }, 1000);
-          return false;
-        }
-        $('body').animate({ scrollTop: 0 }, 1000);
-        return false;
-      });
-    });
-  });
-</script>

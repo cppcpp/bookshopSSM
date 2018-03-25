@@ -277,3 +277,8 @@ input[type="checkbox"]{
 .form_row {
 	margin-bottom:10px;
 }
+
+ input:-webkit-autofill {
+-webkit-box-shadow: 0 0 0px 1000px white inset;
+border: 1px solid rgba(0,0,0,.5)!important;
+}

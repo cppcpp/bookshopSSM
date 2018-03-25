@@ -178,8 +178,9 @@ public class BooksController {
         }
         
         if (booksService.insertSelective(books) == 1) {
-        	mav.addObject("bookAddSuccess", "书籍添加成功!");
+        	//mav.addObject("bookAddSuccess", "书籍添加成功!");
             //重定向到展示图书页面----------------------------未完成
+        	mav.setViewName("redirect:/admin_manage_bookQuery.html");
         	
         }else {
         	mav.addObject("bookAddError", "添加失败!");

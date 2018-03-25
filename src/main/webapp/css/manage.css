@@ -29,6 +29,7 @@ form,ul,li,p,h1,h2,h3,h4,h5,h6{
     float: right;
     padding: 0px 30px;
     line-height: 88px;
+    color:#fff;
 }
 
 .nav-right-area a{
@@ -142,7 +143,7 @@ input[type="text"],input[type="password"],input[type="email"],input[type="date"]
     font-size: 14px;
     font-family: 'PT Sans', Helvetica, Arial, sans-serif;
     outline: none;
-    padding-left:40px ;/*必须设置，否则文本在背景图上方*/
+    padding-left:40px ;/*蹇呴』璁剧疆锛屽惁鍒欐枃鏈湪鑳屾櫙鍥句笂鏂�*/
     border-radius:6px ;
     border: 1px solid rgba(0,0,0,.5);
     box-shadow: 0 1px 2px rgba(0,0,0,.1);
@@ -340,7 +341,14 @@ input[type="submit"]:focus{
     margin-top: 5px;
 }
 
-.mini-form-input input[type="text"],input[type="password"],input[type="email"],input[type="tel"]{
+.input-book {
+	width:96%;
+	height: 42px;
+	margin:0px;
+	
+}
+
+select, .mini-form-input  input[type="text"],input[type="password"],input[type="email"],input[type="tel"]{
     display:inline-block;
     width: 50%;
     height: 32px;
@@ -349,7 +357,7 @@ input[type="submit"]:focus{
     font-size: 16px;
     font-family: 'PT Sans', Helvetica, Arial, sans-serif;
     outline: none;
-    padding-left:10px ;/*必须设置，否则文本在背景图上方*/
+    padding-left:10px ;/*蹇呴』璁剧疆锛屽惁鍒欐枃鏈湪鑳屾櫙鍥句笂鏂�*/
     border-radius:6px ;
     border: 1px solid rgba(0,0,0,.5);
     box-shadow: 0 1px 2px rgba(0,0,0,.1);
@@ -373,12 +381,22 @@ input[type="submit"]:focus{
     outline: none;
 }
 
+.book_lists,.user_lists {
+	display:flex;
+	flex-direction:column ;
+	width: 100%;
+}
+
 .book {
-    border: 1px solid #3c3c3c;
-    width: 100%;
+	width: 100%;
+	height:auto;
+   	border:1px solid #000;
     text-align: left;
     margin: 0px;
     padding: 0px;
+    display:flex;
+    flex-direction: row ;
+    align-items:center;
 
 }
 
@@ -389,7 +407,10 @@ input[type="submit"]:focus{
 .book_column_one {
     width: 10%;
     text-align: center;
-    padding-top: 80px;
+     display:flex;
+    flex-direction: row ;
+    align-items:center;
+    justify-content:center;
 }
 
 .book_column_two {
@@ -399,12 +420,12 @@ input[type="submit"]:focus{
 .book_column_two img{
     width:100px;
     height:100px;
-    margin-top: 40px;
 }
 
 .book_column_three{
     width: 55%;
     text-align: left;
+    padding-right:5px;
 }
 
 .book_column_three li {
@@ -414,7 +435,9 @@ input[type="submit"]:focus{
 
 .book_column_four{
     width: 20%;
-    margin-top: 80px;
+   	display:flex;
+    flex-direction: row ;
+    align-items:center;
 }
 
 .book_column_four input[type="button"] {
@@ -432,7 +455,7 @@ input[type="submit"]:focus{
     -webkit-transition:all .2s;
 }
 
-/*分页区*/
+/*鍒嗛〉鍖�*/
 .papigation {
     margin-top: 40px;
     text-align: center;

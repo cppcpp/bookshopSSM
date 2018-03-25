@@ -32,6 +32,8 @@ public interface BooksMapper {
     
     List<Books> getdiscountBook(@Param("count")int count);
     
+    List<Books> getdiscountBookWithLimit(@Param("count")int count);
+    
     List<Books> getBestSaleBook(@Param("count")int count);
     
     List<Books> getBookByConditions(@Param("category")String category,@Param("saleNum")String saleNum,@Param("discount")String discount,@Param("newest")String newset,@Param("price")String price,@Param("lowestPrice")Float lowestPrice,@Param("highestPrice")Float highestPrice);

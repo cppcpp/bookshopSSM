@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>SHY-BOOKSHOP-首页</title>
+  <title>联系我们</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
   <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -20,13 +20,11 @@
   </div>
   <div style="clear:both"></div>
 </header>
-
 <nav>
   <div class="container">
     <div class="row col-md-12">
       <nav class="navbar navbar-default">
         <div class="container-fluid">
-          <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header col-md-1">
             <a class="navbar-brand" href="index.html">
               <img src="img/logo.png" alt="Logo">
@@ -49,8 +47,8 @@
               <li><a href="about.html">关于我们</a></li>
               <li><a href="contact.html">联系我们</a></li>
             </ul>
-          </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
+          </div>
+        </div>
       </nav>
     </div>
   </div>
@@ -78,23 +76,23 @@
           </div>
            <div class="form_row">
              <label class="contact"><strong>姓名:</strong></label>
-             <input type="text" class="contact_input" />
+             <input type="text" class="contact_input" id="contact_name" />
            </div>  
            
            <div class="form_row">
               <label class="contact"><strong>留言:</strong></label>
-              <textarea class="contact_textarea" rows="6" style="margin-left:0px;width:100%"></textarea>
+              <textarea class="contact_textarea" id="contact_msg"  rows="6" style="margin-left:0px;width:100%"></textarea>
            </div>
            <div class="form_row">
-              <button class="contact" style="width:100px;height:38px;font-size:14px;">发送</button>                    
+              <button class="contact" id="contact_btn" style="width:100px;height:38px;font-size:14px;">发送</button>                    
            </div>
         </div>
-      </div><!-- .col-md-7 close -->
+      </div>
       <div class="col-md-5 col-sm-12">
         <div class="block">
           <img src="img/wrapper-img.jpg" alt="Img">
         </div>
-      </div><!-- .col-md-5 close -->
+      </div>
     </div>
   </div>
 </section>
@@ -122,44 +120,36 @@
     </div>
   </div>
 </footer>
-
-
-
-
 </body>
 </html>
 
 <script src="js/jquery-2.2.4.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="js/index.js"></script>
-<script src="js/owl.carousel.min.js"></script>
-<script src="js/main.js"></script>
-
-<script>
-  $(function(){
-    //当滚动条的位置处于距顶部100像素以下时，跳转链接出现，否则消失
-    $(function () {
-      $(window).scroll(function(){
-        if ($(window).scrollTop()>100){
-          $("#back-to-top").fadeIn(1500);
-        }
-        else
-        {
-          $("#back-to-top").fadeOut(1500);
-        }
-      });
-
-      //当点击跳转链接后，回到页面顶部位置
-      $("#back-to-top").click(function(){
-        //$('body,html').animate({scrollTop:0},1000);
-        if ($('html').scrollTop()) {
-          $('html').animate({ scrollTop: 0 }, 1000);
-          return false;
-        }
-        $('body').animate({ scrollTop: 0 }, 1000);
-        return false;
-      });
-    });
-  });
-</script>
 <script src="js/utils.js"></script>
+<script>
+var uAccount,uMessage;
+$(function(){
+	$("#contact_btn").click(function(){
+		uAccount = $("#contact_name").val();
+		uMessage = $("#contact_msg").val();
+		if(uAccount && uMessage){
+			$.ajax({
+				url:'userMessage/addUserMessage',
+				type:'post',
+				data:JSON.stringify({
+					"uAccount":uAccount,
+					"uMessage":uMessage
+				}),
+				contentType: "application/json; charset=utf-8",
+				success:function(data){
+					console.log(data)
+				}
+			})
+		}else{
+			alert("请完善留言信息！！！")
+		}
+	})
+
+	
+})
+</script>

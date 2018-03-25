@@ -41,7 +41,7 @@ public class HomeController {
 		}
 		
 		List<Books> newsetThreeBooks=booksService.getNewsetBook(3);
-		List<Books> discountFourBooks=booksService.getdiscountBook(8);
+		List<Books> discountFourBooks=booksService.getdiscountBookWithLimit(8);
 		List<Books> recommendFourBooks=recommendBookService.getRecommendBooks(uAccount, 4);
 		List<Books> bestSaleFourBooks=booksService.getBestSaleBook(8);
 		

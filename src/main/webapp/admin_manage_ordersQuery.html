@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>管理员-图书查询</title>
+  <title>管理员-订单管理</title>
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="css/manage.css">
+  <link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <header>
@@ -44,73 +45,23 @@
   </ul>
 </section>
 
-<!-- 修改弹框按钮 -->
-<div id="div2">
-  <div class="circles" >X</div>
-  <form action="booksModify" method="get" >
-    <div class="mini-form-input">
-      <label>图书名称：</label>
-      <input type="text" class="book_input" name="book_name" value="">
-    </div>
-    <div class="mini-form-input">
-      <label>图书描述：</label>
-      <input type="text" class="book_input" name="book_description" value="">
-    </div>
-
-    <div class="mini-form-input">
-      <label>图书价格：</label>
-      <input type="text" class="book_input" name="book_price" value="">
-    </div>
-
-    <div class="mini-form-input">
-      <label>图书折扣：</label>
-      <input type="text" class="book_input" name="book_discount" value="">
-    </div>
-
-    <div class="mini-form-input">
-      <label>图书作者：</label>
-      <input type="text" class="book_input" name="book_author" value="">
-    </div>
-
-    <div class="mini-form-input">
-      <label>图书出版社：</label>
-      <input type="text" class="book_input" name="book_press" value="">
-    </div>
-
-    <div class="mini-form-input">
-      <label>出版时间：</label>
-      <input type="text" class="book_input" name="book_press_time" value="">
-    </div>
-
-    <div class="mini-form-input">
-      <label>图书服务：</label>
-      <input type="text" class="book_input" name="book_service" value="">
-    </div>
-    <div class="mini-form-input">
-      <input type="submit" value="提交" name="submitButton">
-    </div>
-
-  </form>
-
-</div>
 
 <section class="right-content">
   <div>
-    <span class="title"><i class="glyphicon glyphicon-search"></i>图书查询</span>
+    <span class="title"><i class="glyphicon glyphicon-search"></i>订单管理</span>
   </div>
   <div class="search_nav">
     <select name="search_con" id="search_con">
       <option>请选择搜索类型</option>
-      <option value="b_name" selected="selected">书名</option>
-      <option value="b_press">出版社</option>
-      <option value="b_author">作者</option>
-      <option value="b_category">书目类别</option>
+      <option value="o_code" selected="selected">订单号</option>
     </select>
     <input type="text" name="search_input" id="search_input" >
     <input type="submit" value="搜索" id="search_button" name="searchButton">
   </div>
 
- <div class="book_lists"> </div>
+ <div class="book_lists" id="mine_order_lists"> 
+
+ </div>
  
 
   <div class="row papigation">
@@ -129,9 +80,9 @@
 <script src="js/jquery-2.2.4.min.js"></script>
 <script>
   $(function(){
-    $("#bookManage").addClass("current").next().show()
-    $("#book_query").addClass("subliCurrent")
+    $("#orderManage").addClass("current").next().show()
+    $("#order_add").addClass("subliCurrent")
   })
 </script>
 <script src="js/adminUtils.js"></script>
-<script src="js/adminBookQuery.js"></script>
+<script src="js/adminOrdersQuery.js"></script>
