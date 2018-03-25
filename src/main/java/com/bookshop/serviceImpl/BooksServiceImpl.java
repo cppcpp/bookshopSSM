@@ -217,4 +217,10 @@ public class BooksServiceImpl implements BooksService {
 		// TODO Auto-generated method stub
 		return dao.getBookByConditions(category, saleNum, discount, newset, price, lowestPrice, highestPrice);
 	}
+
+	@Override
+	public List<Books> getdiscountBookWithLimit(int count) {
+		// TODO Auto-generated method stub
+		return dao.getdiscountBookWithLimit(count);
+	}
 }
