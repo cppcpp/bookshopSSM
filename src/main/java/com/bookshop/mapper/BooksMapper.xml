@@ -387,4 +387,8 @@
   		,b.b_price*b.b_discount asc
   	</if>
   </select>
+  
+  <update id="updateBSaleNum">
+      update books b set b.b_sale_num=b_sale_num+#{bSaleNum} where b_id=#{bId} 
+  </update>
 </mapper>

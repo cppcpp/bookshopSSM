@@ -223,4 +223,10 @@ public class BooksServiceImpl implements BooksService {
 		// TODO Auto-generated method stub
 		return dao.getdiscountBookWithLimit(count);
 	}
+
+	@Override
+	public int updateBSaleNum(int bSaleNum, String bId) {
+		// TODO Auto-generated method stub
+		return dao.updateBSaleNum(bSaleNum, bId);
+	}
 }

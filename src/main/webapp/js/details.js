@@ -176,7 +176,7 @@ $(function(){
 				if(data=="userNotLogin"){
 					window.location="login.html"
 				}else {
-					/* window.location="mineOrders.html" */
+					window.location="mineOrders.html" 
 				}
 			}
 		})

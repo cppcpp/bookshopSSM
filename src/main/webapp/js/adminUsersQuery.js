@@ -63,10 +63,23 @@ $(function(){
 	
 	//delete
 	 $("body").on("click",".singleDelete",function(){
+		let id = $(this).attr("name");
+		let ids = []
+		ids.push(id)
 		 var r=confirm("确定删除该用户信息？")
 		  if (r==true)
 		    {
-			  //删除用户信息
+			  $.ajax({
+				  url:'user/deleteUsers',
+				  type:'post',
+				  contentType: "application/json; charset=utf-8",
+				  data:JSON.stringify({
+					  "ids":ids
+				  }),
+				  success:function(data){
+					  console.log(data)
+				  }
+			  })
 		    }
 	  });
 	
@@ -124,7 +137,7 @@ function getLists(page,limit){
 				  html += "<li title=\"user_role\" class=\"li_book\"><b>身份：</b>"+udata['uRole']+"</li><br>"
 				  html += "</ul></div>"
 				  html += "<div class=\"book_column book_column_four\">"
-				  html += "<input type=\"button\" value=\"删除\" class=\"singleDelete\">"
+				  html += "<input type=\"button\" value=\"删除\" class=\"singleDelete\" name="+udata['uAccount']+">"
 				  html += "<input type=\"button\" value=\"修改\" class=\"singleModify\" name="+udata['uAccount']+">"
 				  html += "</div></div><br>";
 		  });

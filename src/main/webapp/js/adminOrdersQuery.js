@@ -30,7 +30,7 @@ function getLists(page,limit){
 	}
 	
 	$.ajax({
-    	url:'orders/ordersQry',
+    	url:'orders/saleOrderQuery',
     	type:'post',
     	data:{ 
     		"page": page,

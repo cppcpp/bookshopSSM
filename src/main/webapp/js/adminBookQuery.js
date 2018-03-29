@@ -85,7 +85,7 @@ function getLists(page,limit){
    			  html += " <input type='checkbox' value="+bdata['bId']+"/>"
    			  html += "</div>"
    			  html += "<div class=\"book_column book_column_two\">"
-   			  html += "<div><img src=\"img/book_images/"+bdata['bId']+".jpg\"></div></div>"
+   			  html += "<div><img src=\"img/book_images/"+bdata['bPic']+"\"></div></div>"
    			  html += "<div class=\"book_column book_column_three\">"	
    			  html += "<ul>"
    			  html += "<li title=\"book_name\"  class=\"li_book\"><b>名称：</b>"+bdata['bName']+"</li><br>"
