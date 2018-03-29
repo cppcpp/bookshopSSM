@@ -345,6 +345,10 @@
   	select  * from books ORDER BY b_discount asc
   </select>
   
+  <select id="getdiscountBookWithLimit" resultMap="BaseResultMap" >
+      select  * from books ORDER BY b_discount asc limit 0,#{count};
+  </select>
+  
   <select id="getBestSaleBook" resultMap="BaseResultMap">
   	select  * from books ORDER BY b_sale_num desc limit 0,#{count}; 
   </select>
