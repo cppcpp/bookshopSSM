@@ -140,18 +140,22 @@ var totalPage,currpage,limit
     	var obj = {
 			'ids':[$(this).parent().attr('name')]
 		}
-    	$.ajax({
-			url:'orders/deleteOrders',
-			contentType: "application/json; charset=utf-8",
-			type:'post',
-			data:JSON.stringify(obj),
-			success:function(){
-				getLists()
-			},
-			error:function(){
-				
-			}
-		}) 
+    	 var r=confirm("确定删除该订单记录？")
+   	  	if (r==true)
+   	       {
+	    	$.ajax({
+				url:'orders/deleteOrders',
+				contentType: "application/json; charset=utf-8",
+				type:'post',
+				data:JSON.stringify(obj),
+				success:function(){
+					getLists()
+				},
+				error:function(){
+					
+				}
+			}) 
+   	      }
 	})
   })
   function getLists(page,limit){

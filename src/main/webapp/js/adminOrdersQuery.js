@@ -3,6 +3,27 @@ var selectedValue = '',searchInput=""
 
 $(function(){
 	getLists()
+	    $("body").on('click','.order_delete',function() {
+    	var obj = {
+			'ids':[$(this).parent().attr('name')]
+		}
+    	 var r=confirm("确定删除该订单记录？")
+    	  if (r==true)
+    	    {
+    		  $.ajax({
+    				url:'orders/deleteOrders',
+    				contentType: "application/json; charset=utf-8",
+    				type:'post',
+    				data:JSON.stringify(obj),
+    				success:function(){
+    					getLists()
+    				},
+    				error:function(){
+    					
+    				}
+    			}) 
+    	    }
+	})
 	selectedValue = $("#search_con").val()
 	$("#search_con").change(function(){
 	  selectedValue = $("#search_con").val()

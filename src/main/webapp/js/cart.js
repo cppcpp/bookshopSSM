@@ -121,19 +121,24 @@ $(function(){
 		var obj = {
 			'ids':ids
 		}
-		$.ajax({
-			url:'cart/deleteCart',
-			contentType: "application/json; charset=utf-8",
-			type:'post',
-			data:JSON.stringify(obj),
-			success:function(){
-				$("#table_body").html("");
-				getCartList()
-			},
-			error:function(){
-				
-			}
-		})
+		 var r=confirm("确定删除？")
+		  if (r==true)
+		    {
+			  $.ajax({
+					url:'cart/deleteCart',
+					contentType: "application/json; charset=utf-8",
+					type:'post',
+					data:JSON.stringify(obj),
+					success:function(){
+						$("#table_body").html("");
+						getCartList()
+					},
+					error:function(){
+						
+					}
+				})
+		    }
+		
 		
 	})
 	//多条删除
