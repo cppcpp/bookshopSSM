@@ -40,7 +40,28 @@ $(function(){
                assignment(ulchilds[i]);
            }
        }
-     
+     //
+    });
+	$("body").on("click",".singleDelete",function(){
+        var b_id=$(this).attr("name");
+        console.log("###",b_id);
+        let ids = [];
+        ids.push(b_id)
+        var r = confirm("确定删除该书籍？")
+        if(r == true){
+        	 $.ajax({
+				  url:'books/deleteBooks',
+				  type:'post',
+				  contentType: "application/json; charset=utf-8",
+				  data:JSON.stringify({
+					  "ids":ids
+				  }),
+				  success:function(data){
+					  console.log(data)
+				  }
+			  })
+        }
+       
     });
     //给input的相应节点赋值
     function assignment(thNode){
@@ -88,19 +109,19 @@ function getLists(page,limit){
    			  html += "<div><img src=\"img/book_images/"+bdata['bPic']+"\"></div></div>"
    			  html += "<div class=\"book_column book_column_three\">"	
    			  html += "<ul>"
-   			  html += "<li title=\"book_name\"  class=\"li_book\"><b>名称：</b>"+bdata['bName']+"</li><br>"
-   			  html += "<li title=\"book_description\" class=\"li_book\"><b>图书描述：</b>"+bdata['bDescription']+"</li><br>"
-   			  html += "<li title=\"book_price\" class=\"li_book\"><b>价格：</b>"+bdata['bPrice']+"</li>"
-   			  html += "<li title=\"book_discount\" class=\"li_book\"><b>折扣：</b>"+bdata['bDiscount']+"折</li><br>"
-   			  html += "<li title=\"book_author\" class=\"li_book\"><b>作者：</b>"+bdata['bAuthor']+"</li><br>"
-  			  html += "<li title=\"book_press\" class=\"li_book\"><b>出版社：</b>"+bdata['bPress']+"</li><br>"
-  			  html += "<li title=\"book_press_time\" class=\"li_book\"><b>出版时间：</b>"+bdata['bPressTime']+"</li><br>"
- 			  html += "<li title=\"book_service\" class=\"li_book\"><b>上架时间：</b>"+bdata['bService']+"</li><br>"
- 			  html += "<li title=\"book_num\" class=\"li_book\"><b>已售数量：</b>"+bdata['bSaleNum']+"</li><br>"
-			  html += "<li title=\"book_time\" class=\"li_book\"><b>上架时间：</b>"+bdata['bAddTime']+"</li><br>"
+   			  html += "<li title=\"bName\"  class=\"li_book\"><b>名称：</b>"+bdata['bName']+"</li><br>"
+   			  html += "<li title=\"bDescription\" class=\"li_book\"><b>图书描述：</b>"+bdata['bDescription']+"</li><br>"
+   			  html += "<li title=\"bPrice\" class=\"li_book\"><b>价格：</b>"+bdata['bPrice']+"</li>"
+   			  html += "<li title=\"bDiscount\" class=\"li_book\"><b>折扣：</b>"+bdata['bDiscount']+"折</li><br>"
+   			  html += "<li title=\"bAuthor\" class=\"li_book\"><b>作者：</b>"+bdata['bAuthor']+"</li><br>"
+  			  html += "<li title=\"bPress\" class=\"li_book\"><b>出版社：</b>"+bdata['bPress']+"</li><br>"
+  			  html += "<li title=\"bPressTime\" class=\"li_book\"><b>出版时间：</b>"+bdata['bPressTime']+"</li><br>"
+ 			  html += "<li title=\"bService\" class=\"li_book\"><b>上架时间：</b>"+bdata['bService']+"</li><br>"
+ 			  html += "<li title=\"bNum\" class=\"li_book\"><b>已售数量：</b>"+bdata['bSaleNum']+"</li><br>"
+			  html += "<li title=\"bTime\" class=\"li_book\"><b>上架时间：</b>"+bdata['bAddTime']+"</li><br>"
  			  html += "</ul></div>"
  			  html += "<div class=\"book_column book_column_four\">"
- 			  html += "<input type=\"button\" value=\"删除\" class=\"singleDelete\">"
+ 			  html += "<input type=\"button\" value=\"删除\" name="+bdata['bId']+" class=\"singleDelete\">"
  			  html += "<input type=\"button\" value=\"修改\" class=\"singleModify\" name="+bdata['bId']+">"
    			  html += "</div></div><br>"
  				
