@@ -131,7 +131,10 @@ public class RecommendBookServiceImpl implements RecommendBookService{
 		//根据bookId得到图书信息
 		for(String bId:resultBookId) {
 			tempBook=bookService.selectByPrimaryKey(bId);
-			resultBooks.add(tempBook);
+			//书籍可能为空
+			if(tempBook!=null) {
+				resultBooks.add(tempBook);
+			}
 		}
 		
 		return resultBooks;
@@ -241,6 +244,18 @@ public class RecommendBookServiceImpl implements RecommendBookService{
 			}
 		}
 		
+	}
+
+	@Override
+	public int insertBookColumn(String column) {
+		// TODO Auto-generated method stub
+		return mapper.insertBookColumn(column);
+	}
+
+	@Override
+	public int updateBookNum(String column,int num,String uAccount){
+		// TODO Auto-generated method stub
+		return mapper.updateBookNum(column, num,uAccount);
 	}
 
 }

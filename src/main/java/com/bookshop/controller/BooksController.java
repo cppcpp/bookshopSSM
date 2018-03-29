@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,9 +22,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bookshop.dao.RecommendBookMapper;
 import com.bookshop.modle.Books;
 import com.bookshop.modle.BooksExample;
 import com.bookshop.service.BooksService;
+import com.bookshop.service.RecommendBookService;
 import com.bookshop.util.StringUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -35,6 +38,8 @@ public class BooksController {
 	@Autowired
 	BooksService booksService;
 	
+	@Autowired
+	RecommendBookService recommendBookService;
 	
 	@RequestMapping("/initBooks")
 	@ResponseBody
@@ -134,8 +139,8 @@ public class BooksController {
         }
         //判断非空字段是否为空 以及设置创建时间
         if(StringUtil.isEmpty(id)){
-            id = StringUtil.seqGenerate().toString();
-            req.put("bId", category+id.toString());
+            id = category+StringUtil.seqGenerate().toString();
+            req.put("bId", id);
             newFileName=category+id.toString();
         }
         req.put("bName", request.getParameter("bName"));
@@ -178,9 +183,14 @@ public class BooksController {
         }
         
         if (booksService.insertSelective(books) == 1) {
-        	//mav.addObject("bookAddSuccess", "书籍添加成功!");
+        	//更新recommend_book表
+        	if(recommendBookService.insertBookColumn(id+"_o_num")!=1) {
+        		mav.addObject("upRecommendBookError", "更新图书推荐表失败");
+        		return mav;
+        	}
+        	
+        	mav.addObject("bookAddSuccess", "书籍添加成功!");
             //重定向到展示图书页面----------------------------未完成
-        	mav.setViewName("redirect:/admin_manage_bookQuery.html");
         	
         }else {
         	mav.addObject("bookAddError", "添加失败!");
@@ -232,6 +242,7 @@ public class BooksController {
             Map<String,Object> tMap = new HashMap<>();
             tMap.put("bId", books.getbId());
             tMap.put("bName", books.getbName());
+			tMap.put("bPic", books.getbPic());
             tMap.put("bDescription", books.getbDescription());
             if(books.getbPrice()!=null){
                 tMap.put("bPrice", books.getbPrice().toString());
@@ -260,5 +271,97 @@ public class BooksController {
         return resultMap;
     }
 	
+	@RequestMapping(value="/updateBooks",method=RequestMethod.POST)
+    public String updateBooks(@RequestParam("bookPic")MultipartFile bookPic,
+    		HttpServletRequest request) throws IllegalStateException, IOException{
+		Map<String , String> req=new HashMap<>();
+        String id = request.getParameter("bId");
+        Map<String,Object> resultMap = new HashMap<>();
+        String newFileName=null;
+        
+        if(StringUtil.isEmpty(id)){
+            return "bIdNull";
+        }
+        
+        req.put("bId",id);
+        req.put("bName", request.getParameter("bName"));
+        req.put("bDescription", request.getParameter("bDescription"));
+        req.put("bPrice", request.getParameter("bPrice"));
+        req.put("bDiscount", request.getParameter("bDiscount"));
+        req.put("bAuthor", request.getParameter("bAuthor"));
+        req.put("bPress", request.getParameter("bPress"));
+        req.put("bPressTime", request.getParameter("bPressTime"));
+        req.put("bAddTime", request.getParameter("bAddTime"));
+        req.put("bService", request.getParameter("bService"));
+        req.put("bSaleNum", request.getParameter("bSaleNum"));
+        
+        //修改上传图片
+        if(!bookPic.isEmpty()) {
+        	//左含右不含
+            newFileName=id.substring(0, 1)+StringUtil.seqGenerate();
+        	
+        	String path=request.getSession().getServletContext().getRealPath("/img/book_images/");
+        	System.out.println("path:：："+path);
+        	//设置上传文件名
+        	String fileName=bookPic.getOriginalFilename();
+        	//取得文件后缀
+        	//String[] temp=fileName.split(".");--为空
+        	String suffix=fileName.substring(fileName.lastIndexOf(".")+1);
+        	newFileName=newFileName+"."+suffix;
+        	File file=new File(path, newFileName);
+        	//如果目标路径存在，存储图片文件
+        	if(file.getParentFile().exists()) {
+        		bookPic.transferTo(new File(path+File.separator+newFileName));
+        	}else {
+        		//存储图片的路径不存在，请检查
+        		return "pathNotExist";
+        	}
+        	req.put("bPic", newFileName);
+        }
+        
+        try {
+            Books books = booksService.createBooks(req);
+            if (booksService.updateByPrimaryKeySelective(books) == 1) {
+                return "success";
+            }else {
+                return "error";
+            }
+        } catch (Exception e) {
+        	return "error";
+        }
+    }
+
+    @RequestMapping(value="/deleteBooks",method=RequestMethod.POST)
+    public String deleteBooks(@RequestBody Map<String, Object>req){
+        List<String> idList = (List<String>) req.get("ids");
+        Map<String, Object> resultMap = new HashMap<>();
+        String strSuc = "";
+        String strFail = "";
+        String strNotExist = "";        
+        try {
+            if (idList.size() != 0 && idList != null) {
+                for (int i = 0; i < idList.size(); i++) {
+                    String id =idList.get(i);
+                    if (booksService.selectByPrimaryKey(id) != null) {
+                        if (booksService.deleteByPrimaryKey(id) == 1) {
+                            strSuc += (id + " ");
+                        } else {
+                            strFail += (id + " ");
+                        }
+                   } else {
+                       strNotExist += (id + " ");                   }
+               }
+                if (strNotExist.equals("") && strFail.equals("")) {
+                    return strSuc + "删除成功";
+                } else {
+                    return strFail + strNotExist + "删除失败";
+                }
+            } else {
+                return "idsNull";
+            }
+        } catch (Exception e) {
+            return "error";
+        }
+    }
 	
 }
