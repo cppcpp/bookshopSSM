@@ -13,7 +13,7 @@
 	</select>
 	
 	<update id="insertBookColumn">
-		alter table recommend_books add #{column} int(10) default 0
+		alter table recommend_books add ${column} int(10) default 0
 	</update>
 	
 	<update id="updateBookNum">

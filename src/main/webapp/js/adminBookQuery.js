@@ -58,6 +58,7 @@ $(function(){
 				  }),
 				  success:function(data){
 					  console.log(data)
+					  window.location="admin_manage_bookQuery.html"
 				  }
 			  })
         }
@@ -86,12 +87,12 @@ function getLists(page,limit){
 		url:'books/booksQry',
 		method:'get',
 		 data:{
-   		  "category":category, 
-   		  "page": page,
-   		  "limit": limit,
-   		  "bAuthor":bAuthor,
-   		  "bPress":bPress,
-   		  "bName":bName
+		  "category":category, 
+		  "page": page,
+		  "limit": limit,
+		  "bAuthor":bAuthor,
+		  "bPress":bPress,
+		  "bName":bName
    	  },
 		success:function(data) {
 			console.log(data)
@@ -109,10 +110,11 @@ function getLists(page,limit){
    			  html += "<div><img src=\"img/book_images/"+bdata['bPic']+"\"></div></div>"
    			  html += "<div class=\"book_column book_column_three\">"	
    			  html += "<ul>"
+   			  html += "<li title=\"bId\"  class=\"li_book\"><b>Id：</b>"+bdata['bId']+"</li><br>"
    			  html += "<li title=\"bName\"  class=\"li_book\"><b>名称：</b>"+bdata['bName']+"</li><br>"
    			  html += "<li title=\"bDescription\" class=\"li_book\"><b>图书描述：</b>"+bdata['bDescription']+"</li><br>"
    			  html += "<li title=\"bPrice\" class=\"li_book\"><b>价格：</b>"+bdata['bPrice']+"</li>"
-   			  html += "<li title=\"bDiscount\" class=\"li_book\"><b>折扣：</b>"+bdata['bDiscount']+"折</li><br>"
+   			  html += "<li title=\"bDiscount\" class=\"li_book\"><b>折扣：</b>"+bdata['bDiscount']+"</li><br>"
    			  html += "<li title=\"bAuthor\" class=\"li_book\"><b>作者：</b>"+bdata['bAuthor']+"</li><br>"
   			  html += "<li title=\"bPress\" class=\"li_book\"><b>出版社：</b>"+bdata['bPress']+"</li><br>"
   			  html += "<li title=\"bPressTime\" class=\"li_book\"><b>出版时间：</b>"+bdata['bPressTime']+"</li><br>"

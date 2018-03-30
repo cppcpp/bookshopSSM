@@ -4,10 +4,12 @@ package com.bookshop.serviceImpl;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.security.auth.login.FailedLoginException;
 
@@ -108,7 +110,7 @@ public class RecommendBookServiceImpl implements RecommendBookService{
 			
 			
 		int bookNum=0;
-		List<String> resultBookId=new ArrayList<>();//推荐的书籍Id
+		Set<String> resultBookId=new HashSet<>();//推荐的书籍Id--不允许重复，改成set
 		String tempRecommendUser;int tempIndex;Map<String, Object> tempRecommendUAccountBooksInfo;
 		
 		//按照相似度用户由高到低排序，依次查找推荐的书籍
@@ -204,7 +206,7 @@ public class RecommendBookServiceImpl implements RecommendBookService{
 	 * 
 	 * 
 	 * */
-	public void getResultBookId(Map<String, Object> recommendUAccountBooksInfo,Map<String,Object> uAccountBooksInfo,int bookNum,int expectedCount,List<String> resultBookId){
+	public void getResultBookId(Map<String, Object> recommendUAccountBooksInfo,Map<String,Object> uAccountBooksInfo,int bookNum,int expectedCount,Set<String> resultBookId){
 		//将期望用户的图书信息降序排列
 		List<Entry<String, Object>> sortList=new ArrayList<>(recommendUAccountBooksInfo.entrySet());
 		Collections.sort(sortList, new Comparator<Entry<String, Object>>() {

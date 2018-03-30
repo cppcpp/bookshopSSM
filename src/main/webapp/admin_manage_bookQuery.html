@@ -47,7 +47,8 @@
 <!-- 修改弹框按钮 -->
 <div id="div2">
   <div class="circles" >X</div>
-  <form action="books/updateBooks" method="post" >
+  <form action="books/updateBooks" method="post" enctype="multipart/form-data">
+  	<input type="text" name="bId" value="" style="display:none"><!--隐藏bId框  -->
     <div class="mini-form-input">
       <label>图书名称：</label>
       <input type="text" class="book_input" name="bName" value="">
@@ -79,7 +80,7 @@
 
     <div class="mini-form-input">
       <label>出版时间：</label>
-      <input type="text" class="book_input" name="bPressTime" value="">
+      <input type="date" class="book_input" name="bPressTime" value="">
     </div>
 
     <div class="mini-form-input">

@@ -55,7 +55,7 @@ public class BooksController {
 		Map<String, Object> resultMap=new HashMap<>();
 		String category1,saleNum1,discount1,newset1,price1;
 		List<Map<String, String>> resultList=new ArrayList<>();
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 		
 		int pageNum =  page == null ? 1 : Integer.parseInt(page);
 	    int pageSize =  limit == null ? 10 : Integer.parseInt(limit);
@@ -141,7 +141,7 @@ public class BooksController {
         if(StringUtil.isEmpty(id)){
             id = category+StringUtil.seqGenerate().toString();
             req.put("bId", id);
-            newFileName=category+id.toString();
+            newFileName=id.toString();
         }
         req.put("bName", request.getParameter("bName"));
         req.put("bDescription", request.getParameter("bDescription"));
@@ -154,48 +154,48 @@ public class BooksController {
         req.put("bService", request.getParameter("bService"));
         req.put("bSaleNum", request.getParameter("bSaleNum"));
         
-        //上传图片
-        if(!bookPic.isEmpty()) {
-        	String path=request.getSession().getServletContext().getRealPath("/img/book_images/");
-        	System.out.println("path:：："+path);
-        	//设置上传文件名
-        	String fileName=bookPic.getOriginalFilename();
-        	//取得文件后缀
-        	//String[] temp=fileName.split(".");--为空
-        	String suffix=fileName.substring(fileName.lastIndexOf(".")+1);
-        	newFileName=newFileName+"."+suffix;
-        	File file=new File(path, newFileName);
-        	//如果目标路径存在，存储图片文件
-        	if(file.getParentFile().exists()) {
-        		bookPic.transferTo(new File(path+File.separator+newFileName));
-        	}else {
-        		mav.addObject("pathNotExits", "存储图片的路径不存在，请检查");
-        		return mav;
-        	}
-        }else {
-        	mav.addObject("bookPicNotExit", "未选择图书图片");
+        try {
+	        //上传图片
+	        if(!bookPic.isEmpty()) {
+	        	String path=request.getSession().getServletContext().getRealPath("/img/book_images/");
+	        	System.out.println("path:：："+path);
+	        	//设置上传文件名
+	        	String fileName=bookPic.getOriginalFilename();
+	        	//取得文件后缀
+	        	//String[] temp=fileName.split(".");--为空
+	        	String suffix=fileName.substring(fileName.lastIndexOf(".")+1);
+	        	newFileName=newFileName+"."+suffix;
+	        	File file=new File(path, newFileName);
+	        	//如果目标路径存在，存储图片文件
+	        	if(file.getParentFile().exists()) {
+	        		bookPic.transferTo(new File(path+File.separator+newFileName));
+	        	}else {
+	        		mav.addObject("pathNotExits", "存储图片的路径不存在，请检查");
+	        		return mav;
+	        	}
+	        }else {
+	        	mav.addObject("bookPicNotExit", "未选择图书图片");
+	        }
+	        
+	        req.put("bPic", newFileName);
+	        Books books = booksService.createBooks(req);
+	        if(books.getbAddTime()==null){
+	            books.setbAddTime(new Date());
+	        }
+	        
+	        if (booksService.insertSelective(books) == 1) {
+	        	//更新recommend_book表
+	        	recommendBookService.insertBookColumn(id+"_o_num");
+	        	
+	        	mav.addObject("bookAddSuccess", "书籍添加成功!");
+	        	
+	        }else {
+	        	mav.addObject("bookAddError", "添加失败!");
+	        }
+        }catch (Exception e) {
+        	e.printStackTrace();
         }
-        
-        req.put("bPic", newFileName);
-        Books books = booksService.createBooks(req);
-        if(books.getbAddTime()==null){
-            books.setbAddTime(new Date());
-        }
-        
-        if (booksService.insertSelective(books) == 1) {
-        	//更新recommend_book表
-        	if(recommendBookService.insertBookColumn(id+"_o_num")!=1) {
-        		mav.addObject("upRecommendBookError", "更新图书推荐表失败");
-        		return mav;
-        	}
-        	
-        	mav.addObject("bookAddSuccess", "书籍添加成功!");
-            //重定向到展示图书页面----------------------------未完成
-        	
-        }else {
-        	mav.addObject("bookAddError", "添加失败!");
-        }
-        
+        mav.setViewName("redirect:/admin_manage_bookQuery.html");
         return mav;
     }
 	
@@ -221,7 +221,7 @@ public class BooksController {
         int pageNum =  page == null ? 1 : Integer.parseInt(page);
         int pageSize =  limit == null ? 10 : Integer.parseInt(limit);
         Map<String, String> booksExmMap = new HashMap<>();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         booksExmMap.put("bId", bId);
         booksExmMap.put("bName", bName);
         booksExmMap.put("bDescription", bDescription);
@@ -272,7 +272,7 @@ public class BooksController {
     }
 	
 	@RequestMapping(value="/updateBooks",method=RequestMethod.POST)
-    public String updateBooks(@RequestParam("bookPic")MultipartFile bookPic,
+    public String updateBooks(@RequestParam(name="bookPic",required=false)MultipartFile bookPic,
     		HttpServletRequest request) throws IllegalStateException, IOException{
 		Map<String , String> req=new HashMap<>();
         String id = request.getParameter("bId");
@@ -296,7 +296,7 @@ public class BooksController {
         req.put("bSaleNum", request.getParameter("bSaleNum"));
         
         //修改上传图片
-        if(!bookPic.isEmpty()) {
+        if(bookPic!=null&&!bookPic.isEmpty()) {
         	//左含右不含
             newFileName=id.substring(0, 1)+StringUtil.seqGenerate();
         	
@@ -322,7 +322,7 @@ public class BooksController {
         try {
             Books books = booksService.createBooks(req);
             if (booksService.updateByPrimaryKeySelective(books) == 1) {
-                return "success";
+                return "redirect:/admin_manage_bookQuery.html";
             }else {
                 return "error";
             }
@@ -332,6 +332,7 @@ public class BooksController {
     }
 
     @RequestMapping(value="/deleteBooks",method=RequestMethod.POST)
+    @ResponseBody
     public String deleteBooks(@RequestBody Map<String, Object>req){
         List<String> idList = (List<String>) req.get("ids");
         Map<String, Object> resultMap = new HashMap<>();
