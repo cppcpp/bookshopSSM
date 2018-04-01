@@ -126,10 +126,10 @@
       </tr>
       <tr class="book_server">
         <td class="server_text">店铺服务</td>
-        <td class="server_input"><input type="text" name="bService"  class="input-book"></td>
+        <td class="server_input"><input type="text" name="bService" id="b_server"   class="input-book"></td>
         <td><p id="p_server"></p></td>
       </tr>
-      <tr><td colspan="3"><input type="submit" value="提交" onclick="return checkAddStuNull()" class="add_submit"></td></tr>
+      <tr><td colspan="3"><input type="submit" value="提交"  class="add_submit"></td></tr>
     </table>
   </form>
 </section>
@@ -137,6 +137,7 @@
 </html>
 <script src="js/jquery-2.2.4.min.js"></script>
 <script>
+var imgMark = false;
   $(document).ready(function () {
     $("#bookManage").addClass("current").next().show()
     $("#book_add").addClass("subliCurrent")
@@ -147,11 +148,31 @@
       var arr=filePath.split('\\');
       var fileName=arr[arr.length-1];
       $(".file_name").html(fileName);
+      imgMark = true
     }else{
       $(".file_name").html("您未上传文件，或者您上传文件类型有误！");
+      imgMark = false
       return false
     }
   })
+     $(".addBooks").bind("submit", function(){ 
+	   let category = $("#b_category").val()
+	   let name = $("#b_name").val()
+	   let author = $("#b_author").val()
+	   let description =$("#b_description").val()
+	   let price = $("#b_price").val()
+	   let discount = $("#b_discount").val()
+	   let press = $("#b_press").val()
+	   let pressTime =$("#b_press_time").val()
+	   let server = $("#b_server").val()
+	   if(name && category && imgMark && author && description &&price && discount &&press && pressTime &&server){
+		   return true
+	   }else {
+		   alert("请完善图书信息")
+		   return false;
+	   }
+   })
   })
+
 </script>
 <script src="js/adminUtils.js"></script>

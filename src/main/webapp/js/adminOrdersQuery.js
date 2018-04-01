@@ -1,8 +1,107 @@
 var Ocode='',totalPage=0,currpage=0,limit
 var selectedValue = '',searchInput=""
-
+	var multiDeleteArr = []
 $(function(){
 	getLists()
+	 $("body").on('click','.cart-multiDelete',function() {
+		 let obj = {ids:multiDeleteArr}
+		 console.log(obj)
+			if(multiDeleteArr.length) {
+				$.ajax({
+					url:'orders/deleteOrders',
+					type:'post',
+					contentType: "application/json; charset=utf-8",
+					data:JSON.stringify(obj),
+				
+					success:function(){
+						$(".book_lists").html("");
+						getLists()
+					},
+					error:function(){
+						
+					}
+				})
+			}else{
+				alert("请选择要删除的订单")
+			}
+		})
+	$("#selectAll").click(function () {
+		if (this.checked) {
+		var check = document.getElementsByClassName("selectSub");
+    
+	    for(var i = 0;i<check.length;i++){
+	    	var flag= false
+	    	if(multiDeleteArr.length){
+				  for(var j=0;j<multiDeleteArr.length;j++){
+					  if(check[i].getAttribute('name') ==multiDeleteArr[j]){
+						  flag=true;
+						  break;
+					  }
+				  }
+			  }
+			  if(!flag){
+				  multiDeleteArr.push(check[i].getAttribute('name')) 
+			  }
+	    }
+    $(".selectSub").prop("checked", true);
+    $(".selectSub").click(function () {
+    	var num=0
+    	$(".selectSub").each(function(){
+    		if(this.checked == true){
+    			num +=1
+    			var no = this.parentNode.parentNode;
+    		    var td = no.childNodes;
+    		}else {
+    			$("#selectAll").prop("checked", false);
+    		}
+    	})
+    	console.log(num,$(".selectSub").length)
+    	if(num == $(".selectSub").length){
+    		   $("#selectAll").prop("checked", true);
+    		}
+      });
+  } else {
+	  multiDeleteArr = []
+	  $(".selectSub").prop("checked", false);
+  }
+});
+	
+	 $("body").on("click",".selectSub",function(){
+		 var num=0
+	    	$(".selectSub").each(function(){
+	    		if(this.checked == true){
+	    			num +=1
+	    			var no = this.parentNode.parentNode;
+	    		    var td = no.childNodes;
+	    		}else {
+	    			$("#selectAll").prop("checked", false);
+	    		}
+	    	})
+	    	console.log(num,$(".selectSub").length)
+	    	if(num == $(".selectSub").length){
+	    		   $("#selectAll").prop("checked", true);
+	    		}
+		  currentName = $(this).attr("name");
+		  console.log(currentName);
+		  let flag = false;
+		  if(this.checked){
+			  if(multiDeleteArr.length){
+				  for(var i=0;i<multiDeleteArr.length;i++){
+					  if(currentName ==multiDeleteArr[i]){
+						  flag=true;
+						  break;
+					  }
+				  }
+			  }
+			  if(!flag){
+				  multiDeleteArr.push(currentName) 
+			  }
+		  }else {
+			  if(multiDeleteArr.indexOf(currentName) != -1){
+				  multiDeleteArr.splice(multiDeleteArr.indexOf(currentName),1)
+			  }
+		  }
+	  })
 	    $("body").on('click','.order_delete',function() {
     	var obj = {
 			'ids':[$(this).parent().attr('name')]
@@ -26,6 +125,7 @@ $(function(){
 	})
 	selectedValue = $("#search_con").val()
 	$("#search_con").change(function(){
+		$("#search_input").val('')
 	  selectedValue = $("#search_con").val()
 	})
 	$("#search_button").click(function(){
@@ -55,7 +155,8 @@ function getLists(page,limit){
     	type:'post',
     	data:{ 
     		"page": page,
-    		"limit": limit
+    		"limit": limit,
+    		"oId":Ocode
     	},
     	success:function(data){
     		 totalPage = data.pageInfo.pages
@@ -67,7 +168,7 @@ function getLists(page,limit){
     	    		html += " <div class=\"order-container\">"
     	    		html += " <div class=\"order-top\">"
     	    		html += "<div class=\"order-top-left\">"
-    	    		html += "<div>订单编号：<span>"+odata['oId']+"</span></div>"
+    	    		html += "<div><input type='checkbox'class='selectSub' name="+odata['oId']+">订单编号：<span>"+odata['oId']+"</span></div>"
     	    		html += "<div>订单时间：<span>"+odata['oTime']+"</span></div>"
     	    		html += " <div>收货人：<span>"+odata['uReceiver']+"</span></div></div>"
     	    		html += "<div class=\"order-top-right\"><div>等待付款</div></div></div>"
@@ -80,15 +181,15 @@ function getLists(page,limit){
     	    			html += " <span class=\"order-content-detail-bookprice\">"+ddata['bSumdiscountprice']+"</span>"
     	    			html += "<span class=\"order-content-detail-bookoldprice\">"+ddata['bSumprice']+"</span>"
     	    			html += "<span class=\"order-content-detail-booknum\">"+ddata['bNums']+"</span>"
-    	    			html += "</div> </div>"
+    	    			html += "</div> </div>";
     	    			html +=" <div class=\"clear\"></div>"
     	    		})
     	    		html +="</div> </div>"
-    	    		html +=" <div class=\"order-bottom\">"
-    	    		html += "<div name="+odata['oId']+"><input type=\"submit\" value=\"删除\" class=\"pass_button order_delete\"></div>"
-                	html += "<div>共"+odata['oNum']+"件商品&nbsp;&nbsp;合计：¥"+odata['oPrice']+"</div></div></div> "
+    	    		html +=" <div class=\"order-bottom\">";
+    	    		html += "<div name="+odata['oId']+"><input type=\"button\" value=\"删除\" class=\"pass_button order_delete\" style=\"width:100px;height:26px;line-height:26px\"></div>";
+                	html += "<div>共"+odata['oNum']+"件商品&nbsp;&nbsp;合计：¥"+odata['oPrice']+"</div></div></div> ";
                 
-    	    	})
+    	    	});
     	    	$("#mine_order_lists").html(html)
     	}
     })

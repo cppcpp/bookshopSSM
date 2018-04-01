@@ -7,7 +7,7 @@ $(function(){
         return null; 
 	}
 	var bookId = getQueryString('bId')
-	var bName,bNums,bPrice,bDiscountprice,bSumprice,bSumdiscountprice;
+	var bName,bNums,bPrice,bDiscountprice,bSumprice,bSumdiscountprice,bImg;
 	if(bookId) {
 		$.ajax({
 			url:'books/booksQry',
@@ -20,15 +20,17 @@ $(function(){
 				var html1 = ''
 				var tab1 = ''
 				$.each(data.books,function(index,ndata){
+					console.log("---",data)
 					$("#book_name").html(ndata['bName'])
 					bName = ndata['bName']
 					bPrice = ndata['bPrice']
 					bDiscountprice = (ndata['bDiscount']/100 *ndata['bPrice']).toFixed(2)
+					bImg = ndata['bPic']
 					html += "<p class=\"details\">"+ndata["bDescription"]+"</br>";
 					html += "购买信息：已有"+ndata['bSaleNum']+"人购买</p>";
 					html += "<div class=\"price\"><strong>价格:</strong> <span class=\"red\">"+(ndata['bDiscount']/100 *ndata['bPrice']).toFixed(2);
 					html += "<span class=\"delete_decoration\">原价："+ndata['bPrice']+"</span></div>";
-					html1 += "<a href=\"#\" ><img style=\"width:150px;height: 150px;\" src=\"img/book_images/"+ndata['bId']+".jpg\" /></a>";
+					html1 += "<a href=\"#\" ><img style=\"width:150px;height: 150px;\" src=\"img/book_images/"+ndata['bPic']+"\" /></a>";
 					html1 += "<br /><br /><img src=\"img/zoom.gif\" /></a>"
 					//图书详情
 					tab1 += "<p class=\"more_details\">图书名称："+ndata['bName']+"</p>"
@@ -146,40 +148,25 @@ $(function(){
   		})
 	
 	$("#now_order").click(function(){
-		bNums = $("#num_text").val();
-		bSumprice = bNums * bPrice;
-		bSumdiscountprice = bNums * bDiscountprice;
-		let obj = {
-				"bId":bookId,
-				'bName':bName,
-				"bNums":bNums,
-				"bPrice":bPrice+"",
-				"bDiscountprice":bDiscountprice+"",
-				"bSumprice":bSumprice+"",
-				"bSumdiscountprice":bSumdiscountprice+""
-		};
-		orderDetails.push(obj);
-		let objects = {'orderDetails':orderDetails,
-				"oNum":bNums,
-				"oPrice":bSumdiscountprice,
-				"uAddress":uAddress,
-				"uReceiver":uReceiver,
-				"oPhone":oPhone,
-				"oCheaper":(bSumprice-bSumdiscountprice).toFixed(2)}
-		$.ajax({
-			url:'orders/addOrders',
-			type:'post',
-			contentType: "application/json; charset=utf-8",
-			data:JSON.stringify(objects),
-			success:function(data){
-			
-				if(data=="userNotLogin"){
-					window.location="login.html"
-				}else {
-					window.location="mineOrders.html" 
-				}
-			}
-		})
+		
+		  let obj = {};
+		  let selectedGoods = [];
+		  	bNums = $("#num_text").val();
+			bSumprice = bNums * bPrice;
+			bSumdiscountprice = bNums * bDiscountprice;
+		    obj = {"bId":bookId,
+				  "imgSrc":"img/book_images/"+bImg,
+				  "bName":bName,
+				  "bPrice":bPrice+"",
+				  "bDiscountprice":bDiscountprice+"",
+				  "bNum":bNums,
+				  "bSumdiscountprice":bSumdiscountprice.toFixed(2)+"",
+				  "bSumprice":bSumprice+""};
+		    selectedGoods.push(obj)
+		  console.log(obj)
+		  sessionStorage.setItem("selectedGoods",JSON.stringify(selectedGoods))
+		  setTimeout("javascript:location.href='confirmOrder.html'", 1000); 
+		  
 	});
 	
 })

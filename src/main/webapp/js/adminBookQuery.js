@@ -1,13 +1,116 @@
 var bAuthor='',category='',bPress='',bName='',totalPage=0,currpage=0,limit
 var selectedValue = '',searchInput=""
-
+	var multiDeleteArr = []
 $(function(){
 	getLists()
+	$("body").on('click','.cart-multiDelete',function() {
+		 let obj = {ids:multiDeleteArr}
+		 console.log(obj)
+			if(multiDeleteArr.length) {
+				$.ajax({
+					url:'books/deleteBooks',
+					type:'post',
+					contentType: "application/json; charset=utf-8",
+					data:JSON.stringify(obj),
+				
+					success:function(){
+						$(".book_lists").html("");
+						getLists()
+					},
+					error:function(){
+						
+					}
+				})
+			}else{
+				alert("请选择要删除的图书")
+			}
+		})
+	$("#selectAll").click(function () {
+		if (this.checked) {
+		var check = document.getElementsByClassName("selectSub");
+    
+	    for(var i = 0;i<check.length;i++){
+	    	var flag= false
+	    	if(multiDeleteArr.length){
+				  for(var j=0;j<multiDeleteArr.length;j++){
+					  if(check[i].getAttribute('name') ==multiDeleteArr[j]){
+						  flag=true;
+						  break;
+					  }
+				  }
+			  }
+			  if(!flag){
+				  multiDeleteArr.push(check[i].getAttribute('name')) 
+			  }
+	    }
+    $(".selectSub").prop("checked", true);
+    $(".selectSub").click(function () {
+    	var num=0
+    	$(".selectSub").each(function(){
+    		if(this.checked == true){
+    			num +=1
+    			var no = this.parentNode.parentNode;
+    		    var td = no.childNodes;
+    		}else {
+    			$("#selectAll").prop("checked", false);
+    		}
+    	})
+    	console.log(num,$(".selectSub").length)
+    	if(num == $(".selectSub").length){
+    		   $("#selectAll").prop("checked", true);
+    		}
+      });
+  } else {
+	  multiDeleteArr = []
+	  $(".selectSub").prop("checked", false);
+  }
+});
+	
+	 $("body").on("click",".selectSub",function(){
+		 var num=0
+	    	$(".selectSub").each(function(){
+	    		if(this.checked == true){
+	    			num +=1
+	    			var no = this.parentNode.parentNode;
+	    		    var td = no.childNodes;
+	    		}else {
+	    			$("#selectAll").prop("checked", false);
+	    		}
+	    	})
+	    	console.log(num,$(".selectSub").length)
+	    	if(num == $(".selectSub").length){
+	    		   $("#selectAll").prop("checked", true);
+	    		}
+		  currentName = $(this).attr("name");
+		  console.log(currentName);
+		  let flag = false;
+		  if(this.checked){
+			  if(multiDeleteArr.length){
+				  for(var i=0;i<multiDeleteArr.length;i++){
+					  if(currentName ==multiDeleteArr[i]){
+						  flag=true;
+						  break;
+					  }
+				  }
+			  }
+			  if(!flag){
+				  multiDeleteArr.push(currentName) 
+			  }
+		  }else {
+			  if(multiDeleteArr.indexOf(currentName) != -1){
+				  multiDeleteArr.splice(multiDeleteArr.indexOf(currentName),1)
+			  }
+		  }
+	  })
+	
 	selectedValue = $("#search_con").val()
 	$("#search_con").change(function(){
+	  bAuthor='',category='',bPress='',bName=''
+	  $("#search_input").val('')
 	  selectedValue = $("#search_con").val()
 	})
 	$("#search_button").click(function(){
+		bAuthor='',category='',bPress='',bName=''
 		searchInput = $("#search_input").val()
 		console.log(selectedValue,searchInput)
 		if(selectedValue && searchInput){
@@ -57,7 +160,7 @@ $(function(){
 					  "ids":ids
 				  }),
 				  success:function(data){
-					  console.log(data)
+					  console.log(data);
 					  window.location="admin_manage_bookQuery.html"
 				  }
 			  })
@@ -95,16 +198,16 @@ function getLists(page,limit){
 		  "bName":bName
    	  },
 		success:function(data) {
-			console.log(data)
-			 totalPage = data.pageInfo.pages
-   		  	 limit = data.pageInfo.pageSize
-   		  	 currpage = data.pageInfo.pageNum
-   		  $(".papigationPage").html("第"+currpage+"页/共"+totalPage+"页")
+			console.log(data);
+			 totalPage = data.pageInfo.pages;
+   		  	 limit = data.pageInfo.pageSize;
+   		  	 currpage = data.pageInfo.pageNum;
+   		  $(".papigationPage").html("第"+currpage+"页/共"+totalPage+"页");
 		  var html = "";
    		  $.each(data.books,function(index,bdata){
    			  html += "<div class=\"book\">";
    			  html += "<div class=\"book_column book_column_one\">"
-   			  html += " <input type='checkbox' value="+bdata['bId']+"/>"
+   			  html += " <input class=\"selectSub\" type='checkbox' name="+bdata['bId']+">"
    			  html += "</div>"
    			  html += "<div class=\"book_column book_column_two\">"
    			  html += "<div><img src=\"img/book_images/"+bdata['bPic']+"\"></div></div>"
@@ -125,9 +228,9 @@ function getLists(page,limit){
  			  html += "<div class=\"book_column book_column_four\">"
  			  html += "<input type=\"button\" value=\"删除\" name="+bdata['bId']+" class=\"singleDelete\">"
  			  html += "<input type=\"button\" value=\"修改\" class=\"singleModify\" name="+bdata['bId']+">"
-   			  html += "</div></div><br>"
+   			  html += "</div></div><br>";
  				
-   		  })
+   		  });
    		  $(".book_lists").html(html)
 		}
 	})

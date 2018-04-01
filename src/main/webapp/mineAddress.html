@@ -5,7 +5,7 @@
   <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <link href="css/style.css" rel="stylesheet" type="text/css">
-  <title>Title</title>
+  <title>我的地址</title>
 </head>
 <body>
 <header>
@@ -110,6 +110,7 @@
               <label>收货人电话：</label>
               <input type="text" value="" id="addPhone">
             </div>
+            <span class="tip-phone"></span>
 
             <div class="mini-form-input">
               <label>设为默认：</label>
@@ -138,7 +139,7 @@
               <label>收货人电话：</label>
               <input type="text" value="" id="editPhone">
             </div>
-
+ 			<span class="tip-phone"></span>
             <div class="mini-form-input">
               <label>设为默认：</label>
               <input type="checkbox" id="isEditDefault">
@@ -184,6 +185,31 @@
 <script src="js/utils.js"></script>
 <script>
   $(function () {
+	
+	  $("#addPhone").blur(function(){
+	        var phone=$("#addPhone").val();
+	        console.log(phone)
+	        if(!phone){
+	            $(".tip-phone").html("电话不能为空！");
+	        }else if(!phone.match(/^\d{11}$/)){
+	            $(".tip-phone").html("电话号码必须为11位的数字!");
+	        }
+	    }).focus(function (){
+	        $(".tip-phone").html("");
+	    });
+	  
+	  $("#editPhone").blur(function(){
+	        var phone=$("#editPhone").val();
+	        console.log(phone)
+	        if(!phone){
+	            $(".tip-phone").html("电话不能为空！");
+	        }else if(!phone.match(/^\d{11}$/)){
+	            $(".tip-phone").html("电话号码必须为11位的数字!");
+	        }
+	    }).focus(function (){
+	        $(".tip-phone").html("");
+	    });
+	  
     $(".subnav li").hover(function () {
       $(".subnav li").removeClass("activeLI")
     },function () {
@@ -230,6 +256,7 @@
 		}
 		
 	})
+	 
 	//删除地址
 	$("body").on("click",".delete",function(){
 		let ids = []

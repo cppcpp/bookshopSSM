@@ -1066,6 +1066,7 @@ textarea {
 .order-container {
     border: 1px solid #7c6354;
     margin: 20px auto;
+    width:100%;
 }
 
 .order-top {
@@ -1156,7 +1157,10 @@ textarea {
     border-color: #de6a5d;
     padding: 2px 10px 2px 16px;
     letter-spacing: 6px;
+    line-height: 20px !important;
 }
+
+
 
 .red-btn {
     background: #de6a5d;
@@ -1358,6 +1362,10 @@ textarea {
 	font-size: 14px;
 	margin-left:10px;
 	font-weight: normal;
+}
+.tip-phone {
+	color: #fff;
+	margin:110px;
 }
 
 

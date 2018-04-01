@@ -4,8 +4,10 @@
   <meta charset="UTF-8">
   <title>管理员-订单管理</title>
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="css/manage.css">
   <link href="css/style.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="css/manage.css">
+  
+ 
 </head>
 <body>
 <header>
@@ -63,6 +65,11 @@
 
  </div>
  
+<div style="display:flex;width:100%;justify-content:flex-end">
+<div style="width:100px;margin-top:10px;"><input type="checkbox" id="selectAll"/ > 全选 </div>
+
+<input type="button" class="cart-multiDelete" value="多条删除" > 
+</div>
 
   <div class="row papigation">
      <span class="papigation-button" onclick="toPage('index')">首页</span>

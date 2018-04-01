@@ -159,7 +159,7 @@
           <label>收货人电话：</label>
           <input type="text" value="" id="addPhone">
         </div>
-
+		<span class="tip-phone"></span>
         <div class="mini-form-input">
           <label>设为默认：</label>
           <input type="checkbox" id="isDefault">
@@ -200,6 +200,17 @@
 <script>
 var oNum = 0,oPrice=0,uAddress='',uReceiver='',oPhone='',oCheaper=0,ids=[],orderDetails
   $(function () {
+	  $("#addPhone").blur(function(){
+	        var phone=$("#addPhone").val();
+	        console.log(phone)
+	        if(!phone){
+	            $(".tip-phone").html("电话不能为空！");
+	        }else if(!phone.match(/^\d{11}$/)){
+	            $(".tip-phone").html("电话号码必须为11位的数字!");
+	        }
+	    }).focus(function (){
+	        $(".tip-phone").html("");
+	    });
       $("#add_address").click(function() {
           $(".add_address").slideDown();
       })
@@ -317,29 +328,39 @@ var oNum = 0,oPrice=0,uAddress='',uReceiver='',oPhone='',oCheaper=0,ids=[],order
 			url:'userAdress/getUserDefaultAddress',
 			type:'get',
 			success:function(data){
-			uReceiver = data.defaultUserAddress.oReceiver
-			oPhone = data.defaultUserAddress.oPhone
-			uAddress = data.defaultUserAddress.uAddress
-			  var html = ""
-			  html += "<div class=\"item-row\">"
-			  html += "<span>收货人：&nbsp;&nbsp;"+uReceiver+"</span>"
-			  html += " <span>"+oPhone+"</span></div>"
-			  html += "<div>"+uAddress+"</div>"
-			  $(".address-container").html(html)
+			if(data&&data.defaultUserAddress) {
+				uReceiver = data.defaultUserAddress.oReceiver
+				oPhone = data.defaultUserAddress.oPhone
+				uAddress = data.defaultUserAddress.uAddress
+				  var html = ""
+				  html += "<div class=\"item-row\">"
+				  html += "<span>收货人：&nbsp;&nbsp;"+uReceiver+"</span>"
+				  html += " <span>"+oPhone+"</span></div>"
+				  html += "<div>"+uAddress+"</div>"
+				  $(".address-container").html(html)
+			}else {
+				 $(".address-container").html("请选择一个地址")
+				 $("#other_address").css("display",'none')
 			}
+		  }
   		})
       
 	$(".order-ok").click(function(){
 		let objects = {'orderDetails':orderDetails,'ids':ids,"oNum":oNum,"oPrice":oPrice,"uAddress":uAddress,"uReceiver":uReceiver,"oPhone":oPhone,"oCheaper":oCheaper.toFixed(2)}
-		$.ajax({
-			url:'orders/addOrders',
-			type:'post',
-			contentType: "application/json; charset=utf-8",
-			data:JSON.stringify(objects),
-			success:function(){
-				  window.location="mineOrders.html"  
-			}
-		})
+		if(uReceiver) {
+			$.ajax({
+				url:'orders/addOrders',
+				type:'post',
+				contentType: "application/json; charset=utf-8",
+				data:JSON.stringify(objects),
+				success:function(){
+					  window.location="mineOrders.html"  
+				}
+			})
+		}else {
+			alert("请选择一个收货地址")
+		}
+		
 	})
 	
 	$("body").on("click","input:radio[name=\"cate\"]",function(){

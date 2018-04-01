@@ -96,22 +96,18 @@
 
 <section class="right-content">
   <div>
-    <span class="title"><i class="glyphicon glyphicon-search"></i>图书查询</span>
+    <span class="title"><i class="glyphicon glyphicon-search"></i>留言查询</span>
   </div>
   <div class="search_nav">
-    <select name="search_con" id="search_con">
-      <option>请选择搜索类型</option>
-      <option value="b_name" selected="selected">书名</option>
-      <option value="b_press">出版社</option>
-      <option value="b_author">作者</option>
-      <option value="b_category">书目类别</option>
-    </select>
-    <input type="text" name="search_input" id="search_input" >
-    <input type="submit" value="搜索" id="search_button" name="searchButton">
+    
   </div>
 
  <div class="book_lists"> </div>
  
+<div style="display:flex;width:100%;justify-content:flex-end">
+<input type="checkbox" id="selectAll"/> 全选
+<input type="button" class="cart-multiDelete" value="多条删除"> 
+</div>
 
   <div class="row papigation">
      <span class="papigation-button" onclick="toPage('index')">首页</span>
@@ -134,4 +130,4 @@
   })
 </script>
 <script src="js/adminUtils.js"></script>
-<script src="js/adminUserMessageQuery.js"></script>
+<script src="js/adminUsersMsgQuery.js"></script>

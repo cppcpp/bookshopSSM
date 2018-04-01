@@ -88,9 +88,9 @@ public class UserMessageController {
                        strNotExist += (id + " ");                   }
                }
                 if (strNotExist.equals("") && strFail.equals("")) {
-                	return strSuc + "删除成功";
+                	return strSuc + "delete success";
                 } else {
-                	return strFail+ "删除失败";
+                	return strFail+strNotExist + "delete error";
                 }
             } else {
             	return "idsNull";
