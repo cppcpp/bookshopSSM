@@ -1,5 +1,7 @@
 package com.bookshop.serviceImpl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
@@ -76,6 +78,10 @@ public class UserMessageServiceImpl implements UserMessageService {
     public UserMessageExample createUserMessageExm(Map<String, String>req){
         String uAccount = req.get("uAccount");
         String uMessage = req.get("uMessage");
+        String addStartTime=req.get("addStartTime");
+        String addStopTime=req.get("addStopTime");
+        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+        
         UserMessageExample example = new UserMessageExample();
         UserMessageExample.Criteria criteria = example.createCriteria();
         if (StringUtils.isNotEmpty(uAccount)) {
@@ -84,6 +90,14 @@ public class UserMessageServiceImpl implements UserMessageService {
         if (StringUtils.isNotEmpty(uMessage)) {
             criteria.andUMessageEqualTo(uMessage);
         }
+        try {
+		    if(StringUtils.isNotEmpty(addStartTime)&&StringUtils.isNotEmpty(addStopTime)){
+		    	criteria.andUAddTimeBetween(format.parse(addStartTime), format.parse(addStopTime));
+		    }
+        } catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         return example;
     }
     @Override

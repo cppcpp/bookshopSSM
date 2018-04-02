@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.bookshop.modle.UserMessage">
     <id column="u_account" jdbcType="VARCHAR" property="uAccount" />
     <result column="u_message" jdbcType="VARCHAR" property="uMessage" />
+    <result column="u_add_time" jdbcType="TIMESTAMP" property="uAddTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -64,7 +65,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    u_account, u_message
+    u_account, u_message, u_add_time
   </sql>
   <select id="selectByExample" parameterType="com.bookshop.modle.UserMessageExample" resultMap="BaseResultMap">
     select
@@ -97,8 +98,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.bookshop.modle.UserMessage">
-    insert into user_message (u_account, u_message)
-    values (#{uAccount,jdbcType=VARCHAR}, #{uMessage,jdbcType=VARCHAR})
+    insert into user_message (u_account, u_message, u_add_time
+      )
+    values (#{uAccount,jdbcType=VARCHAR}, #{uMessage,jdbcType=VARCHAR}, #{uAddTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.bookshop.modle.UserMessage">
     insert into user_message
@@ -109,6 +112,9 @@
       <if test="uMessage != null">
         u_message,
       </if>
+      <if test="uAddTime != null">
+        u_add_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="uAccount != null">
@@ -116,6 +122,9 @@
       </if>
       <if test="uMessage != null">
         #{uMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="uAddTime != null">
+        #{uAddTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -134,6 +143,9 @@
       <if test="record.uMessage != null">
         u_message = #{record.uMessage,jdbcType=VARCHAR},
       </if>
+      <if test="record.uAddTime != null">
+        u_add_time = #{record.uAddTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -142,7 +154,8 @@
   <update id="updateByExample" parameterType="map">
     update user_message
     set u_account = #{record.uAccount,jdbcType=VARCHAR},
-      u_message = #{record.uMessage,jdbcType=VARCHAR}
+      u_message = #{record.uMessage,jdbcType=VARCHAR},
+      u_add_time = #{record.uAddTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -153,12 +166,16 @@
       <if test="uMessage != null">
         u_message = #{uMessage,jdbcType=VARCHAR},
       </if>
+      <if test="uAddTime != null">
+        u_add_time = #{uAddTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where u_account = #{uAccount,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.bookshop.modle.UserMessage">
     update user_message
-    set u_message = #{uMessage,jdbcType=VARCHAR}
+    set u_message = #{uMessage,jdbcType=VARCHAR},
+      u_add_time = #{uAddTime,jdbcType=TIMESTAMP}
     where u_account = #{uAccount,jdbcType=VARCHAR}
   </update>
 </mapper>

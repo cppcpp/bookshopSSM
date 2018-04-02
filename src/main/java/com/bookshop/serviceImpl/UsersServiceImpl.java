@@ -103,7 +103,7 @@ public class UsersServiceImpl implements UsersService {
             criteria.andUAccountEqualTo(uAccount);
         }
         if (StringUtils.isNotEmpty(uName)) {
-            criteria.andUNameEqualTo(uName);
+            criteria.andUNameLike("%"+uName+"%");
         }
         if (StringUtils.isNotEmpty(uPassword)) {
             criteria.andUPasswordEqualTo(uPassword);

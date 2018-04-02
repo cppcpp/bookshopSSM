@@ -1,6 +1,7 @@
 package com.bookshop.modle;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class UserMessageExample {
@@ -241,6 +242,66 @@ public class UserMessageExample {
 
         public Criteria andUMessageNotBetween(String value1, String value2) {
             addCriterion("u_message not between", value1, value2, "uMessage");
+            return (Criteria) this;
+        }
+
+        public Criteria andUAddTimeIsNull() {
+            addCriterion("u_add_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUAddTimeIsNotNull() {
+            addCriterion("u_add_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUAddTimeEqualTo(Date value) {
+            addCriterion("u_add_time =", value, "uAddTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUAddTimeNotEqualTo(Date value) {
+            addCriterion("u_add_time <>", value, "uAddTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUAddTimeGreaterThan(Date value) {
+            addCriterion("u_add_time >", value, "uAddTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUAddTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("u_add_time >=", value, "uAddTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUAddTimeLessThan(Date value) {
+            addCriterion("u_add_time <", value, "uAddTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUAddTimeLessThanOrEqualTo(Date value) {
+            addCriterion("u_add_time <=", value, "uAddTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUAddTimeIn(List<Date> values) {
+            addCriterion("u_add_time in", values, "uAddTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUAddTimeNotIn(List<Date> values) {
+            addCriterion("u_add_time not in", values, "uAddTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUAddTimeBetween(Date value1, Date value2) {
+            addCriterion("u_add_time between", value1, value2, "uAddTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUAddTimeNotBetween(Date value1, Date value2) {
+            addCriterion("u_add_time not between", value1, value2, "uAddTime");
             return (Criteria) this;
         }
     }
