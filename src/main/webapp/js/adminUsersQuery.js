@@ -117,6 +117,12 @@ $(function(){
 				contentType: "application/json; charset=utf-8",
 				success:function(data){
 					$("#div2").slideUp();
+					if(data == 'success') {
+						alert("修改成功")
+						$(".book_lists").html("");
+						getLists()
+					}
+					
 			}
 		   })
 		}else {
@@ -160,7 +166,6 @@ $(function(){
         var ul = $(this).parent().parent().find("ul")
         var ulchilds=ul.children();
        for(var i=0;i<ulchilds.length;i++){
-    	   console.log(ulchilds[i].tagName)
     	   if(ulchilds[i].tagName=="LI"){
                assignment(ulchilds[i]);
            }
@@ -184,7 +189,8 @@ $(function(){
 					  "ids":ids
 				  }),
 				  success:function(data){
-					  console.log(data)
+					  $(".book_lists").html("");
+					  getLists()
 				  }
 			  })
 		    }

@@ -99,7 +99,16 @@
     <span class="title"><i class="glyphicon glyphicon-search"></i>留言查询</span>
   </div>
   <div class="search_nav">
+    <select name="search_con" id="search_con">
+      <option>请选择搜索类型</option>
+      <option value="u_name" selected="selected">留言者</option>
+      <option value="u_time">留言时间</option>
+    </select>
+    <div id="search_state">
+    <input type="text" name="search_input" id="search_input" >
+    </div>
     
+    <input type="submit" value="搜索" id="search_button" name="searchButton">
   </div>
 
  <div class="book_lists"> </div>

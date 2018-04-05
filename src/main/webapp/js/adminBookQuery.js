@@ -124,6 +124,75 @@ $(function(){
 			}else if(selectedValue == "b_category"){
 				category = searchInput
 			}
+			switch(category){
+			case '马列主义、毛泽东思想':
+				category = 'a'
+			   break;
+			case '哲学':
+				category = 'b'
+			   break;
+			case '社会科学':
+				category =  'c'
+			   break;
+			case '政治法律':
+				category =  'd'
+			   break;
+			case '军事':
+				category =  'e'
+			   break;
+			case '经济':
+				category =  'f'
+			   break;
+			case '文化、科学、教育、体育':
+				category =  'g'
+			   break;
+			case '语言、文字':
+				category = 'h'
+			   break;	
+			case '文学':
+				category = 'i'
+			   break;
+			case '艺术':
+				category =  'j'
+			   break;
+			case '历史、地理':
+				category =  'k'
+			   break;
+			case '自然科学总论':
+				category = 'n'
+			   break;
+			case '数理科学和化学':
+				category =  'o'
+			   break;
+			case '天文学、地球科学':
+				category =  'p'
+			   break;
+			case '生物科学':
+				category =  'q'
+			   break;
+			case '医药、卫生':
+				category =  'r'
+			   break;
+			case '农业科学':
+				category =  's'
+			   break;
+			case '工业科学':
+				category =  't'
+			   break;
+			case '交通运输':
+				category =  'u'
+			   break;
+			case '航天航空':
+				category =  'v'
+			   break;
+			case '环境科学':
+				category =  'x'
+			   break;
+			case '综合性图书':
+				category =  'z'
+			   break;
+			}
+			
 			getLists()
 		}else{
 			alert("请选择搜索条件")
@@ -190,7 +259,7 @@ function getLists(page,limit){
 		url:'books/booksQry',
 		method:'get',
 		 data:{
-		  "category":category, 
+		  "bId":category, 
 		  "page": page,
 		  "limit": limit,
 		  "bAuthor":bAuthor,

@@ -275,6 +275,13 @@ input[type="submit"]:focus{
     margin: 0px;
     margin-right: 10px;
 }
+#addStartTime,#addStopTime {
+	height: 38px;
+    width: 160px;
+    border: 1px solid #4f445e;
+    margin: 0px;
+    margin-right: 10px;
+}
 
 #search_button{
     width: 100px;

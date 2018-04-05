@@ -26,16 +26,16 @@ public class UserMessageController {
         List<Map> mapList = new ArrayList<>();        Map<String, Object> resultMap=new HashMap<>();
         int pageNum =  page == null ? 1 : Integer.parseInt(page);
         int pageSize =  limit == null ? 10 : Integer.parseInt(limit);
-        Map<String, String> userMessageExmMap = new HashMap<>();        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");                
+        Map<String, String> userMessageExmMap = new HashMap<>();       // SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");                
         try {
             userMessageExmMap.put("uAccount", uAccount);
-            userMessageExmMap.put("uMessage", uMessage);//            if(StringUtils.isNotEmpty(addStartTime)&&StringUtils.isNotEmpty(addStopTime)){//            	userMessageExmMap.put("addStartTime",);//            	//            }            userMessageExmMap.put("addStartTime",addStartTime);            userMessageExmMap.put("addStopTime", addStopTime);            
+            userMessageExmMap.put("uMessage", uMessage);//            if(StringUtils.isNotEmpty(addStartTime)&&StringUtils.isNotEmpty(addStopTime)){//            	userMessageExmMap.put("addStartTime",);//            	//            }            userMessageExmMap.put("addStartTime",addStartTime);            userMessageExmMap.put("addStopTime", addStopTime);            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             UserMessageExample example = userMessageSV.createUserMessageExm(userMessageExmMap);
             List<UserMessage> userMessageList = userMessageSV.selectByExample(example,pageNum,pageSize);
             for (UserMessage userMessage : userMessageList) {
                 Map<String,Object> tMap = new HashMap<>();
                 tMap.put("uAccount", userMessage.getuAccount());
-                tMap.put("uMessage", userMessage.getuMessage());
+                tMap.put("uMessage", userMessage.getuMessage());                tMap.put("addStartTime", sdf.format(userMessage.getuAddTime()));
                 mapList.add(tMap);
             }                        PageInfo<UserMessage> pageInfo=new PageInfo<>(userMessageList);            resultMap.put("userMessageList", mapList);            resultMap.put("pageInfo", pageInfo);        } catch (Exception e) {        	resultMap.put("error", "error");
         }

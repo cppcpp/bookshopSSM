@@ -115,7 +115,8 @@ $(function(){
     				type:'post',
     				data:JSON.stringify(obj),
     				success:function(){
-    					getLists()
+    					$(".book_lists").html("");
+						getLists()
     				},
     				error:function(){
     					
@@ -130,9 +131,7 @@ $(function(){
 	})
 	$("#search_button").click(function(){
 		searchInput = $("#search_input").val()
-		console.log(selectedValue,searchInput)
 		if(selectedValue && searchInput){
-			console.log(selectedValue,searchInput)
 			if(selectedValue == "o_code") {
 				Ocode = searchInput
 			}

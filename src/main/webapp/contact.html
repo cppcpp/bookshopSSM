@@ -53,7 +53,7 @@
     </div>
   </div>
   <div class="nav-cart-area">
-    <span class="nav-cart"><img src="img/icon-cart.png"></span>
+   <a href="cart.html"><span class="nav-cart"><img src="img/icon-cart.png"></span></a>
   </div>
 </nav>
 
@@ -142,7 +142,9 @@ $(function(){
 				}),
 				contentType: "application/json; charset=utf-8",
 				success:function(data){
-					console.log(data)
+					if(data == 'success'){
+						alert("留言成功")
+					}
 				}
 			})
 		}else{

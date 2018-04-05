@@ -1,8 +1,36 @@
-var uAccount='',uPhone='',uRole='',totalPage=0,currpage=0,limit
+var uAccount='',uPhone='',uRole='',totalPage=0,currpage=0,limit,addStartTime ='',addStopTime=""
 var selectedValue = '',searchInput=""
 	var multiDeleteArr = []
 $(function(){
 	getLists()
+		selectedValue = $("#search_con").val()
+	$("#search_con").change(function(){
+		$("#search_input").val('')
+	  selectedValue = $("#search_con").val()
+	  if(selectedValue == "u_name") {
+			$("#search_state").html("<input type=\"text\" name=\"search_input\" id=\"search_input\" >")
+		}else if(selectedValue == "u_time"){
+			$("#search_state").css({'display':'flex','flex-direction': 'row','padding':'0px 10px'})
+			$("#search_state").html("<input type=\"date\" name=\"addStartTime\" id=\"addStartTime\"> - <input type=\"date\" name=\"addStopTime\"  id=\"addStopTime\">")
+		}
+	})
+	$("#search_button").click(function(){
+		if(selectedValue == "u_name") {
+			searchInput = $("#search_input").val()
+			uAccount = searchInput
+			if(uAccount) {
+				getLists()
+			}
+		}else if(selectedValue == "u_time"){
+			addStartTime = $("#addStartTime").val()
+			addStopTime = $("#addStopTime").val()
+			if(addStartTime && addStopTime){
+				getLists()
+			}else {
+				alert("请选择时间范围")
+			}
+		}
+	})
  $("body").on('click','.cart-multiDelete',function() {
 		 let obj = {ids:multiDeleteArr}
 		 console.log(obj)
@@ -13,9 +41,12 @@ $(function(){
 					contentType: "application/json; charset=utf-8",
 					data:JSON.stringify(obj),
 				
-					success:function(){
-						$(".book_lists").html("");
-						getLists()
+					success:function(data){
+						console.log("----",data,data.indexOf("success") )
+						 if(data.indexOf("success") != -1){
+							  $(".book_lists").html("");
+								getLists()
+						  }
 					},
 					error:function(){
 						
@@ -77,7 +108,6 @@ $(function(){
 	    			$("#selectAll").prop("checked", false);
 	    		}
 	    	})
-	    	console.log(num,$(".selectSub").length)
 	    	if(num == $(".selectSub").length){
 	    		   $("#selectAll").prop("checked", true);
 	    		}
@@ -120,7 +150,10 @@ $(function(){
 					  "ids":ids
 				  }),
 				  success:function(data){
-					  console.log(data)
+					  if(data.indexOf("success") != -1){
+						  $(".book_lists").html("");
+							getLists()
+					  }
 				  }
 			  })
 		    }
@@ -143,36 +176,39 @@ function getLists(page,limit){
    		  "uAccount":uAccount,
    		  "page": page,
    		  "limit": limit,
-   		  "uPhone":uPhone,
-   		  "uRole":uRole
+   		  "addStartTime":addStartTime,
+   		  "addStopTime":addStopTime
+   		  
    	  },
 		success:function(data){
-			console.log(data)
-			 totalPage = data.pageInfo.pages
-   		  	 limit = data.pageInfo.pageSize
-   		  	 currpage = data.pageInfo.pageNum
-   		  $(".papigationPage").html("第"+currpage+"页/共"+totalPage+"页")
-		  var html = "";
-		 $.each(data.userMessageList,function(index,udata){
-				  html += "<div class=\"book\">";
-				  html += "<div class=\"book_column book_column_one\">"
-				  html += " <input type='checkbox'class='selectSub' name="+udata['uAccount']+">"
-				  html += "</div>"
-				  html += "<div class=\"book_column book_column_three\">"
-				  html += "<ul>"
-				  html += "<li title=\"user_name\"  class=\"li_book\"><b>账户：</b>"+udata['uAccount']+"</li><br>"
-				  html += "<li title=\"user_name\"  class=\"li_book\"><b>留言：</b><br>"+udata['uMessage']+"</li><br>"
-				  html += "</ul></div>"
-				  html += "<div class=\"book_column book_column_four\">"
-				  html += "<input type=\"button\" value=\"删除\" class=\"singleDelete\" name="+udata['uAccount']+">"
-				  html += "</div></div><br>";
-		  });
-   		  $(".book_lists").html(html)
+			if(data && data.pageInfo && data.userMessageList){
+				 totalPage = data.pageInfo.pages
+	   		  	 limit = data.pageInfo.pageSize
+	   		  	 currpage = data.pageInfo.pageNum
+	   		  $(".papigationPage").html("第"+currpage+"页/共"+totalPage+"页")
+			  var html = "";
+			 $.each(data.userMessageList,function(index,udata){
+					  html += "<div class=\"book\">";
+					  html += "<div class=\"book_column book_column_one\">"
+					  html += " <input type='checkbox'class='selectSub' name="+udata['uAccount']+">"
+					  html += "</div>"
+					  html += "<div class=\"book_column book_column_three\">"
+					  html += "<ul>"
+					  html += "<li title=\"user_name\"  class=\"li_book\"><b>账户：</b>"+udata['uAccount']+"</li><br>"
+					  html += "<li title=\"user_name\"  class=\"li_book\"><b>留言：</b><br>"+udata['uMessage']+"</li><br><br>"
+					  html += "<li title=\"user_name\"  class=\"li_book\"><b>时间：</b>"+udata['addStartTime']+"</li><br>"
+					  html += "</ul></div>"
+					  html += "<div class=\"book_column book_column_four\">"
+					  html += "<input type=\"button\" value=\"删除\" class=\"singleDelete\" name="+udata['uAccount']+">"
+					  html += "</div></div><br>";
+			  });
+	   		  $(".book_lists").html(html)
+			}
+		
 		}
 	})
 }
 function toPage(str) {
-	console.log(str)
 	if(str == "index"){
 		getLists(1,limit)
 	}

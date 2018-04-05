@@ -263,7 +263,10 @@ var oNum = 0,oPrice=0,uAddress='',uReceiver='',oPhone='',oCheaper=0,ids=[],order
  				    			 }
  				    		  })
  				    		  $("#exist-lists").append(html)
- 			    		  }
+ 			    		  }else {
+ 							 $(".address-container").html("请选择一个地址")
+ 							 $("#other_address").css("display",'none')
+ 						}
  			    	  }
  			      })
  			  }
@@ -338,9 +341,6 @@ var oNum = 0,oPrice=0,uAddress='',uReceiver='',oPhone='',oCheaper=0,ids=[],order
 				  html += " <span>"+oPhone+"</span></div>"
 				  html += "<div>"+uAddress+"</div>"
 				  $(".address-container").html(html)
-			}else {
-				 $(".address-container").html("请选择一个地址")
-				 $("#other_address").css("display",'none')
 			}
 		  }
   		})
