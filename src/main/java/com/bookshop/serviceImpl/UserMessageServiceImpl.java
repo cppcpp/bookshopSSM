@@ -85,7 +85,7 @@ public class UserMessageServiceImpl implements UserMessageService {
         UserMessageExample example = new UserMessageExample();
         UserMessageExample.Criteria criteria = example.createCriteria();
         if (StringUtils.isNotEmpty(uAccount)) {
-            criteria.andUAccountEqualTo(uAccount);
+            criteria.andUAccountLike("%"+uAccount+"%");
         }
         if (StringUtils.isNotEmpty(uMessage)) {
             criteria.andUMessageEqualTo(uMessage);
