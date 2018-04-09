@@ -11,4 +11,12 @@
 	<select id="getAllRecommendBooks" resultType="map">
 		select * from recommend_books;
 	</select>
+	
+	<update id="insertBookColumn">
+		alter table recommend_books add ${column} int(10) default 0
+	</update>
+	
+	<update id="updateBookNum">
+		update recommend_books set ${column}=${column}+#{num} where u_account=#{uAccount}
+	</update>
 </mapper>

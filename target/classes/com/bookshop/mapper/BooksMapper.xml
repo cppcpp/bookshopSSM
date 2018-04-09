@@ -341,11 +341,16 @@
   </select>
   
   <select id="getdiscountBook" resultMap="BaseResultMap">
-  	select  * from books ORDER BY b_discount asc limit 0,#{count};
+  	<!-- select  * from books ORDER BY b_discount asc limit 0,#{count}; -->
+  	select  * from books ORDER BY b_discount asc
+  </select>
+  
+  <select id="getdiscountBookWithLimit" resultMap="BaseResultMap" >
+      select  * from books ORDER BY b_discount asc limit 0,#{count};
   </select>
   
   <select id="getBestSaleBook" resultMap="BaseResultMap">
-  	select  * from books ORDER BY b_sale_num desc limit 0,#{count};
+  	select  * from books ORDER BY b_sale_num desc limit 0,#{count}; 
   </select>
   
   <select id="getBookByConditions" resultMap="BaseResultMap">
@@ -354,7 +359,7 @@
   	 	and b.b_id like #{category}
   	 </if>
   	<if test="lowestPrice!=null and highestPrice!=null">
-  		and b.b_price BETWEEN  #{lowestPrice} and #{highestPrice}
+  		and b.b_price*b.b_discount/100 BETWEEN  #{lowestPrice} and #{highestPrice}
   	</if>
   		order by b.b_state desc
   	<if test='saleNum=="desc"'>
@@ -376,10 +381,14 @@
   		,b.b_add_time asc
   	</if>
   	<if test='price=="desc"'>
-  		,b.b_price desc
+  		,b.b_price*b.b_discount desc
   	</if>
   	<if test='price=="asc"'>
-  		,b.b_price asc
+  		,b.b_price*b.b_discount asc
   	</if>
   </select>
+  
+  <update id="updateBSaleNum">
+      update books b set b.b_sale_num=b_sale_num+#{bSaleNum} where b_id=#{bId} 
+  </update>
 </mapper>
