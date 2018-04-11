@@ -31,7 +31,7 @@
 
 	<!-- springmvc : DispatcherServlet -->
 	<servlet>
-		<servlet-name>spring-webmvc</servlet-name>
+		<servlet-name>springMVC</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<!-- spring mvc 下配置文件的名称及路径 -->
 		<init-param>
@@ -42,7 +42,7 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>spring-webmvc</servlet-name>
+		<servlet-name>springMVC</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	
