@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bookshop.dao.UserMessageMapper">
+  <resultMap id="BaseResultMap" type="com.bookshop.modle.UserMessage">
+    <id column="u_account" jdbcType="VARCHAR" property="uAccount" />
+    <result column="u_message" jdbcType="VARCHAR" property="uMessage" />
+    <result column="u_add_time" jdbcType="TIMESTAMP" property="uAddTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    u_account, u_message, u_add_time
+  </sql>
+  <select id="selectByExample" parameterType="com.bookshop.modle.UserMessageExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_message
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_message
+    where u_account = #{uAccount,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from user_message
+    where u_account = #{uAccount,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bookshop.modle.UserMessageExample">
+    delete from user_message
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bookshop.modle.UserMessage">
+    insert into user_message (u_account, u_message, u_add_time
+      )
+    values (#{uAccount,jdbcType=VARCHAR}, #{uMessage,jdbcType=VARCHAR}, #{uAddTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bookshop.modle.UserMessage">
+    insert into user_message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uAccount != null">
+        u_account,
+      </if>
+      <if test="uMessage != null">
+        u_message,
+      </if>
+      <if test="uAddTime != null">
+        u_add_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uAccount != null">
+        #{uAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="uMessage != null">
+        #{uMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="uAddTime != null">
+        #{uAddTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bookshop.modle.UserMessageExample" resultType="java.lang.Long">
+    select count(*) from user_message
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user_message
+    <set>
+      <if test="record.uAccount != null">
+        u_account = #{record.uAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uMessage != null">
+        u_message = #{record.uMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uAddTime != null">
+        u_add_time = #{record.uAddTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user_message
+    set u_account = #{record.uAccount,jdbcType=VARCHAR},
+      u_message = #{record.uMessage,jdbcType=VARCHAR},
+      u_add_time = #{record.uAddTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bookshop.modle.UserMessage">
+    update user_message
+    <set>
+      <if test="uMessage != null">
+        u_message = #{uMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="uAddTime != null">
+        u_add_time = #{uAddTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where u_account = #{uAccount,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bookshop.modle.UserMessage">
+    update user_message
+    set u_message = #{uMessage,jdbcType=VARCHAR},
+      u_add_time = #{uAddTime,jdbcType=TIMESTAMP}
+    where u_account = #{uAccount,jdbcType=VARCHAR}
+  </update>
+</mapper>

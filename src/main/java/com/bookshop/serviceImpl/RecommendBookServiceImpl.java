@@ -122,8 +122,6 @@ public class RecommendBookServiceImpl implements RecommendBookService{
 			//得到推荐书籍
 			getResultBookId(tempRecommendUAccountBooksInfo, uAccountBooksInfo, bookNum, count, resultBookId);
 			
-			bookNum++;
-			
 			//书籍数量达到要求
 			if(bookNum>=count) {
 				break;

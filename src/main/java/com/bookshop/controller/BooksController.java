@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -204,7 +203,6 @@ public class BooksController {
 	@ResponseBody
     public Map booksQry(
              @RequestParam(name="bId",required=false)String bId,
-             @RequestParam(name="bCategory",required=false)String bCategory,
              @RequestParam(name="bName",required=false)String bName,
              @RequestParam(name="bDescription",required=false)String bDescription,
              @RequestParam(name="bPrice",required=false)String bPrice,
@@ -225,7 +223,6 @@ public class BooksController {
         Map<String, String> booksExmMap = new HashMap<>();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         booksExmMap.put("bId", bId);
-        booksExmMap.put("bCategory", bCategory);
         booksExmMap.put("bName", bName);
         booksExmMap.put("bDescription", bDescription);
         booksExmMap.put("bPrice", bPrice);

@@ -259,7 +259,7 @@ function getLists(page,limit){
 		url:'books/booksQry',
 		method:'get',
 		 data:{
-		  "bCategory":category, 
+		  "bId":category, 
 		  "page": page,
 		  "limit": limit,
 		  "bAuthor":bAuthor,

@@ -100,7 +100,7 @@ public class UsersServiceImpl implements UsersService {
         UsersExample.Criteria criteria = example.createCriteria();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         if (StringUtils.isNotEmpty(uAccount)) {
-            criteria.andUAccountLike("%"+uAccount+"%");
+            criteria.andUAccountEqualTo(uAccount);
         }
         if (StringUtils.isNotEmpty(uName)) {
             criteria.andUNameLike("%"+uName+"%");
@@ -109,7 +109,7 @@ public class UsersServiceImpl implements UsersService {
             criteria.andUPasswordEqualTo(uPassword);
         }
         if (StringUtils.isNotEmpty(uPhone)) {
-            criteria.andUPhoneLike("%"+uPhone+"%");
+            criteria.andUPhoneEqualTo(uPhone);
         }
         if (StringUtils.isNotEmpty(uMail)) {
             criteria.andUMailEqualTo(uMail);

@@ -125,7 +125,6 @@ public class BooksServiceImpl implements BooksService {
     @Override
     public BooksExample createBooksExm(Map<String, String>req){
         String bId = req.get("bId");
-        String bCategory=req.get("bCategory");
         String bPic=req.get("bPic");
         String bName = req.get("bName");
         String bDescription = req.get("bDescription");
@@ -143,10 +142,7 @@ public class BooksServiceImpl implements BooksService {
         BooksExample.Criteria criteria = example.createCriteria();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         if (StringUtils.isNotEmpty(bId)) {
-            criteria.andBIdEqualTo(bId);
-        }
-        if(StringUtils.isNotEmpty(bCategory)) {
-        	criteria.andBIdLike("%"+bCategory+"%");
+            criteria.andBIdLike("%"+bId+"%");
         }
         if(StringUtils.isNotEmpty(bPic)) {
         	criteria.andBPicLike("%"+bPic+"%");
