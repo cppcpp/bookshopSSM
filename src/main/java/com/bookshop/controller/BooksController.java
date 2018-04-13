@@ -157,7 +157,8 @@ public class BooksController {
         try {
 	        //上传图片
 	        if(!bookPic.isEmpty()) {
-	        	String path=request.getSession().getServletContext().getRealPath("/img/book_images/");
+	        	String t=request.getSession().getServletContext().getRealPath("");
+	        	String path=t.substring(0, t.lastIndexOf('\\'))+"\\"+"book_images";
 	        	System.out.println("path:：："+path);
 	        	//设置上传文件名
 	        	String fileName=bookPic.getOriginalFilename();

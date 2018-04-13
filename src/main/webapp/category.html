@@ -231,7 +231,7 @@
 	    		  $.each(data.books,function(index,ndata){
 						owlhtml += "<div class=\"new_prod_box col-md-4 col-sm-6\" style=\"border:1px\">"
 						owlhtml += "<div class=\"new_prod_bg\">"
-						owlhtml += " <a href=\"detail.html?bId="+ndata['bId']+"\"><img src=\"img/book_images/"+ndata['bId']+".jpg\" class=\"thumb\"></a>"
+						owlhtml += " <a href=\"detail.html?bId="+ndata['bId']+"\"><img src=\"/book_images/"+ndata['bId']+".jpg\" class=\"thumb\"></a>"
 						owlhtml += "<span class=\"price\">￥"+(ndata['bDiscount']/100 *ndata['bPrice']).toFixed(2)+"</span></br>"
 						owlhtml += "<span class=\"discount\">原价:"+ndata['bPrice'] +"</span>"
 						owlhtml += " <a class=\"overflow_text\" href=\"detail.html?bId="+ndata['bId']+"\">"+ndata['bName']+"</a>"

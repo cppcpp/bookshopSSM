@@ -30,7 +30,7 @@ $(function(){
 					html += "购买信息：已有"+ndata['bSaleNum']+"人购买</p>";
 					html += "<div class=\"price\"><strong>价格:</strong> <span class=\"red\">"+(ndata['bDiscount']/100 *ndata['bPrice']).toFixed(2);
 					html += "<span class=\"delete_decoration\">原价："+ndata['bPrice']+"</span></div>";
-					html1 += "<a href=\"#\" ><img style=\"width:150px;height: 150px;\" src=\"img/book_images/"+ndata['bPic']+"\" /></a>";
+					html1 += "<a href=\"#\" ><img style=\"width:150px;height: 150px;\" src=\"/book_images/"+ndata['bPic']+"\" /></a>";
 					html1 += "<br /><br /><img src=\"img/zoom.gif\" /></a>"
 					//图书详情
 					tab1 += "<p class=\"more_details\">图书名称："+ndata['bName']+"</p>"
@@ -67,7 +67,7 @@ $(function(){
 					tab2 += "<div class=\"col-md-4\">"
 					tab2 += "<div class=\"new_prod_box\">"	
 					tab2 += " <a href=\"detail.html?bId="+ndata['bId']+"\" style=\"white-space:nowrap;text-overflow:ellipsis;overflow: hidden;width: 100px;\">"+ndata['bName']+"</a>"
-					tab2 += " <a href=\"detail.html?bId="+ndata['bId']+"\"><img src=\"img/book_images/"+ndata['bPic']+"\" class=\"thumb\" border=\"0\" width=\"90px\" height=\"90px\"/></a>"
+					tab2 += " <a href=\"detail.html?bId="+ndata['bId']+"\"><img src=\"/book_images/"+ndata['bPic']+"\" class=\"thumb\" border=\"0\" width=\"90px\" height=\"90px\"/></a>"
 					tab2 +="</div></div>";
 				});
 				$("#tab2").html(tab2)
@@ -155,7 +155,7 @@ $(function(){
 			bSumprice = bNums * bPrice;
 			bSumdiscountprice = bNums * bDiscountprice;
 		    obj = {"bId":bookId,
-				  "imgSrc":"img/book_images/"+bImg,
+				  "imgSrc":"/book_images/"+bImg,
 				  "bName":bName,
 				  "bPrice":bPrice+"",
 				  "bDiscountprice":bDiscountprice+"",

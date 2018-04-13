@@ -174,7 +174,7 @@ function getLists(page,limit){
     	    		html += "<div class=\"order-content\"><div class=\"order-content-detail\">"
     	    		$.each(odata.orderDetailsList,function(index,ddata){
     	    			html += "<div class=\"detail-list-item\">"
-    	    	    	html += "<img src=\"img/book_images/"+ddata['bPic']+"\">"
+    	    	    	html += "<img src=\"/book_images/"+ddata['bPic']+"\">"
     	    	    	html += "<span class=\"order-content-detail-bookname\">"+ddata['bName']+"</span>"
     	    			html +="<div class=\"order-content-detail-right\">"
     	    			html += " <span class=\"order-content-detail-bookprice\">"+ddata['bSumdiscountprice']+"</span>"

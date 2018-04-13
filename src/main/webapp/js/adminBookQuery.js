@@ -279,7 +279,7 @@ function getLists(page,limit){
    			  html += " <input class=\"selectSub\" type='checkbox' name="+bdata['bId']+">"
    			  html += "</div>"
    			  html += "<div class=\"book_column book_column_two\">"
-   			  html += "<div><img src=\"img/book_images/"+bdata['bPic']+"\"></div></div>"
+   			  html += "<div><img src=\"/book_images/"+bdata['bPic']+"\"></div></div>"
    			  html += "<div class=\"book_column book_column_three\">"	
    			  html += "<ul>"
    			  html += "<li title=\"bId\"  class=\"li_book\"><b>Id：</b>"+bdata['bId']+"</li><br>"

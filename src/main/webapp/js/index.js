@@ -24,7 +24,7 @@ $.ajax({
 					newsethtml += "<li><a href=\"detail.html?bId="+ndata['bId']+"\">"
 					newsethtml += "<div class=\"block\">";
 					newsethtml += " <h4 class=\"counter\">"+ndata['bName']+"</h4>"
-					newsethtml += " <span> <img src=\"img/book_images/"+ndata['bPic']+"\" alt=\"Pepole\"></span>"
+					newsethtml += " <span> <img src=\"/book_images/"+ndata['bPic']+"\" alt=\"Pepole\"></span>"
 					newsethtml += "</div></a></li>"
 				})
 				$(".counter-box").append(newsethtml);
@@ -36,7 +36,7 @@ $.ajax({
 		  if(data.bestSaleFourBooks || data.discountFourBooks) {
 			  $.each(data.bestSaleFourBooks,function(index,ndata){
 				tab1 += "<div class=\"col-sm-6 col-md-3\"> <div class=\"service-item\">"
-				tab1 += " <img src=\"img/book_images/"+ndata['bPic']+"\" alt=\"Pepole\">"
+				tab1 += " <img src=\"/book_images/"+ndata['bPic']+"\" alt=\"Pepole\">"
 				tab1 += "<h4>"+ndata['bName']+"</h4>"
 				tab1 += " <p>"+ ndata['bDescription']+"</p>"
 				tab1 += "<p><a href=\"detail.html?bId="+ndata['bId']+"\">-详情-</a></p>"
@@ -44,7 +44,7 @@ $.ajax({
 			})
 			 $.each(data.discountFourBooks,function(index,ndata){
 				tab2 += "<div class=\"col-sm-6 col-md-3\"> <div class=\"service-item\">"
-				tab2 += "<img src=\"img/book_images/"+ndata['bPic']+"\">"
+				tab2 += "<img src=\"/book_images/"+ndata['bPic']+"\">"
 				tab2 += "<h4>"+ndata['bName']+"</h4>"
 				tab2 += " <p>"+ ndata['bDescription']+"</p>"
 				tab2 += "<p><a href=\"detail.html?bId="+ndata['bId']+"\">-详情-</a></p>"
@@ -72,7 +72,7 @@ function customDataSuccess(data){
 				$.each(data.newsetThreeBooks,function(index,ndata){
 					owlhtml += "<div><a href=\"detail.html?bId="+ndata['bId']+"\"> <img src='img/new.png' alt='IMG'><p>"+ndata['bDescription']+"</p>"
 					owlhtml += "<div class=\"user\">"
-					owlhtml += " <img src=\"img/book_images/"+ndata['bPic']+"\" alt=\"Pepole\">"
+					owlhtml += " <img src=\"/book_images/"+ndata['bPic']+"\" alt=\"Pepole\">"
 					owlhtml += " <p><span>"+ndata['bName']+"</span>"+ ndata['bAuthor']+"</p>"
 					owlhtml += "</div></a></div>"
 						$("#testimonial-slider").html(owlhtml);

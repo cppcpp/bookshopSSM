@@ -187,7 +187,7 @@ function getCartList(page,limit){
 			var html = '';
 			$.each(data.cartList,function(index,cdata){
 				html +=	"<tr index="+index+" id="+cdata['cId']+"><td><input type=\"checkbox\" class=\"selectSub\" name="+cdata['bId']+"></td>"
-				html += "<td><img class=\"table-img\" src=\"img/book_images/"+cdata['bPic']+"\" /></td>"
+				html += "<td><img class=\"table-img\" src=\"/book_images/"+cdata['bPic']+"\" /></td>"
 				html += "<td class='bname'>"+cdata['bName']+"</td>"
 				html += " <td class=\"cart-price\">"+cdata['bPrice']+"</td>"
 				html += " <td class=\"dis_price\">"+cdata['bDiscountprice']+"</td>"
