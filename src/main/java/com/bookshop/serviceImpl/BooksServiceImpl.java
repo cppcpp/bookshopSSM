@@ -142,7 +142,7 @@ public class BooksServiceImpl implements BooksService {
         BooksExample.Criteria criteria = example.createCriteria();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         if (StringUtils.isNotEmpty(bId)) {
-            criteria.andBIdLike("%"+bId+"%");
+            criteria.andBIdEqualTo(bId);
         }
         if(StringUtils.isNotEmpty(bPic)) {
         	criteria.andBPicLike("%"+bPic+"%");
