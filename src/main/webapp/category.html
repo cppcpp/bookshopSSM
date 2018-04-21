@@ -157,9 +157,6 @@
     </div>
   </div>
 </section>
-
-
-
 <!-- footer Start -->
 <footer>
   <div class="container">
@@ -186,8 +183,33 @@
 <script src="js/jquery-2.2.4.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script type="text/javascript">
-	var totalPage,currpage,limit,category
-	var discount,saleNum,newset,price,lowsetPrice,highestPrice
+	var totalPage,currpage,limit,category,categoryName;
+	var discount,saleNum,newset,price,lowsetPrice,highestPrice;
+	let categoryArray = [
+	        {name:'马列主义、毛泽东思想(A)',value:'a'},
+	        {name:'哲学(B)',value:'b'},
+	        {name:'社会科学(C)',value:'c'},
+	        {name:'政治、法律(D)',value:'d'},
+	        {name:'军事(E)',value:'e'},
+	        {name:'经济(F)',value:'f'},
+	        {name:'文化、科学、教育、体育(G)',value:'g'},
+	        {name:'语言、文字(H)',value:'h'},
+	        {name:'文学(I)',value:'i'},
+	        {name:'艺术(J)',value:'j'},
+	        {name:'历史、地理(K)',value:'k'},
+	        {name:'自然科学总论(N)',value:'n'},
+	        {name:'数理科学和化学(O)',value:'o'},
+	        {name:'天文学、地球科学(P)',value:'p'},
+	        {name:'生物科学(Q)',value:'q'},
+	        {name:'医药、卫生(R)',value:'r'},
+	        {name:'农业科学(S)',value:'s'},
+	        {name:'工业科学(T)',value:'t'},
+	        {name:'交通运输(U)',value:'u'},
+	        {name:'航空、航天(V)',value:'v'},
+	        {name:'环境科学(X)',value:'x'},
+	        {name:'综合性图书(Z)',value:'z'}
+	
+	]
 	$(function(){
 		function getQueryString(name) {
 			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)","i")
@@ -200,7 +222,13 @@
 
 	})
 	
+	
 	function getLists(page,limit){
+		for(let item of categoryArray){
+			if(item.value ==category ) {
+				categoryName = item.name
+			}
+		}
 		if(!page) {
 			page = 1
 		}
@@ -228,10 +256,11 @@
 	    		  currpage = data.pageInfo.pageNum
 	    		  $(".papigationPage").html("第"+currpage+"页/共"+totalPage+"页")
 	    		  let owlhtml='';
+	    		  owlhtml += "<h3><i class=\"fa fa-angle-double-right\"></i>&nbsp;"+categoryName+"</h3>"
 	    		  $.each(data.books,function(index,ndata){
 						owlhtml += "<div class=\"new_prod_box col-md-4 col-sm-6\" style=\"border:1px\">"
 						owlhtml += "<div class=\"new_prod_bg\">"
-						owlhtml += " <a href=\"detail.html?bId="+ndata['bId']+"\"><img src=\"/book_images/"+ndata['bId']+".jpg\" class=\"thumb\"></a>"
+						owlhtml += " <a href=\"detail.html?bId="+ndata['bId']+"\"><img src=\"/book_images/"+ndata['bPic']+"\" class=\"thumb\"></a>"
 						owlhtml += "<span class=\"price\">￥"+(ndata['bDiscount']/100 *ndata['bPrice']).toFixed(2)+"</span></br>"
 						owlhtml += "<span class=\"discount\">原价:"+ndata['bPrice'] +"</span>"
 						owlhtml += " <a class=\"overflow_text\" href=\"detail.html?bId="+ndata['bId']+"\">"+ndata['bName']+"</a>"

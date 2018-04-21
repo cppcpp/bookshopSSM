@@ -33,14 +33,12 @@ $(function(){
     while(sum_money.nodeName=="#text"){
       sum_money = sum_money.nextSibling;
     }
-
     //获取打折单价列
     var price = this.parentNode.previousSibling.previousSibling;
     while(price.nodeName=="#text"){
       price = price.nextSibling;
     }
     every_price = Number(price.innerHTML);
-
     //改变数量
     var num = this.previousSibling;
     while(num.nodeName=="#text"){
@@ -50,7 +48,6 @@ $(function(){
     num_text = Number(num_text)+1;
     num.value = num_text;
     sum_money.innerHTML = (num_text*every_price).toFixed(2);
-
     //获取复选框
     var check = this.parentNode.parentNode.childNodes;
     subCheck = check[1].childNodes;
@@ -247,7 +244,6 @@ $("#selectAll").click(function () {
     	sumPrice += Number(m[i].innerHTML);
     }
     var check = document.getElementsByClassName("selectSub");
-    
     for(var i = 0;i<check.length;i++){
     	var flag2= false
     	if(multiDeleteArr.length){
@@ -261,7 +257,6 @@ $("#selectAll").click(function () {
 		  if(!flag){
 			  multiDeleteArr.push(check[i].parentNode.parentNode.getAttribute('id')) 
 		  }
-		  
     }
     $(".ac_money").html(sumPrice.toFixed(2));
     $(".selectSub").prop("checked", true);

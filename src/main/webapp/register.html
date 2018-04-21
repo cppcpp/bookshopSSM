@@ -66,10 +66,7 @@
     }
     //用户名判断 是否存在
     $("#register_username").blur(function(){
-
-        //法二通过$(this)
         var username= $("#register_username").val();
-        console.log(username.length)
         if(!username){
             $(".checkRegisterUsername").html("用户名不能为空！")
         }else{
@@ -86,19 +83,15 @@
     }).focus(function(){
         $(".checkRegisterUsername").html("");
     });
-
     //回调函数
     function handleStateChange(data) {
-        if(requestName.readyState==4){
-            if(requestName.status==200){
+        if(requestName.readyState==4 && requestName.status==200){
             	responseText=requestName.responseText;
             	console.log(requestName.responseText.trim())
                 if(requestName.responseText.trim()=="uAccountOK"){
-                    //成功
                 	$(".checkRegisterUsername").html("&radic;该用户名可以使用").css("color",'green');
                 }else{
                     $(".checkRegisterUsername").text("该用户名已存在！");
-                }
             }
         }
     }

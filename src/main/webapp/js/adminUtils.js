@@ -17,6 +17,18 @@ $(function(){
       return false;
     })
   })
+  
+  $.ajax({
+		  url:'user/loginUAccount',
+		  method:"get",
+		  success:function(data){
+			  console.log(data)
+			  if(data != 'empty' ) {
+				  $("。nav-right-area").html("<span style=\"width:80px\">你好，"+data+"</li><li><a href='user/logOut'>退出</a></span>")
+			  }
+		 }
+	  })
+  
   $.ajax({
 		  url:'user/loginUAccount',
 		  method:"get",
