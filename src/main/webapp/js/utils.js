@@ -5,8 +5,7 @@ $(function() {
 		  method:"get",
 		  success:function(data){
 			  if(data != 'empty' ) {
-				  console.log(data)
-				  $("#top-bar").html("<li style=\"width:80px\">你好，"+data+"</li><li><a href='user/logOut'>退出</a></li>")
+				  $("#top-bar").html("<li style=\"width:100px;\">你好，"+data+"</li><li><a href='user/logOut'>退出</a></li>")
 			  }
 		 }
 	  })

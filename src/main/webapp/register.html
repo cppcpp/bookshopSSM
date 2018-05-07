@@ -186,8 +186,11 @@
               //console.log("registterSuccess::"+JSON.parse(responseText).registerSuccess)
               //注册成功，重定向到登录页面
               if(JSON.parse(responseText).registerSuccess){
-            	  console.log("成功")
-            	  window.location="login.html"
+            	  alert("注册成功，2s后进入登录页面")
+            	  setTimeout(function(){
+            		  window.location="login.html"
+            	  },2000)
+            	 
               }
               
               //注册失败情况

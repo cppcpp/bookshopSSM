@@ -30,8 +30,6 @@ public class SecurityFilter implements Filter {
 		String path=uri.substring(10);
 		System.out.println("path:::"+path);
 		Users user= (Users) req.getSession().getAttribute("users");
-		System.out.println("use:"+user);
-		
 		//登录页面，放行
 		if(path.equals("login.html")) {
 			chain.doFilter(request, response);
@@ -53,7 +51,6 @@ public class SecurityFilter implements Filter {
 				return;
 			}
 		}
-		
 		chain.doFilter(request, response);
 	}
 

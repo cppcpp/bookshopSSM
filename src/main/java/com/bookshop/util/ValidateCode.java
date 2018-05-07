@@ -17,9 +17,10 @@ public class ValidateCode {
 	// 输出一张随机验证码图片
 	public static final int WIDTH = 160;
 	public static final int HEIGHT = 50;
-	
 	//生成验证码
-	public static HttpServletResponse generateValidateCode(HttpServletRequest request,HttpServletResponse response) throws IOException {
+	public static HttpServletResponse generateValidateCode(HttpServletRequest request,
+			HttpServletResponse response) throws IOException
+	{
 		BufferedImage image = new BufferedImage(WIDTH, HEIGHT,BufferedImage.TYPE_INT_RGB);
 		Graphics g = image.getGraphics();
 		// 1.設置背景色
@@ -30,10 +31,8 @@ public class ValidateCode {
 		drawRandomLine(g);
 		// 4.写随机数
 		String random = drawRandomNum((Graphics2D) g);
-//		System.out.println("random:"+random);
 		// 写给客户机的同时也给服务器一份,将验证码存到session中
 		request.getSession().setAttribute("imagecheckcode", random);
-//		System.out.println("random"+random);
 		// 5.把图形写给浏览器
 		// 通知浏览器以图形的方式打开
 		response.setContentType("image/jpeg");
@@ -41,8 +40,8 @@ public class ValidateCode {
 		response.setDateHeader("expries", -1);
 		response.setHeader("Cache-Control", "no-cache");
 		response.setHeader("Pragma", "no-cache");
+		//将图像输出到Servlet输出流中。
 		ImageIO.write(image, "jpg", response.getOutputStream());
-		
 		return response;
 	}
 	

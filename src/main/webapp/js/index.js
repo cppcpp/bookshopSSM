@@ -17,7 +17,6 @@ $.ajax({
 	  method:"get",
 	  dataType:"json",
 	  success:function(data){
-		  console.log(data)
 		  var newsethtml = ""
 			  if(data.recommendFourBooks && data.recommendFourBooks.length) {
 				$.each(data.recommendFourBooks,function(index,ndata){

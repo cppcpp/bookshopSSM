@@ -74,7 +74,7 @@ public class BooksController {
 		}
 		
 		
-		//分页
+		//分页调用
 		PageHelper.startPage(pageNum, pageSize);
 		
 		List<Books> booksList= booksService.getBookByConditions(category1, saleNum1, discount1, newset1, price1, lowestPrice, highestPrice);
@@ -156,10 +156,12 @@ public class BooksController {
         
         try {
 	        //上传图片
-	        if(!bookPic.isEmpty()) {
+	        if(!bookPic.isEmpty()) {//判断上传是否为空
+	        	//项目在容器中实际发布运行的跟路径
 	        	String t=request.getSession().getServletContext().getRealPath("");
+	        	//存储照片的路径
 	        	String path=t.substring(0, t.lastIndexOf('\\'))+"\\"+"book_images";
-	        	System.out.println("path:：："+path);
+	        	//System.out.println("path:：："+path);
 	        	//设置上传文件名
 	        	String fileName=bookPic.getOriginalFilename();
 	        	//取得文件后缀
@@ -167,7 +169,7 @@ public class BooksController {
 	        	String suffix=fileName.substring(fileName.lastIndexOf(".")+1);
 	        	newFileName=newFileName+"."+suffix;
 	        	File file=new File(path, newFileName);
-	        	//如果目标路径存在，存储图片文件
+	        	//如果目标路径存在，存储图片文件至指定路径
 	        	if(file.getParentFile().exists()) {
 	        		bookPic.transferTo(new File(path+File.separator+newFileName));
 	        	}else {

@@ -42,12 +42,25 @@ public class UserController {
 	
 	@Autowired
 	HttpSession session;
-	
+	//@Autowired依赖注解注入
 	@Autowired
 	UsersService usersService;
-	
+	//@Autowired依赖注解注入
 	@Autowired
 	RecommendBookService recommendBookService;
+	//判断用户名是否存在
+		@RequestMapping(value="/registerAccount",method=RequestMethod.GET)
+		@ResponseBody
+		public String registerAccount() {
+			Map<String,String> resultMap=new HashMap<>();
+			String uAccount=request.getParameter("uAccount");
+			Users users=usersService.selectByPrimaryKey(uAccount);
+			if(users==null) {
+				return "uAccountOK";
+			}else {
+				return "uAccountError";
+			}
+		}
 	
 	//生成验证码
 	@RequestMapping(value="/generateValidateCode",method=RequestMethod.GET)
@@ -61,19 +74,6 @@ public class UserController {
 		}
 	}
 	
-	@RequestMapping(value="/registerAccount",method=RequestMethod.GET)
-	@ResponseBody
-	public String registerAccount() {
-		Map<String,String> resultMap=new HashMap<>();
-		String uAccount=request.getParameter("uAccount");
-		
-		Users users=usersService.selectByPrimaryKey(uAccount);
-		if(users==null) {
-			return "uAccountOK";
-		}else {
-			return "uAccountError";
-		}
-	}
 	
 	@RequestMapping("/register")
 	@ResponseBody
@@ -316,12 +316,13 @@ public class UserController {
 		
 	}
 	
-	@RequestMapping("/loginUAccount")
+	@RequestMapping(value="/loginUAccount",produces={"text/html;charset=UTF-8;","application/json;"})
 	@ResponseBody
 	public String logingUAccount() {
 		Users users=(Users) session.getAttribute("users");
 		if(users!=null) {
-			return users.getuAccount();
+			System.out.println("------"+users.getuAccount());
+			return users.getuAccount()+"";
 		}
 		return "empty";
 	}

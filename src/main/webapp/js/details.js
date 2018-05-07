@@ -20,7 +20,6 @@ $(function(){
 				var html1 = ''
 				var tab1 = ''
 				$.each(data.books,function(index,ndata){
-					console.log("---",data)
 					$("#book_name").html(ndata['bName'])
 					bName = ndata['bName']
 					bPrice = ndata['bPrice']
@@ -31,10 +30,11 @@ $(function(){
 					html += "<div class=\"price\"><strong>价格:</strong> <span class=\"red\">"+(ndata['bDiscount']/100 *ndata['bPrice']).toFixed(2);
 					html += "<span class=\"delete_decoration\">原价："+ndata['bPrice']+"</span></div>";
 					html1 += "<a href=\"#\" ><img style=\"width:150px;height: 150px;\" src=\"/book_images/"+ndata['bPic']+"\" /></a>";
-					html1 += "<br /><br /><img src=\"img/zoom.gif\" /></a>"
+					html1 += "<br/><br/>"
+					/*html1 += "<br /><br /><img src=\"img/zoom.gif\" /></a>"*/
 					//图书详情
-					tab1 += "<p class=\"more_details\">图书名称："+ndata['bName']+"</p>"
 					tab1 += " <ul class=\"demo-list\">"
+					tab1 += "<li>图书名称："+ndata['bName']+"</li>"
 					tab1 += "<li>图书作者："+ndata['bAuthor']+"</li>"
 					tab1 += "<li>图书出版时间："+ndata["bPressTime"]+"</li>"
 					tab1 += "<li>图书出版社："+ndata["bPress"]+"</li>"
@@ -59,16 +59,18 @@ $(function(){
 			type:'get',
 			data:{
 				category: bookId.substr(0,1),
-				limit:4
+				limit:6
 			},
 			success:function (data){
 				var tab2 = ''
 				$.each(data.books,function(index,ndata){
-					tab2 += "<div class=\"col-md-4\">"
-					tab2 += "<div class=\"new_prod_box\">"	
-					tab2 += " <a href=\"detail.html?bId="+ndata['bId']+"\" style=\"white-space:nowrap;text-overflow:ellipsis;overflow: hidden;width: 100px;\">"+ndata['bName']+"</a>"
-					tab2 += " <a href=\"detail.html?bId="+ndata['bId']+"\"><img src=\"/book_images/"+ndata['bPic']+"\" class=\"thumb\" border=\"0\" width=\"90px\" height=\"90px\"/></a>"
-					tab2 +="</div></div>";
+					if(bookId !=ndata.bId){
+						tab2 += "<div class=\"col-md-4\">"
+							tab2 += "<div class=\"new_prod_box\" style=\"height:150px;\">"	
+							tab2 += " <a href=\"detail.html?bId="+ndata['bId']+"\" style=\"white-space:nowrap;text-overflow:ellipsis;overflow: hidden;width: 100px;\">"+ndata['bName']+"</a>"
+							tab2 += " <a href=\"detail.html?bId="+ndata['bId']+"\"><img src=\"/book_images/"+ndata['bPic']+"\" class=\"thumb\" border=\"0\" width=\"90px\" height=\"90px\"/></a>"
+							tab2 +="</div></div>";
+					}
 				});
 				$("#tab2").html(tab2)
 			},

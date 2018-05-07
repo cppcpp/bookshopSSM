@@ -173,6 +173,11 @@ var totalPage,currpage,limit
 	    		"limit": limit
 	    	},
 	    	success:function(data){
+	    		console.log("----",data.orderList.length)
+	    		if(!data.orderList.length) {
+	    			$("#mine_order_lists").html("<br><br>暂无购买记录！")
+	    			return;
+	    		}
 	    		 totalPage = data.pageInfo.pages
 	    		  limit = data.pageInfo.pageSize
 	    		  currpage = data.pageInfo.pageNum
