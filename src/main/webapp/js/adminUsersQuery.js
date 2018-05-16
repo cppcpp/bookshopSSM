@@ -55,7 +55,6 @@ $(function(){
     			$("#selectAll").prop("checked", false);
     		}
     	})
-    	console.log(num,$(".selectSub").length)
     	if(num == $(".selectSub").length){
     		   $("#selectAll").prop("checked", true);
     		}
@@ -77,12 +76,10 @@ $(function(){
 	    			$("#selectAll").prop("checked", false);
 	    		}
 	    	})
-	    	console.log(num,$(".selectSub").length)
 	    	if(num == $(".selectSub").length){
 	    		   $("#selectAll").prop("checked", true);
 	    		}
 		  currentName = $(this).attr("name");
-		  console.log(currentName);
 		  let flag = false;
 		  if(this.checked){
 			  if(multiDeleteArr.length){
@@ -162,6 +159,7 @@ $(function(){
 	//修改
     $("body").on("click",".singleModify",function(){
         $("#div2").slideDown();
+        document.getElementById("bg").style.display ="block";
         var b_id=$(this).attr("name");
         var ul = $(this).parent().parent().find("ul")
         var ulchilds=ul.children();

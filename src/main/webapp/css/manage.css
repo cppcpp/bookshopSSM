@@ -143,7 +143,7 @@ input[type="text"],input[type="password"],input[type="email"],input[type="date"]
     font-size: 14px;
     font-family: 'PT Sans', Helvetica, Arial, sans-serif;
     outline: none;
-    padding-left:40px ;/*蹇呴』璁剧疆锛屽惁鍒欐枃鏈湪鑳屾櫙鍥句笂鏂�*/
+    padding-left:40px ;/*韫囧懘銆忕拋鍓х枂閿涘苯鎯侀崚娆愭瀮閺堫剙婀懗灞炬珯閸ュ彞绗傞弬锟�*/
     border-radius:6px ;
     border: 1px solid rgba(0,0,0,.5);
     box-shadow: 0 1px 2px rgba(0,0,0,.1);
@@ -325,7 +325,7 @@ input[type="submit"]:focus{
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
-    z-index: 1000;
+    z-index: 1002;
 }
 
 .circles,.circle {
@@ -382,7 +382,7 @@ select, .mini-form-input  input[type="text"],input[type="password"],input[type='
     font-size: 16px;
     font-family: 'PT Sans', Helvetica, Arial, sans-serif;
     outline: none;
-    padding-left:10px ;/*蹇呴』璁剧疆锛屽惁鍒欐枃鏈湪鑳屾櫙鍥句笂鏂�*/
+    padding-left:10px ;/*韫囧懘銆忕拋鍓х枂閿涘苯鎯侀崚娆愭瀮閺堫剙婀懗灞炬珯閸ュ彞绗傞弬锟�*/
     border-radius:6px ;
     border: 1px solid rgba(0,0,0,.5);
     box-shadow: 0 1px 2px rgba(0,0,0,.1);
@@ -480,7 +480,7 @@ select, .mini-form-input  input[type="text"],input[type="password"],input[type='
     -webkit-transition:all .2s;
 }
 
-/*鍒嗛〉鍖�*/
+/*閸掑棝銆夐崠锟�*/
 .papigation {
     margin-top: 40px;
     text-align: center;

@@ -1,4 +1,11 @@
 $(function() {
+	 $("#searchBtn").click(function(){
+		  if($("#searchBook").val()!=""){
+			  window.location="searchBook.html?data="+$("#searchBook").val()
+		  }
+	  })
+	
+	
 	// 判断登录信息
 	$.ajax({
 		  url:'user/loginUAccount',
@@ -9,6 +16,7 @@ $(function() {
 			  }
 		 }
 	  })
+	  
 	  //购物车个数
 	  $.ajax({
 		  url:'cart/countOfCart',

@@ -4,6 +4,11 @@ var flag = false;
 var currentName;
 var totalPage,currpage,limit
 $(function(){
+ $("#searchBtn").click(function(){
+	  if($("#searchBook").val()!=""){
+		  window.location="searchBook.html?data="+$("#searchBook").val()
+	  }
+  })
   getCartList()
   $("body").on("click",".selectSub",function(){
 	  currentName = this.parentNode.parentNode.getAttribute('id')

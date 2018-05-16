@@ -5,14 +5,12 @@ $(function(){
 	getLists()
 	$("body").on('click','.cart-multiDelete',function() {
 		 let obj = {ids:multiDeleteArr}
-		 console.log(obj)
 			if(multiDeleteArr.length) {
 				$.ajax({
 					url:'books/deleteBooks',
 					type:'post',
 					contentType: "application/json; charset=utf-8",
 					data:JSON.stringify(obj),
-				
 					success:function(){
 						$(".book_lists").html("");
 						getLists()
@@ -28,7 +26,6 @@ $(function(){
 	$("#selectAll").click(function () {
 		if (this.checked) {
 		var check = document.getElementsByClassName("selectSub");
-    
 	    for(var i = 0;i<check.length;i++){
 	    	var flag= false
 	    	if(multiDeleteArr.length){
@@ -55,7 +52,6 @@ $(function(){
     			$("#selectAll").prop("checked", false);
     		}
     	})
-    	console.log(num,$(".selectSub").length)
     	if(num == $(".selectSub").length){
     		   $("#selectAll").prop("checked", true);
     		}
@@ -77,12 +73,10 @@ $(function(){
 	    			$("#selectAll").prop("checked", false);
 	    		}
 	    	})
-	    	console.log(num,$(".selectSub").length)
 	    	if(num == $(".selectSub").length){
 	    		   $("#selectAll").prop("checked", true);
 	    		}
 		  currentName = $(this).attr("name");
-		  console.log(currentName);
 		  let flag = false;
 		  if(this.checked){
 			  if(multiDeleteArr.length){
@@ -112,9 +106,7 @@ $(function(){
 	$("#search_button").click(function(){
 		bAuthor='',category='',bPress='',bName=''
 		searchInput = $("#search_input").val()
-		console.log(selectedValue,searchInput)
 		if(selectedValue && searchInput){
-			console.log(selectedValue,searchInput)
 			if(selectedValue == "b_name") {
 				bName = searchInput
 			}else if(selectedValue == "b_press"){
@@ -192,7 +184,6 @@ $(function(){
 				category =  'z'
 			   break;
 			}
-			
 			getLists()
 		}else{
 			alert("请选择搜索条件")
@@ -201,6 +192,7 @@ $(function(){
 	//修改
     $("body").on("click",".singleModify",function(){
         $("#div2").slideDown();
+        document.getElementById("bg").style.display ="block";
         var b_id=$(this).attr("name");
         console.log(b_id)
         var ul = $(this).parent().parent().find("ul")
@@ -212,7 +204,6 @@ $(function(){
                assignment(ulchilds[i]);
            }
        }
-     //
     });
 	$("body").on("click",".singleDelete",function(){
         var b_id=$(this).attr("name");
@@ -267,7 +258,6 @@ function getLists(page,limit){
 		  "bName":bName
    	  },
 		success:function(data) {
-			console.log(data);
 			 totalPage = data.pageInfo.pages;
    		  	 limit = data.pageInfo.pageSize;
    		  	 currpage = data.pageInfo.pageNum;
@@ -285,7 +275,7 @@ function getLists(page,limit){
    			  html += "<li title=\"bId\"  class=\"li_book\"><b>Id：</b>"+bdata['bId']+"</li><br>"
    			  html += "<li title=\"bName\"  class=\"li_book\"><b>名称：</b>"+bdata['bName']+"</li><br>"
    			  html += "<li title=\"bDescription\" class=\"li_book\"><b>图书描述：</b>"+bdata['bDescription']+"</li><br>"
-   			  html += "<li title=\"bPrice\" class=\"li_book\"><b>价格：</b>"+bdata['bPrice']+"</li>"
+   			  html += "<li title=\"bPrice\" class=\"li_book\"><b>价格：</b>"+bdata['bPrice']+"</li><br>"
    			  html += "<li title=\"bDiscount\" class=\"li_book\"><b>折扣：</b>"+bdata['bDiscount']+"</li><br>"
    			  html += "<li title=\"bAuthor\" class=\"li_book\"><b>作者：</b>"+bdata['bAuthor']+"</li><br>"
   			  html += "<li title=\"bPress\" class=\"li_book\"><b>出版社：</b>"+bdata['bPress']+"</li><br>"

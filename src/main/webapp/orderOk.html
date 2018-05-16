@@ -3,12 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>订单成功</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+  <meta charset="UTF-8">
   <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
-  <link href="css/style.css" rel="stylesheet" type="text/css">
   <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
-  <link href="css/owl.carousel.css" rel="stylesheet" type="text/css">
+  <link href="css/style.css" rel="stylesheet" type="text/css">
   <style>
     button{
       cursor: pointer;
@@ -42,7 +40,19 @@
 </head>
 <body>
 <header>
-
+    <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12"> 
+      <div class="col-md-8 col-sm-8" style="display:inline-block">
+       	 <button style="float:right;margin:5px;" id="searchBtn">搜索</button>
+     	 <input type="text" id="searchBook" style="float:right">
+     	
+      </div>
+      <div style="display:inline-block" class="col-md-3 col-sm-3 col-md-offset-1 clearfix">
+     	<ul id="top-bar"  class="clearfix">
+	        <li><a href="login.html">登录</a></li>
+	        <li><a href="register.html">注册</a></li>
+       </ul> 
+      </div>
+    </div>
 </header>
 
 <nav>
@@ -67,10 +77,11 @@
           <div class="collapse navbar-collapse nav-collapsed-area" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right clearfix">
               <li><a href="index.html">首页</a></li>
-              <li><a href="categroy.html">书城</a></li>
+              <li><a href="category.html">书城</a></li>
               <li><a href="special.html">特价</a></li>
               <li><a href="mineInfo.html">我的</a></li>
               <li><a href="about.html">关于我们</a></li>
+              <li><a href="contact.html">联系我们</a></li>
             </ul>
           </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
@@ -78,11 +89,9 @@
     </div>
   </div>
   <div class="nav-cart-area">
-    <span class="nav-cart"><img src="img/icon-cart.png"></span>
-    <span class="cart-num">3</span>
+    <a href="cart.html"><span class="nav-cart"><img src="img/icon-cart.png"></span></a>
   </div>
 </nav>
-
 
 <!--back to top-->
 <p id="back-to-top">
@@ -97,16 +106,16 @@
         <div style="font-size: 32px;">您的订单提交成功，我们将尽快为您安排发货！</div>
         <div>
           <ul style="list-style: none;">
-            <li> <label style="letter-spacing: 10px;">订单编号：</label>238483928023</li>
+            <li> <label style="letter-spacing: 10px;">订单编号：</label><span id="oId"></span></li>
             <li>  <label style="letter-spacing: 10px;">支付方式：</label>支付宝</li>
-            <li>  <label style="letter-spacing: 10px;">应付金额：</label></li>
+            <li>  <label style="letter-spacing: 10px;">应付金额：</label>￥<span id="oPrice"></span></li>
           </ul>
         </div>
         <div>
-          <button>立即使用支付宝支付</button>
+          <button id="patBtn">立即使用支付宝支付</button>
         </div>
         <div style="align-self: flex-start;margin: 20px 0px;">
-          您现在还可以：<a href="">查看订单</a>&nbsp;&nbsp;<a href="">返回首页</a>
+          您现在还可以：<a href="mineOrders.html">查看订单</a>&nbsp;&nbsp;<a href="index.html">返回首页</a>
         </div>
       </div>
   </div>
@@ -141,34 +150,37 @@
 
 <script src="js/jquery-2.2.4.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="js/index.js"></script>
-<script src="js/owl.carousel.min.js"></script>
-<script src="js/main.js"></script>
+<script src="js/utils.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#patBtn").click(function(){
+		alert("对不起，该服务暂未开启，无法支付！")
+	})
+	var date = '';
+	function getDate(curDate){
+		var year = curDate.getFullYear();
+		var month = curDate.getMonth()+1;
+		month = month< 10 ?"0"+month:month
+		var day = curDate.getDate()
+		date = year+"-"+month+"-"+day
+		return year+"-"+month+"-"+day
+	}
+	
+	$.ajax({
+    	url:'orders/curOrderQry',
+    	type:'post',
+    	
+    	success:function(data){
+    		if(data!=null){
+    			var str = data.split(",")
+    			if(str.length){
+    				$("#oId").html(str[0]);
+    				$("#oPrice").html(str[1]);
+    			}
+    		}
+    		
+    	}
+    }) 
+})
 
-<script>
-  $(function(){
-    //当滚动条的位置处于距顶部100像素以下时，跳转链接出现，否则消失
-    $(function () {
-      $(window).scroll(function(){
-        if ($(window).scrollTop()>100){
-          $("#back-to-top").fadeIn(1500);
-        }
-        else
-        {
-          $("#back-to-top").fadeOut(1500);
-        }
-      });
-
-      //当点击跳转链接后，回到页面顶部位置
-      $("#back-to-top").click(function(){
-        //$('body,html').animate({scrollTop:0},1000);
-        if ($('html').scrollTop()) {
-          $('html').animate({ scrollTop: 0 }, 1000);
-          return false;
-        }
-        $('body').animate({ scrollTop: 0 }, 1000);
-        return false;
-      });
-    });
-  });
 </script>

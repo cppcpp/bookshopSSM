@@ -7,7 +7,7 @@
   <link href="css/style.css" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="css/lightbox.css" type="text/css" media="screen" />
 
-  <title>Title</title>
+  <title>list</title>
 </head>
 <body>
 <header>
@@ -109,7 +109,7 @@
       <div class="col-md-8 col-md-offset-1">
         <div class="row">
           <div class="nav-title">
-            <span><i class="fa fa-bookmark"></i>&nbsp;&nbsp;特价书籍</span>
+            <span><i class="fa fa-bookmark"></i>&nbsp;&nbsp;书籍</span>
           </div>
         </div>
 
@@ -164,13 +164,17 @@
 <script src="js/details.js"></script>
 <script src="js/utils.js"></script>
 <script type="text/javascript">
-var totalPage,currpage,limit
-var bookNum = 4
+var totalPage,currpage,limit,bName;
+function getQueryString(name) {
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)","i")
+	var r = window.location.search.substr(1).match(reg)
+	 if (r != null) return decodeURI(r[2]); 
+    return null; 
+}
 $(function(){
-	
+	bName = getQueryString('data')
 	getLists()
 })
-
 	function getLists(page,limit){
 	  if(!page) {
 		page = 1
@@ -179,21 +183,20 @@ $(function(){
 		limit = 5
 	  }
 	  $.ajax({
-	   	  url:"books/specialOfferBooks",
-	   	  method:"post",
-		   	data:{
-				  "bookNum":bookNum, 
-				  "page": page,
-	    		  "limit": limit,
-			  },
+	   	  url:"books/booksQry",
+	   	  method:"get",
+	   	  data:{
+			  "page": page,
+			  "limit": limit,
+			  "bName":bName
+	   	  },
 	   	  success:function(data){
 	   	    totalPage = data.pageInfo.pages
   		  	limit = data.pageInfo.pageSize
   		  	currpage = data.pageInfo.pageNum 
   		 	$(".papigationPage").html("第"+currpage+"页/共"+totalPage+"页")
- 		 
 	   		 let html = ''
-	   		 $.each(data.specialOfferBooks,function(index,ndata){
+	   		 $.each(data.books,function(index,ndata){
 	   			 html += "<div class=\"special\"> <div class=\"special-left\">";
 	   	   		 html += "<img src=\"/book_images/"+ndata['bPic']+"\"></img></div>";
 	   	   		 html += " <div class=\"special-right\">";

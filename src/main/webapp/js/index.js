@@ -1,5 +1,12 @@
 
 $(function(){
+  $("#searchBtn").click(function(){
+	  if($("#searchBook").val()!=""){
+		  window.location="searchBook.html?data="+$("#searchBook").val()
+	  }
+  })
+	
+	
   $("#testimonial-slider").owlCarousel({
       items: 3,
       navigation: true,
@@ -20,7 +27,7 @@ $.ajax({
 		  var newsethtml = ""
 			  if(data.recommendFourBooks && data.recommendFourBooks.length) {
 				$.each(data.recommendFourBooks,function(index,ndata){
-					newsethtml += "<li><a href=\"detail.html?bId="+ndata['bId']+"\">"
+					newsethtml += "<li><a href=\"detail.html?bId="+ndata['bId']+"\" >"
 					newsethtml += "<div class=\"block\">";
 					newsethtml += " <h4 class=\"counter\">"+ndata['bName']+"</h4>"
 					newsethtml += " <span> <img src=\"/book_images/"+ndata['bPic']+"\" alt=\"Pepole\"></span>"
@@ -28,7 +35,6 @@ $.ajax({
 				})
 				$(".counter-box").append(newsethtml);
 		  }else{
-			  console.log('暂无推荐')
 			$(".counter-box").append('暂无推荐');
 		  }
 		  var tab1 = '',tab2 = ''
@@ -69,7 +75,7 @@ function customDataSuccess(data){
 	  var owlhtml = ""
 	  if(data.newsetThreeBooks) {
 				$.each(data.newsetThreeBooks,function(index,ndata){
-					owlhtml += "<div><a href=\"detail.html?bId="+ndata['bId']+"\"> <img src='img/new.png' alt='IMG'><p>"+ndata['bDescription']+"</p>"
+					owlhtml += "<div class=\"newset-area\"><a href=\"detail.html?bId="+ndata['bId']+"\"> <img src='img/new.png' alt='IMG'><p>"+ndata['bDescription']+"</p>"
 					owlhtml += "<div class=\"user\">"
 					owlhtml += " <img src=\"/book_images/"+ndata['bPic']+"\" alt=\"Pepole\">"
 					owlhtml += " <p><span>"+ndata['bName']+"</span>"+ ndata['bAuthor']+"</p>"

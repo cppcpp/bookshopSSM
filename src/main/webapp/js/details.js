@@ -1,5 +1,10 @@
 var uAddress='',uReceiver='',oPhone='',orderDetails=[];
 $(function(){
+	 $("#searchBtn").click(function(){
+		  if($("#searchBook").val()!=""){
+			  window.location="searchBook.html?data="+$("#searchBook").val()
+		  }
+	  })
 	function getQueryString(name) {
 		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)","i")
 		var r = window.location.search.substr(1).match(reg)

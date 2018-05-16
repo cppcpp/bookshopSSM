@@ -42,7 +42,6 @@ $(function(){
 					data:JSON.stringify(obj),
 				
 					success:function(data){
-						console.log("----",data,data.indexOf("success") )
 						 if(data.indexOf("success") != -1){
 							  $(".book_lists").html("");
 								getLists()

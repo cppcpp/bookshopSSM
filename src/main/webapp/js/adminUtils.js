@@ -41,5 +41,6 @@ $(function(){
 	  })
 	  $(".circles").click(function() {
           $("#div2").slideUp();
+          document.getElementById("bg").style.display ="none";
       })
 })
