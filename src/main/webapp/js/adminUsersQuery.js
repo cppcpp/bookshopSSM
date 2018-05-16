@@ -5,7 +5,6 @@ $(function(){
 	getLists()
 	 $("body").on('click','.cart-multiDelete',function() {
 		 let obj = {ids:multiDeleteArr}
-		 console.log(obj)
 			if(multiDeleteArr.length) {
 				$.ajax({
 					url:'user/deleteUsers',
@@ -117,6 +116,8 @@ $(function(){
 					if(data == 'success') {
 						alert("修改成功")
 						$(".book_lists").html("");
+						$("body").css({overflow:"auto"})
+				        document.getElementById("bg").style.display ="none";
 						getLists()
 					}
 					
@@ -159,6 +160,7 @@ $(function(){
 	//修改
     $("body").on("click",".singleModify",function(){
         $("#div2").slideDown();
+        $("body").css({overflow:"hidden"})
         document.getElementById("bg").style.display ="block";
         var b_id=$(this).attr("name");
         var ul = $(this).parent().parent().find("ul")

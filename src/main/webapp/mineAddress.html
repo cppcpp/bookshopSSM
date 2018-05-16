@@ -211,7 +211,6 @@
 	
 	  $("#addPhone").blur(function(){
 	        var phone=$("#addPhone").val();
-	        console.log(phone)
 	        if(!phone){
 	            $(".tip-phone").html("电话不能为空！");
 	        }else if(!phone.match(/^\d{11}$/)){
@@ -223,7 +222,6 @@
 	  
 	  $("#editPhone").blur(function(){
 	        var phone=$("#editPhone").val();
-	        console.log(phone)
 	        if(!phone){
 	            $(".tip-phone").html("电话不能为空！");
 	        }else if(!phone.match(/^\d{11}$/)){
@@ -242,15 +240,18 @@
       $("#addNewAddress").click(function() {
           $(".new-address").slideDown();
           document.getElementById("bg").style.display ="block";
+          $("body").css({overflow:"hidden"})
       })
       $(".circles").click(function() {
           $(".new-address").slideUp();
           document.getElementById("bg").style.display ="none";
+          $("body").css({overflow:"auto"})
       })
       
       $(".circle").click(function() {
           $(".edit-address").slideUp();
           document.getElementById("bg").style.display ="none";
+          $("body").css({overflow:"auto"})
       })
       
       var uAccount = '';
@@ -275,6 +276,7 @@
 				data:JSON.stringify(obj),
 				success:function(data){
 				  $(".new-address").slideUp();
+				  document.getElementById("bg").style.display ="none";
 				  getAddressLists()	
 				}
 			})
@@ -308,6 +310,7 @@
 	//修改地址
 		$("body").on("click",".edit",function(){
 			document.getElementById("bg").style.display ="block";
+			 $("body").css({overflow:"hidden"})
 			editId = $(this).parent().parent().attr('name')
 			$("#editReciver").val($(this).parent().siblings().eq(0).find('.oReceiver').html())
 			$("#editAddress").val($(this).parent().siblings().eq(1).find('.uAddress').html())
@@ -338,6 +341,7 @@
 			  contentType: "application/json; charset=utf-8",
 			  success:function(data){
 				  $(".edit-address").slideUp();
+				  document.getElementById("bg").style.display ="none";
 				  getAddressLists()
 			  }
 		  

@@ -13,6 +13,8 @@ $(function(){
 					data:JSON.stringify(obj),
 					success:function(){
 						$(".book_lists").html("");
+						$("body").css({overflow:"auto"})
+				        document.getElementById("bg").style.display ="none";
 						getLists()
 					},
 					error:function(){
@@ -193,6 +195,7 @@ $(function(){
     $("body").on("click",".singleModify",function(){
         $("#div2").slideDown();
         document.getElementById("bg").style.display ="block";
+        $("body").css({overflow:"hidden"})
         var b_id=$(this).attr("name");
         console.log(b_id)
         var ul = $(this).parent().parent().find("ul")

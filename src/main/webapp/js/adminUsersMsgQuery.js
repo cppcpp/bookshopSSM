@@ -85,7 +85,6 @@ $(function(){
     			$("#selectAll").prop("checked", false);
     		}
     	})
-    	console.log(num,$(".selectSub").length)
     	if(num == $(".selectSub").length){
     		   $("#selectAll").prop("checked", true);
     		}
@@ -112,7 +111,6 @@ $(function(){
 	    		}
 	
 		  currentName = $(this).attr("name");
-		  console.log(currentName);
 		  let flag = false;
 		  if(this.checked){
 			  if(multiDeleteArr.length){

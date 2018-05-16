@@ -107,8 +107,14 @@
     </div>
   </div>
 </section>
-
-
+<div id="tip-show">
+	<div id="tip-area">
+		<div>
+		<image src="img/tip_success.png" style="width:25px;height:25px;margin-right:5px;">
+		</div>
+		<div>修改成功!</div>
+	</div>
+</div>
 
 <!-- footer Start -->
 <footer>
@@ -163,7 +169,12 @@
 			data:JSON.stringify(obj),
 			contentType: "application/json; charset=utf-8",
 			success:function(data){
-			 console.log(data)
+			 if(data == "success"){
+				 $("#tip-show").css("display", "block")
+				  setTimeout(function(){
+					 window.location="mineAccount.html"
+				 },2000) 
+			 }
 		}
 	})
     })

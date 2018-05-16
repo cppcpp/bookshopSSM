@@ -10,7 +10,9 @@ form,ul,li,p,h1,h2,h3,h4,h5,h6{
     margin: 0;
     padding: 0;
 }
-
+button ,input[type='button']{
+	outline:none
+}
 .manage-top-nav {
     position: fixed;
     height:85px;
@@ -448,7 +450,7 @@ select, .mini-form-input  input[type="text"],input[type="password"],input[type='
 }
 
 .book_column_three{
-    width: 55%;
+    width: 60%;
     text-align: left;
     padding-right:5px;
 }
@@ -459,7 +461,7 @@ select, .mini-form-input  input[type="text"],input[type="password"],input[type='
 }
 
 .book_column_four{
-    width: 20%;
+    width: 15%;
    	display:flex;
     flex-direction: row ;
     align-items:center;
