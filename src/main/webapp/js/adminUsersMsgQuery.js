@@ -33,22 +33,40 @@ $(function(){
 	})
  $("body").on('click','.cart-multiDelete',function() {
 		 let obj = {ids:multiDeleteArr}
-		 console.log(obj)
 			if(multiDeleteArr.length) {
 				$.ajax({
 					url:'userMessage/deleteUserMessage',
 					type:'post',
 					contentType: "application/json; charset=utf-8",
 					data:JSON.stringify(obj),
-				
 					success:function(data){
-						 if(data.indexOf("success") != -1){
-							  $(".book_lists").html("");
-								getLists()
+						if(data.indexOf("success") != -1){
+							  $("#tip-success-show-admin").css("display", "block")
+							     $(".tip-content").html("删除成功")						 
+								 setTimeout(function(){
+									  $("#tip-success-show-admin").css("display", "none")
+									  $(".book_lists").html("");
+									  getLists()
+								 },2000) 
+							 
+						  }else{
+							  $("#tip-failure-show-admin").css("display", "block")
+							  $(".tip-content").html("删除失败")						 
+								 setTimeout(function(){
+									  $("#tip-failure-show-admin").css("display", "none")
+									  $(".book_lists").html("");
+									  getLists()
+								 },2000) 
 						  }
 					},
 					error:function(){
-						
+						$("#tip-failure-show-admin").css("display", "block")
+						  $(".tip-content").html("删除失败")						 
+							 setTimeout(function(){
+								  $("#tip-failure-show-admin").css("display", "none")
+								  $(".book_lists").html("");
+								  getLists()
+							 },2000) 
 					}
 				})
 			}else{
@@ -109,7 +127,6 @@ $(function(){
 	    	if(num == $(".selectSub").length){
 	    		   $("#selectAll").prop("checked", true);
 	    		}
-	
 		  currentName = $(this).attr("name");
 		  let flag = false;
 		  if(this.checked){
@@ -147,10 +164,34 @@ $(function(){
 					  "ids":ids
 				  }),
 				  success:function(data){
+							  
 					  if(data.indexOf("success") != -1){
-						  $(".book_lists").html("");
-							getLists()
+						  $("#tip-success-show-admin").css("display", "block")
+						     $(".tip-content").html("删除成功")						 
+							 setTimeout(function(){
+								  $("#tip-success-show-admin").css("display", "none")
+								  $(".book_lists").html("");
+								  getLists()
+							 },2000) 
+						 
+					  }else{
+						  $("#tip-failure-show-admin").css("display", "block")
+						  $(".tip-content").html("删除失败")						 
+							 setTimeout(function(){
+								  $("#tip-failure-show-admin").css("display", "none")
+								  $(".book_lists").html("");
+								  getLists()
+							 },2000) 
 					  }
+				  },
+				  error:function(){
+					  $("#tip-success-show-admin").css("display", "block")
+					  $(".tip-content").html("删除失败")						 
+						 setTimeout(function(){
+							  $("#tip-success-show-admin").css("display", "none")
+							  $(".book_lists").html("");
+							  getLists()
+						 },2000) 
 				  }
 			  })
 		    }

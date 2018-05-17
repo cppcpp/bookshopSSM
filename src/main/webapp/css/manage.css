@@ -375,7 +375,7 @@ input[type="submit"]:focus{
 	
 }
 
-select, .mini-form-input  input[type="text"],input[type="password"],input[type='date'],input[type="email"],input[type="tel"]{
+select, .mini-form-input  input[type="text"],.mini-form-input input[type="password"],.mini-form-input input[type='date'],.mini-form-input input[type="email"],.mini-form-input input[type="tel"]{
     display:inline-block;
     width: 50%;
     height: 32px;
@@ -511,6 +511,46 @@ select, .mini-form-input  input[type="text"],input[type="password"],input[type='
     border-radius:6px ;
     margin: 0px !important;
     padding-left: 5px;
+}
+
+#tip-success-show-admin,#tip-failure-show-admin {
+	display:none; 
+	width:350px;
+	height:68px;
+	position: fixed;
+	left:50%;
+	margin-left:-150px;
+	top:50%;
+	z-index:1005;
+}
+#tip-success-show-admin {
+	color:green;
+}
+#tip-failure-show--admin {
+	color:#ff8080;
+}
+
+.tip-area {
+	width:350px;
+	height:68px;
+	background: -moz-linear-gradient(top ,#fff 0%,#eef0f1 100%);
+	background: -webkit-linear-gradient(top ,#fff 0%,#eef0f1 100%);
+	background: -ms-linear-gradient(top ,#fff 0%,#eef0f1 100%);
+	background: -o-linear-gradient(top ,#fff 0%,#eef0f1 100%);
+	background: -webkit-gradient(linear,left top ,color-stop(0%,white),color-stop(100%,#eef0f1));
+	background: linear-gradient(to bottom ,#fff 0%,#eef0f1 100%);
+	border: 1px solid #b9babb;
+	border-radius: 4px;
+	box-shadow: 0px 1px 0px 0px rgba(255, 255, 255, 0.2) inset, 0px 1px 0px 0px #cccccc;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+
+.tip-area img {
+	width:25px;
+	height:25px;
+	margin-right:5px;
 }
 
 

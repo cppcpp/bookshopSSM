@@ -107,6 +107,23 @@
     <span>设置每页&nbsp;<input type="text" id="pageSize" style="width: 30px;">&nbsp;条</span>
 </div>
 
+<div id="tip-success-show">
+	<div class="tip-area">
+		<div>
+		<img class="tip-img" src="img/tip_success.png"/>
+		</div>
+		<div>删除成功!</div>
+	</div>
+</div>
+
+<div id="tip-failure-show">
+	<div class="tip-area">
+		<div>
+		<img class="tip-img" src="img/tip_failure.png"/>
+		</div>
+		<div>删除失败!</div>
+	</div>
+</div>
 
 <!-- footer Start -->
 <footer>
@@ -142,12 +159,11 @@ var totalPage,currpage,limit
       $("#mineOrders").addClass("activeLI")
     })
     getLists()
-    
     $("body").on('click','.order_delete',function() {
     	var obj = {
 			'ids':[$(this).parent().attr('name')]
 		}
-    	 var r=confirm("确定删除该订单记录？")
+    	var r=confirm("确定删除该订单记录？")
    	  	if (r==true)
    	       {
 	    	$.ajax({
@@ -155,11 +171,27 @@ var totalPage,currpage,limit
 				contentType: "application/json; charset=utf-8",
 				type:'post',
 				data:JSON.stringify(obj),
-				success:function(){
-					getLists()
+				success:function(data){
+					console.log(data)
+					if(data.indexOf("success") != -1){
+						 $("#tip-success-show").css("display", "block")
+						  setTimeout(function(){
+							  $("#tip-success-show").css("display", "none")
+							  getLists()
+						 },2000) 
+					 }else {
+						 $("#tip-failure-show").css("display", "block")
+						 setTimeout(function(){
+							 $("#tip-failure-show").css("display", "none")
+							 getLists()
+						 },2000) 
+					 }
 				},
 				error:function(){
-					
+					 $("#tip-failure-show").css("display", "block")
+					 setTimeout(function(){
+						 $("#tip-failure-show").css("display", "none")
+					 },2000) 
 				}
 			}) 
    	      }
@@ -180,7 +212,6 @@ var totalPage,currpage,limit
 	    		"limit": limit
 	    	},
 	    	success:function(data){
-	    		console.log("----",data.orderList.length)
 	    		if(!data.orderList.length) {
 	    			$("#mine_order_lists").html("<br><br>暂无购买记录！")
 	    			return;

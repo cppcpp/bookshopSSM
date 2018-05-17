@@ -13,11 +13,33 @@ $(function(){
 					data:JSON.stringify(obj),
 				
 					success:function(){
-						$(".book_lists").html("");
-						getLists()
+						if(data.indexOf("success") != -1){
+							  $("#tip-success-show-admin").css("display", "block")
+							     $(".tip-content").html("删除成功")						 
+								 setTimeout(function(){
+									  $("#tip-success-show-admin").css("display", "none")
+									  $(".book_lists").html("");
+									  getLists()
+								 },2000) 
+							 
+						  }else{
+							  $("#tip-failure-show-admin").css("display", "block")
+							  $(".tip-content").html("删除失败")						 
+								 setTimeout(function(){
+									  $("#tip-failure-show-admin").css("display", "none")
+									  $(".book_lists").html("");
+									  getLists()
+								 },2000) 
+						  }
 					},
 					error:function(){
-						
+						$("#tip-failure-show-admin").css("display", "block")
+						  $(".tip-content").html("删除失败")						 
+							 setTimeout(function(){
+								  $("#tip-failure-show-admin").css("display", "none")
+								  $(".book_lists").html("");
+								  getLists()
+							 },2000) 
 					}
 				})
 			}else{
@@ -114,11 +136,29 @@ $(function(){
 				success:function(data){
 					$("#div2").slideUp();
 					if(data == 'success') {
-						alert("修改成功")
-						$(".book_lists").html("");
-						$("body").css({overflow:"auto"})
-				        document.getElementById("bg").style.display ="none";
-						getLists()
+						if(data.indexOf("success") != -1){
+							  $("#tip-success-show-admin").css("display", "block")
+							     $(".tip-content").html("修改成功")						 
+								 setTimeout(function(){
+									$("#tip-success-show-admin").css("display", "none")
+									$(".book_lists").html("");
+									$("body").css({overflow:"auto"})
+							        document.getElementById("bg").style.display ="none";
+									getLists()
+								 },2000) 
+							 
+						  }else{
+							  $("#tip-failure-show-admin").css("display", "block")
+							  $(".tip-content").html("修改失败")						 
+							  setTimeout(function(){
+									$("#tip-success-show-admin").css("display", "none")
+									$(".book_lists").html("");
+									$("body").css({overflow:"auto"})
+							        document.getElementById("bg").style.display ="none";
+									getLists()
+								 },2000)  
+						  }
+						
 					}
 					
 			}
@@ -189,8 +229,24 @@ $(function(){
 					  "ids":ids
 				  }),
 				  success:function(data){
-					  $(".book_lists").html("");
-					  getLists()
+					  if(data.indexOf("success") != -1){
+						  $("#tip-success-show-admin").css("display", "block")
+						     $(".tip-content").html("删除成功")						 
+							 setTimeout(function(){
+								  $("#tip-success-show-admin").css("display", "none")
+								  $(".book_lists").html("");
+								  getLists()
+							 },2000) 
+						 
+					  }else{
+						  $("#tip-failure-show-admin").css("display", "block")
+						  $(".tip-content").html("删除失败")						 
+							 setTimeout(function(){
+								  $("#tip-failure-show-admin").css("display", "none")
+								  $(".book_lists").html("");
+								  getLists()
+							 },2000) 
+					  }
 				  }
 			  })
 		    }

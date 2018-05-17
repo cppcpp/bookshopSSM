@@ -107,12 +107,21 @@
     </div>
   </div>
 </section>
-<div id="tip-show">
-	<div id="tip-area">
+<div id="tip-success-show">
+	<div class="tip-area">
 		<div>
-		<image src="img/tip_success.png" style="width:25px;height:25px;margin-right:5px;">
+		<img class="tip-img" src="img/tip_success.png"/>
 		</div>
 		<div>修改成功!</div>
+	</div>
+</div>
+
+<div id="tip-failure-show">
+	<div class="tip-area">
+		<div>
+		<img class="tip-img" src="img/tip_failure.png"/>
+		</div>
+		<div>修改失败!</div>
 	</div>
 </div>
 
@@ -150,7 +159,6 @@
       $("#mineAccount").addClass("activeLI")
     })
     let uAccount;
-    
     $.ajax({
 			url:'user/getUsersInfo',
 			type:'get',
@@ -159,8 +167,6 @@
 				$("#uPassword").val(data.uPassword)
 		}
 	})
-	 
-    
     $("#updatePasswd").click(function(){
     	let obj = {'uAccount':uAccount,'uPassword':$("#uPassword").val()}
 		$.ajax({
@@ -170,14 +176,24 @@
 			contentType: "application/json; charset=utf-8",
 			success:function(data){
 			 if(data == "success"){
-				 $("#tip-show").css("display", "block")
+				 $("#tip-success-show").css("display", "block")
 				  setTimeout(function(){
+					  $("#tip-success-show").css("display", "none")
+				 },2000) 
+			 }else {
+				 $("#tip-failure-show").css("display", "block")
+				 setTimeout(function(){
 					 window.location="mineAccount.html"
 				 },2000) 
-			 }
-		}
-	})
+			   }
+			},
+			error:function(){
+				$("#tip-failure-show").css("display", "block")
+				 setTimeout(function(){
+					 window.location="mineInfo.html"
+				 },2000) 
+			}
+		})
     })
-    
   })
 </script>

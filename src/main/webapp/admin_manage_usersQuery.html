@@ -8,7 +8,7 @@
    <style>
   #bg {
         display: none;
-        position: absolute;
+        position: fixed;
         top: 0%;
         left: 0%;
         width: 100%;
@@ -61,7 +61,7 @@
 </section>
 
 <!-- 修改弹框按钮 -->
-<div id="div2">
+<div id="div2" style="margin-top:30px;">
   <div class="circles" >X</div>
     <div class="mini-form-input">
       <label>账户：</label>
@@ -117,7 +117,23 @@
 </div>
 
 </section>
+<div id="tip-success-show-admin">
+	<div class="tip-area">
+		<div>
+		<img class="tip-img" src="img/tip_success.png"/>
+		</div>
+		<div class="tip-content">删除成功!</div>
+	</div>
+</div>
 
+<div id="tip-failure-show-admin">
+	<div class="tip-area">
+		<div>
+		<img class="tip-img" src="img/tip_failure.png"/>
+		</div>
+		<div class="tip-content">删除失败!</div>
+	</div>
+</div>
 </body>
 </html>
 <script src="js/jquery-2.2.4.min.js"></script>

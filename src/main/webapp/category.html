@@ -227,9 +227,18 @@
 		category = getQueryString('category') || 'a'
 		searchData = getQueryString('data')
 		getLists()
-
+		getActiveNav(category)
 	})
 	
+	function getActiveNav(category){
+		
+		for(let i = 0; i<categoryArray.length;i++){
+			if(category == categoryArray[i].value){
+				
+				console.log($(".list li").eq(i).addClass("categroy-nav-active"))
+			}
+		}
+	}
 	
 	function getLists(page,limit){
 		for(let item of categoryArray){
@@ -388,7 +397,6 @@
   		clearInfo()
   		lowsetPrice  = $("#input_left").val()
   		highestPrice = $("#input_right").val()
-  		console.log(validate(lowsetPrice),validate(highestPrice))
   		if(validate(lowsetPrice) && validate(highestPrice)) {
   			getLists(1,limit)
   		}else{

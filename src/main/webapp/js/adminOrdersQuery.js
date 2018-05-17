@@ -13,12 +13,34 @@ $(function(){
 					contentType: "application/json; charset=utf-8",
 					data:JSON.stringify(obj),
 				
-					success:function(){
-						$(".book_lists").html("");
-						getLists()
+					success:function(data){
+						if(data.indexOf("success") != -1){
+							  $("#tip-success-show-admin").css("display", "block")
+							     $(".tip-content").html("删除成功")						 
+								 setTimeout(function(){
+									  $("#tip-success-show-admin").css("display", "none")
+									  $(".book_lists").html("");
+									  getLists()
+								 },2000) 
+							 
+						  }else{
+							  $("#tip-failure-show-admin").css("display", "block")
+							  $(".tip-content").html("删除失败")						 
+								 setTimeout(function(){
+									  $("#tip-failure-show-admin").css("display", "none")
+									  $(".book_lists").html("");
+									  getLists()
+								 },2000) 
+						  }
 					},
 					error:function(){
-						
+						 $("#tip-failure-show-admin").css("display", "block")
+						  $(".tip-content").html("删除失败")						 
+							 setTimeout(function(){
+								  $("#tip-failure-show-admin").css("display", "none")
+								  $(".book_lists").html("");
+								  getLists()
+							 },2000) 
 					}
 				})
 			}else{
@@ -77,12 +99,10 @@ $(function(){
 	    			$("#selectAll").prop("checked", false);
 	    		}
 	    	})
-	    	console.log(num,$(".selectSub").length)
 	    	if(num == $(".selectSub").length){
 	    		   $("#selectAll").prop("checked", true);
 	    		}
 		  currentName = $(this).attr("name");
-		  console.log(currentName);
 		  let flag = false;
 		  if(this.checked){
 			  if(multiDeleteArr.length){
@@ -114,13 +134,35 @@ $(function(){
     				contentType: "application/json; charset=utf-8",
     				type:'post',
     				data:JSON.stringify(obj),
-    				success:function(){
-    					$(".book_lists").html("");
-						getLists()
-    				},
-    				error:function(){
-    					
-    				}
+    				success:function(data){
+						if(data.indexOf("success") != -1){
+							  $("#tip-success-show-admin").css("display", "block")
+							     $(".tip-content").html("删除成功")						 
+								 setTimeout(function(){
+									  $("#tip-success-show-admin").css("display", "none")
+									  $(".book_lists").html("");
+									  getLists()
+								 },2000) 
+							 
+						  }else{
+							  $("#tip-failure-show-admin").css("display", "block")
+							  $(".tip-content").html("删除失败")						 
+								 setTimeout(function(){
+									  $("#tip-failure-show-admin").css("display", "none")
+									  $(".book_lists").html("");
+									  getLists()
+								 },2000) 
+						  }
+					},
+					error:function(){
+						 $("#tip-failure-show-admin").css("display", "block")
+						  $(".tip-content").html("删除失败")						 
+							 setTimeout(function(){
+								  $("#tip-failure-show-admin").css("display", "none")
+								  $(".book_lists").html("");
+								  getLists()
+							 },2000) 
+					}
     			}) 
     	    }
 	})

@@ -11,14 +11,37 @@ $(function(){
 					type:'post',
 					contentType: "application/json; charset=utf-8",
 					data:JSON.stringify(obj),
-					success:function(){
-						$(".book_lists").html("");
-						$("body").css({overflow:"auto"})
-				        document.getElementById("bg").style.display ="none";
-						getLists()
+					success:function(data){
+						if(data.indexOf("success")!= -1) {
+						 $("#tip-success-show-admin").css("display", "block")
+					     $(".tip-content").html("删除成功")						 
+						 setTimeout(function(){
+							  $("#tip-success-show-admin").css("display", "none")
+							  $(".book_lists").html("");
+							  $("body").css({overflow:"auto"});
+							  getLists()
+						 },2000) 
+					}else {
+						 $(".tip-content").html("删除失败")
+						 $("#tip-failure-show-admin").css("display", "block")
+						  setTimeout(function(){
+							  $("#tip-success-show-admin").css("display", "none")
+							  $(".book_lists").html("");
+							  $("body").css({overflow:"auto"});
+							  getLists()
+						 },2000) 
+					 }
+						
 					},
 					error:function(){
-						
+						$(".tip-content").html("删除失败")
+						 $("#tip-failure-show-admin").css("display", "block")
+						  setTimeout(function(){
+							  $("#tip-success-show-admin").css("display", "none")
+							  $(".book_lists").html("");
+							  $("body").css({overflow:"auto"});
+							  getLists()
+						 },2000) 
 					}
 				})
 			}else{
@@ -210,7 +233,6 @@ $(function(){
     });
 	$("body").on("click",".singleDelete",function(){
         var b_id=$(this).attr("name");
-        console.log("###",b_id);
         let ids = [];
         ids.push(b_id)
         var r = confirm("确定删除该书籍？")
@@ -223,8 +245,27 @@ $(function(){
 					  "ids":ids
 				  }),
 				  success:function(data){
-					  console.log(data);
-					  window.location="admin_manage_bookQuery.html"
+					  if(data.indexOf("success")!= -1) {
+							 $("#tip-success-show-admin").css("display", "block")
+						     $(".tip-content").html("删除成功")						 
+							 setTimeout(function(){
+								  $("#tip-success-show-admin").css("display", "none")
+								  $(".book_lists").html("");
+								  $("body").css({overflow:"auto"});
+								  getLists()
+							 },2000) 
+						}else {
+							 $(".tip-content").html("删除失败")
+							 $("#tip-failure-show-admin").css("display", "block")
+							  setTimeout(function(){
+								  $("#tip-success-show-admin").css("display", "none")
+								  $(".book_lists").html("");
+								  $("body").css({overflow:"auto"});
+								  getLists()
+							 },2000) 
+							
+						 }
+					 
 				  }
 			  })
         }

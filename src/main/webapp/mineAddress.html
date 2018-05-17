@@ -9,9 +9,10 @@
   <style>
   #bg {
             display: none;
-            position: absolute;
+            position: fixed;
             top: 0%;
             left: 0%;
+            bottom:0%;
             width: 100%;
             height: 100%;
             background-color: black;
@@ -20,7 +21,7 @@
             opacity: .70;
             filter: alpha(opacity=70);
         }
-  </style>
+   </style>
 </head>
 <body>
 <div id="bg"></div>
@@ -123,22 +124,23 @@
               <label>收货人：</label>
               <input type="text" value="" id="addReciver">
             </div>
-
-            <div class="mini-form-input">
-              <label>收货地址：</label>
-              <textarea id="addAddress"></textarea>
-            </div>
-
+            
             <div class="mini-form-input">
               <label>收货人电话：</label>
-              <input type="text" value="" id="addPhone">
+              <input type="text" value="" id="addPhone"  onkeyup="WidthCheck(this,11)">
             </div>
-            <span class="tip-phone"></span>
-
-            <div class="mini-form-input">
+            
+             <div class="mini-form-input " style="display:flex;align-items:center">
+              <label>收货地址：</label>
+              <textarea id="addAddress" style="height:auto;margin-left:10px;" rows="3"></textarea>
+            </div>
+            
+            <div class="mini-form-input checkbox">
               <label>设为默认：</label>
               <input type="checkbox" id="isDefault">
             </div>
+            
+            <span class="tip-phone"></span>
             <div class="mini-form-input">
               <input type="hidden" value="" name="uAddrId">
               <input type="submit" value="确定" class="add_address_button" name="add">
@@ -160,7 +162,7 @@
 
             <div class="mini-form-input">
               <label>收货人电话：</label>
-              <input type="text" value="" id="editPhone">
+              <input type="text" value="" id="editPhone"  onkeyup="WidthCheck(this,11)">
             </div>
  			<span class="tip-phone"></span>
             <div class="mini-form-input">
@@ -178,6 +180,23 @@
   </div>
 </section>
 
+<div id="tip-success-show">
+	<div class="tip-area">
+		<div>
+		<img class="tip-img" src="img/tip_success.png"/>
+		</div>
+		<div class="tip-content">删除成功!</div>
+	</div>
+</div>
+
+<div id="tip-failure-show">
+	<div class="tip-area">
+		<div>
+		<img class="tip-img" src="img/tip_failure.png"/>
+		</div>
+		<div class="tip-content">删除失败!</div>
+	</div>
+</div>
 
 
 <!-- footer Start -->
@@ -238,6 +257,9 @@
     })
 
       $("#addNewAddress").click(function() {
+    	  $(".new-address #addReciver").val("")
+    	  $(".new-address #addPhone").val("")
+    	  $(".new-address #addAddress").val("")
           $(".new-address").slideDown();
           document.getElementById("bg").style.display ="block";
           $("body").css({overflow:"hidden"})
@@ -263,6 +285,9 @@
 		if(!$("#addReciver").val()|| !$("#addAddress").val() ||!$("#addPhone").val()){
 			alert('请完善收货地址')
 		}else{
+			if($(".tip-phone").val()){
+				return;
+			}
 			let obj = {
 					'uAddress':$("#addAddress").val(),
 					'oPhone':$("#addPhone").val(),
@@ -275,10 +300,32 @@
 				contentType: "application/json; charset=utf-8",
 				data:JSON.stringify(obj),
 				success:function(data){
-				  $(".new-address").slideUp();
+					if(data == "success") {
+						 $("#tip-success-show").css("display", "block")
+					     $(".tip-content").html("添加成功")						 
+						 setTimeout(function(){
+							  $("#tip-success-show").css("display", "none")
+							  $(".new-address").slideUp();
+							  document.getElementById("bg").style.display ="none";
+							  getAddressLists()	
+							  $("body").css({overflow:"auto"})
+						 },2000) 
+					}else {
+						 $(".tip-content").html("添加失败")
+						 $("#tip-failure-show").css("display", "block")
+						 $(".new-address").slideUp();
+						  document.getElementById("bg").style.display ="none";
+						  getAddressLists()	
+						  $("body").css({overflow:"auto"})
+					 }
+			},
+			error:function(){
+				$("#tip-failure-show").css("display", "block")
+				$(".new-address").slideUp();
 				  document.getElementById("bg").style.display ="none";
 				  getAddressLists()	
-				}
+				  $("body").css({overflow:"auto"})
+			},
 			})
 		}
 		
@@ -298,8 +345,30 @@
 				  }),
 				  contentType: "application/json; charset=utf-8",
 				  success:function(data){
-					  getAddressLists()	
-				  }
+					  if(data.indexOf("success")!=-1) {
+						  	 $(".tip-content").html("删除成功")
+							 $("#tip-success-show").css("display", "block")
+							  setTimeout(function(){
+								 $("#tip-success-show").css("display", "none")
+								 getAddressLists()	
+							 },2000) 
+						}else {
+							 $(".tip-content").html("删除失败")
+							 $("#tip-failure-show").css("display", "block")
+							  setTimeout(function(){
+								 $("#tip-success-show").css("display", "none")
+								 getAddressLists()	
+							 },2000)
+						 }
+					},
+					error:function(){
+						 $(".tip-content").html("删除失败")
+						 $("#tip-failure-show").css("display", "block")
+						  setTimeout(function(){
+							 $("#tip-success-show").css("display", "none")
+							 getAddressLists()	
+						 },2000)
+					}
 			  
 			  }) 
 			 }else{ 
@@ -340,9 +409,38 @@
 			  }),
 			  contentType: "application/json; charset=utf-8",
 			  success:function(data){
-				  $(".edit-address").slideUp();
-				  document.getElementById("bg").style.display ="none";
-				  getAddressLists()
+				  if(data.indexOf("success")!=-1) {
+					  $(".tip-content").html("修改成功")
+						 $("#tip-success-show").css("display", "block")
+						  setTimeout(function(){
+							 $("#tip-success-show").css("display", "none")
+							 $(".edit-address").slideUp();
+				  			 document.getElementById("bg").style.display ="none";
+				  			  $("body").css({overflow:"auto"})
+				  			 getAddressLists()
+						 },2000) 
+					}else {
+						 $(".tip-content").html("修改失败")
+						 $("#tip-failure-show").css("display", "block")
+						  setTimeout(function(){
+							 $("#tip-success-show").css("display", "none")
+							 $(".edit-address").slideUp();
+				  			document.getElementById("bg").style.display ="none";
+				  		  $("body").css({overflow:"auto"})
+				  			getAddressLists()
+						 },2000)
+					 }
+			  },
+			  error:function(){
+				  $(".tip-content").html("修改失败")
+				  $("#tip-failure-show").css("display", "block")
+				  setTimeout(function(){
+					 $("#tip-success-show").css("display", "none")
+					 $(".edit-address").slideUp();
+		  			document.getElementById("bg").style.display ="none";
+		  		  $("body").css({overflow:"auto"})
+		  			getAddressLists()
+				 },2000)
 			  }
 		  
 		  }) 

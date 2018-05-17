@@ -6,8 +6,6 @@
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
   <link href="css/style.css" rel="stylesheet" type="text/css">
   <link rel="stylesheet" type="text/css" href="css/manage.css">
-  
- 
 </head>
 <body>
 <header>
@@ -47,6 +45,23 @@
   </ul>
 </section>
 
+<div id="tip-success-show-admin" style="z-index:1009">
+	<div class="tip-area" style="z-index:1009">
+		<div>
+		<img class="tip-img" src="img/tip_success.png"/>
+		</div>
+		<div class="tip-content">删除成功!</div>
+	</div>
+</div>
+
+<div id="tip-failure-show-admin" style="z-index:1009">
+	<div class="tip-area" style="z-index:1009">
+		<div>
+		<img class="tip-img" src="img/tip_failure.png"/>
+		</div>
+		<div class="tip-content">删除失败!</div>
+	</div>
+</div>
 
 <section class="right-content">
   <div>
@@ -66,7 +81,7 @@
  </div>
  
 <div style="display:flex;width:100%;justify-content:flex-end">
-<div style="width:100px;margin-top:10px;"><input type="checkbox" id="selectAll"/ > 全选 </div>
+<div style="width:100px;margin-top:10px;"><input type="checkbox" id="selectAll"/> 全选 </div>
 
 <input type="button" class="cart-multiDelete" value="多条删除" > 
 </div>
@@ -81,6 +96,7 @@
 </div>
 
 </section>
+
 
 </body>
 </html>
