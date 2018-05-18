@@ -305,6 +305,10 @@ function getLists(page,limit){
 			 totalPage = data.pageInfo.pages;
    		  	 limit = data.pageInfo.pageSize;
    		  	 currpage = data.pageInfo.pageNum;
+   		  	 if(data.books && data.books.length ==0){
+   		  	 $(".book_lists").html("<div style=\"display:flex;justify-content:center;height:100px;align-items:center\">抱歉，无匹配书籍！</div>");
+   		  	 return;
+   		  	 }
    		  $(".papigationPage").html("第"+currpage+"页/共"+totalPage+"页");
 		  var html = "";
    		  $.each(data.books,function(index,bdata){

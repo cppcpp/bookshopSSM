@@ -191,6 +191,10 @@ $(function(){
 			  "bName":bName
 	   	  },
 	   	  success:function(data){
+	   		if(data.books && data.books.length ==0){
+   		  	 $(".special_area").html("<div style=\"display:flex;justify-content:center;height:100px;align-items:center\">抱歉，无匹配书籍！</div>");
+   		  	 return;
+   		 }
 	   	    totalPage = data.pageInfo.pages
   		  	limit = data.pageInfo.pageSize
   		  	currpage = data.pageInfo.pageNum 

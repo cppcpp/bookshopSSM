@@ -10,8 +10,8 @@ $(function(){
 	  if(selectedValue == "u_name") {
 			$("#search_state").html("<input type=\"text\" name=\"search_input\" id=\"search_input\" >")
 		}else if(selectedValue == "u_time"){
-			$("#search_state").css({'display':'flex','flex-direction': 'row','padding':'0px 10px'})
-			$("#search_state").html("<input type=\"date\" name=\"addStartTime\" id=\"addStartTime\"> - <input type=\"date\" name=\"addStopTime\"  id=\"addStopTime\">")
+			$("#search_state").css({'display':'flex','flex-direction': 'row','padding':'0px 10px',"align-items":"center"})
+			$("#search_state").html("<input type=\"date\" name=\"addStartTime\" id=\"addStartTime\"> — <input type=\"date\" name=\"addStopTime\"  id=\"addStopTime\" style=\"margin-left:10px;\">")
 		}
 	})
 	$("#search_button").click(function(){
@@ -225,6 +225,10 @@ function getLists(page,limit){
 	   		  	 currpage = data.pageInfo.pageNum
 	   		  $(".papigationPage").html("第"+currpage+"页/共"+totalPage+"页")
 			  var html = "";
+			 if(data.userMessageList && data.userMessageList.length ==0){
+	   		  	 $(".book_lists").html("<div style=\"display:flex;justify-content:center;height:100px;align-items:center\">抱歉，无匹配留言！</div>");
+	   		  	 return;
+	   		  }
 			 $.each(data.userMessageList,function(index,udata){
 					  html += "<div class=\"book\">";
 					  html += "<div class=\"book_column book_column_one\">"

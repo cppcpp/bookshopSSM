@@ -204,8 +204,12 @@ function getLists(page,limit){
     		  limit = data.pageInfo.pageSize
     		  currpage = data.pageInfo.pageNum
     		  $(".papigationPage").html("第"+currpage+"页/共"+totalPage+"页")
-    		var html = ""
-    		$.each(data.orderList,function(index,odata){
+    		  var html = ""
+			  if(data.orderList && data.orderList.length ==0){
+	   		  	 $("#mine_order_lists").html("<div style=\"display:flex;justify-content:center;height:100px;align-items:center\">抱歉，无匹配订单！</div>");
+	   		  	 return;
+	   		  }
+    		 $.each(data.orderList,function(index,odata){
     	    		html += " <div class=\"order-container\">"
     	    		html += " <div class=\"order-top\">"
     	    		html += "<div class=\"order-top-left\">"

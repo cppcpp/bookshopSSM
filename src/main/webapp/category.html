@@ -231,11 +231,9 @@
 	})
 	
 	function getActiveNav(category){
-		
 		for(let i = 0; i<categoryArray.length;i++){
 			if(category == categoryArray[i].value){
-				
-				console.log($(".list li").eq(i).addClass("categroy-nav-active"))
+				$(".list li").eq(i).addClass("categroy-nav-active")
 			}
 		}
 	}
@@ -267,7 +265,10 @@
 	    		  "highestPrice":highestPrice
 	    	  },
 	    	  success:function(data){
-	    		  console.log(data.pageInfo)
+	    		  if(data.books && data.books.length ==0){
+	     		  	 $(".new_products").html("<div style=\"display:flex;justify-content:center;height:100px;align-items:center\">抱歉，无匹配书籍！</div>");
+	     		  	 return;
+	     		 }
 	    		  totalPage = data.pageInfo.pages
 	    		  limit = data.pageInfo.pageSize
 	    		  currpage = data.pageInfo.pageNum

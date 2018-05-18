@@ -288,6 +288,10 @@ function getLists(page,limit){
    		  	 currpage = data.pageInfo.pageNum
    		  $(".papigationPage").html("第"+currpage+"页/共"+totalPage+"页")
 		  var html = "";
+		  if(data.usersList && data.usersList.length ==0){
+   		  	 $(".book_lists").html("<div style=\"display:flex;justify-content:center;height:100px;align-items:center\">抱歉，无匹配用户！</div>");
+   		  	 return;
+   		  }
 		 $.each(data.usersList,function(index,udata){
 			   if(udata['uRole'] == 0){
 					udata['uRole'] = "买家"

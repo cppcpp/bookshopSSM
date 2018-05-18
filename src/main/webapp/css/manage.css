@@ -13,6 +13,8 @@ form,ul,li,p,h1,h2,h3,h4,h5,h6{
 button ,input[type='button']{
 	outline:none
 }
+
+input[type=date]::-webkit-inner-spin-button { visibility: hidden; } 
 .manage-top-nav {
     position: fixed;
     height:85px;
