@@ -3,6 +3,7 @@ var selectedValue = '',searchInput=""
 	var multiDeleteArr = []
 $(function(){
 	$("#editForm").ajaxForm(function(data){ 
+		
 		if(data.indexOf("success")!= -1) {
 			 $("#tip-success-show-admin").css("display", "block")
 		     $(".tip-content").html("修改成功")						 
@@ -12,6 +13,7 @@ $(function(){
 				  $("#div2").slideUp();
 		          document.getElementById("bg").style.display ="none";
 				  $("body").css({overflow:"auto"});
+				  return;
 				  getLists()
 			 },2000) 
 		}else {
@@ -245,7 +247,13 @@ $(function(){
 	})
 	//修改
     $("body").on("click",".singleModify",function(){
+    	var img = $(this).parent().parent().find(".book_column_two").children().find("img")[0].src
+    	var startIndex = img.indexOf("/book")
+    	img = img.substring(startIndex,img.length)
+    	console.log(img)
+    	
         $("#div2").slideDown();
+    	$("#book_pic").attr('src',img)
         document.getElementById("bg").style.display ="block";
         $("body").css({overflow:"hidden"})
         var b_id=$(this).attr("name");
@@ -292,7 +300,6 @@ $(function(){
 							 },2000) 
 							
 						 }
-					 
 				  }
 			  })
         }
@@ -344,7 +351,7 @@ function getLists(page,limit){
    			  html += " <input class=\"selectSub\" type='checkbox' name="+bdata['bId']+">"
    			  html += "</div>"
    			  html += "<div class=\"book_column book_column_two\">"
-   			  html += "<div><img src=\"/book_images/"+bdata['bPic']+"\"></div></div>"
+   			  html += "<div class=\"book_img\"><img src=\"/book_images/"+bdata['bPic']+"\"></div></div>"
    			  html += "<div class=\"book_column book_column_three\">"	
    			  html += "<ul>"
    			  html += "<li title=\"bId\"  class=\"li_book\"><b>Id：</b>"+bdata['bId']+"</li><br>"

@@ -181,7 +181,7 @@ input[type="text"],input[type="password"],input[type="email"],input[type="date"]
     text-align: right;
 }
 
-input[type="submit"]{
+input[type="submit"],.add_submit{
     cursor: pointer;
     width: 330px;
     height: 48px;
@@ -212,7 +212,7 @@ input[type="submit"]:focus{
 }
 
 
-.a-upload {
+/* .a-upload {
     padding: 4px 10px 4px 14px;
     height: 36px;
     line-height: 30px;
@@ -228,7 +228,7 @@ input[type="submit"]:focus{
     letter-spacing: 6px;
     *display: inline;
     *zoom: 1
-}
+} */
 
 .a-upload  input {
     position: absolute;
@@ -240,13 +240,13 @@ input[type="submit"]:focus{
     cursor: pointer
 }
 
-.a-upload:hover {
+/* .a-upload:hover {
     color: #ffffff;
     background: #c5c0dd;
     border-color: #ccc;
     text-decoration: none
 }
-
+ */
 .file_name {
     display: inline-block;
     color: #8a85a0;

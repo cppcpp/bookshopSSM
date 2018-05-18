@@ -5,6 +5,20 @@
   <title>管理员主页</title>
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="css/manage.css">
+  <style>
+   input[type='file'] {
+    position: absolute;
+    width:100px;
+    height:100px;
+    font-size: 100px;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    cursor: pointer
+}
+  
+  </style>
 </head>
 <body>
 <header>
@@ -89,11 +103,13 @@
       </tr>
       <tr>
         <td>图书图片</td>
-        <td class="file_input" colspan="2">
-          <a href="javascript:;" class="a-upload">
-          <!-- <img src="img/default-cover.jpg" style="width:30px;height:30px;"> -->
-          <input type="file" name="bookPic" >选择封面</a>
-          <div class="file_name"></div>
+        <td class="file_input" colspan="2" >
+         <div style=" position: relative;padding:10px 0px;">
+	         <img src="img/default-cover.png" style="width:100px;height:100px;margin-left:5px;" id="book_pic" >
+	          <!-- <img src="img/default-cover.jpg" style="width:30px;height:30px;"> -->
+	          <input type="file" name="bookPic" id="book" onchange="showPreview(this)">    
+	          <div class="file_name"></div>
+         </div>
         </td>
       </tr>
       <tr class="book_desc">
@@ -131,7 +147,7 @@
         <td class="server_input"><input type="text" name="bService" id="b_server"   class="input-book"></td>
         <td><p id="p_server"></p></td>
       </tr>
-      <tr><td colspan="3"><input type="submit" value="提交"  class="add_submit"></td></tr>
+      <tr><td colspan="3"><input type="button" value="提交"  onclick= "checkForm()" class="add_submit"></td></tr>
     </table>
   </form>
 </section>
@@ -158,25 +174,9 @@
 <script src="js/jquery.form.js"></script>
 <script>
 var imgMark = false;
-  $(document).ready(function () {
-    $("#bookManage").addClass("current").next().show()
-    $("#book_add").addClass("subliCurrent")
-
-  $(".a-upload").on("change","input[type='file']",function(){
-    var filePath=$(this).val();
-    if(filePath.indexOf("jpg")!=-1 || filePath.indexOf("png")!=-1 ||filePath.indexOf("jpeg")!=-1){
-      var arr=filePath.split('\\');
-      var fileName=arr[arr.length-1];
-      $(".file_name").html(fileName);
-      imgMark = true
-    }else{
-      $(".file_name").html("您未上传文件，或者您上传文件类型有误！");
-      imgMark = false
-      return false
-    }
-  })
-     $(".addBooks").bind("submit", function(){ 
-	   let category = $("#b_category").val()
+function checkForm(){
+	
+	 let category = $("#b_category").val()
 	   let name = $("#b_name").val()
 	   let author = $("#b_author").val()
 	   let description =$("#b_description").val()
@@ -186,12 +186,37 @@ var imgMark = false;
 	   let pressTime =$("#b_press_time").val()
 	   let server = $("#b_server").val()
 	   if(name && category && imgMark && author && description &&price && discount &&press && pressTime &&server){
+		   $("#addForm").submit();
 		   return true
 	   }else {
+		   console.log("00001111")
 		   alert("请完善图书信息")
 		   return false;
 	   }
-   })
+}
+function showPreview(source) {
+    var file = source.files[0];
+    if(window.FileReader) {
+        var fr = new FileReader();
+        var portrait = document.getElementById('book_pic');
+        fr.onloadend = function(e) {
+          portrait.src = e.target.result;
+          $(".file_name").html(source.files[0].name);
+          imgMark = true
+        };
+        fr.readAsDataURL(file);
+    }else {
+    	 $(".file_name").html("您未上传文件，或者您上传文件类型有误！");
+         imgMark = false
+         return false
+    }
+  }
+  $(document).ready(function () {
+    $("#bookManage").addClass("current").next().show()
+    $("#book_add").addClass("subliCurrent")
+
+   
+  
      $("#addForm").ajaxForm(function(data){
 	  if(data.indexOf("success")!= -1) {
 			 $("#tip-success-show-admin").css("display", "block")

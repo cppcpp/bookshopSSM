@@ -19,6 +19,16 @@
         opacity: .70;
         filter: alpha(opacity=70);
         }
+        
+  input[type='file'] {
+    position: absolute;
+    font-size: 100px;
+    left: 110px;
+    top: 10px;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    cursor: pointer
+}
   </style>
 </head>
 <body>
@@ -70,6 +80,12 @@
       <input type="text" class="book_input" name="bName" value="">
     </div>
     
+     <div class="mini-form-input upload" style=" position: relative;padding:10px 0px;">
+      <label>图书图片：</label>
+      <!-- <input type="file" class="book_input" name="bName" value=""> -->
+      <img src="img/default-cover.png" style="width:50px;height:50px;margin-left:5px;" id="book_pic" >
+      <input type="file" name="bookPic" onchange="showPreview(this)" style="width:50px;height:50px;">
+    </div>
     
     <div class="mini-form-input">
       <label>图书描述：</label>
@@ -168,7 +184,21 @@
 <script src="js/jquery-1.7.min.js"></script>
 <script src="js/jquery.form.js"></script>
 <script>
+function showPreview(source) {
+    var file = source.files[0];
+    if(window.FileReader) {
+        var fr = new FileReader();
+        var portrait = document.getElementById('book_pic');
+        fr.onloadend = function(e) {
+          portrait.src = e.target.result;
+        };
+        fr.readAsDataURL(file);
+    }
+  }
   $(function(){
+	  
+	 
+	  
     $("#bookManage").addClass("current").next().show()
     $("#book_query").addClass("subliCurrent")
   })
