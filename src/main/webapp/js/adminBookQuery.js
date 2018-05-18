@@ -13,7 +13,6 @@ $(function(){
 				  $("#div2").slideUp();
 		          document.getElementById("bg").style.display ="none";
 				  $("body").css({overflow:"auto"});
-				  return;
 				  getLists()
 			 },2000) 
 		}else {
