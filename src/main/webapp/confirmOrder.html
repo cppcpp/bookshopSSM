@@ -141,7 +141,7 @@
   </div>
 </section>
 
-<div class="address-all">
+<div class="address-all" style="z-index:1004"> 
   <div class="circle">X</div>
   <!--遍历所有的已有地址-->
       <div id="exist-lists">
@@ -150,21 +150,21 @@
   <div class="address-b"><input type="button" value="确定" class="edit_default_address"></div>
 </div>
 
-	<div class="add_address" style="color:#000">
+	<div class="add_address" style="color:#000;z-index:1004">
         <div class="circles" >X</div>
         <div class="mini-form-input">
           <label>收货人：</label>
           <input type="text" value="" id="addReciver">
         </div>
 
-        <div class="mini-form-input">
+        <div class="mini-form-input" style="display:flex;align-items:center">
           <label>收货地址：</label>
-          <textarea id="addAddress"></textarea>
+          <textarea id="addAddress" style="height:auto;margin-left:10px;" rows="3"></textarea>
         </div>
 
         <div class="mini-form-input">
           <label>收货人电话：</label>
-          <input type="text" value="" id="addPhone">
+          <input type="text" value="" id="addPhone" onkeyup="WidthCheck(this,11)">
         </div>
 		<span class="tip-phone"></span>
         <div class="mini-form-input">
@@ -198,7 +198,7 @@
     </div>
   </div>
 </footer>
-
+<div id="bg"></div>
 </body>
 </html>
 <script src="js/jquery-2.2.4.min.js"></script>
@@ -220,19 +220,29 @@ var oNum = 0,oPrice=0,uAddress='',uReceiver='',oPhone='',oCheaper=0,ids=[],order
 	    });
       $("#add_address").click(function() {
           $(".add_address").slideDown();
+          document.getElementById("bg").style.display ="block";
+          $("body").css({overflow:"hidden"})
       })
 
       $(".circles").click(function() {
           $(".add_address").slideUp();
+          document.getElementById("bg").style.display ="none";
+          $("body").css({overflow:"auto"})
+          
       })
       
        $(".circle").click(function() {
           $(".address-all").slideUp();
+          document.getElementById("bg").style.display ="none";
+          $("body").css({overflow:"auto"})
       })
       
       $("#other_address").click(function(){
     	  $(".address-all").slideDown();
+    	  document.getElementById("bg").style.display ="block";
+          $("body").css({overflow:"hidden"})
     	  var html= ""
+    	  
           $.ajax({
  			url:'user/getUsersInfo',
  			type:'get',
@@ -270,7 +280,9 @@ var oNum = 0,oPrice=0,uAddress='',uReceiver='',oPhone='',oCheaper=0,ids=[],order
  				    			 }
  				    		  })
  				    		  $("#exist-lists").append(html)
+ 				    		  
  			    		  }else {
+ 			    			
  							 $(".address-container").html("请选择一个地址")
  							 $("#other_address").css("display",'none')
  						}
@@ -319,9 +331,12 @@ var oNum = 0,oPrice=0,uAddress='',uReceiver='',oPhone='',oCheaper=0,ids=[],order
   			let obj = {
   					'uAddress':$("#addAddress").val(),
   					'oPhone':$("#addPhone").val(),
-  					"ulsdefault":$("#isDefault").is(":checked")? 1:0,
+  					"uIsdefault":$("#isDefault").is(":checked")? 1:0,
   					"oReceiver":$("#addReciver").val()	
   				}
+  			if($(".tip-phone").html()){
+				return;
+			}
   			$.ajax({
   				url:'userAdress/addUserAddress',
   				type:'post',
@@ -329,28 +344,15 @@ var oNum = 0,oPrice=0,uAddress='',uReceiver='',oPhone='',oCheaper=0,ids=[],order
   				data:JSON.stringify(obj),
   				success:function(data){
   				   $(".add_address").slideUp();
+  				 	document.getElementById("bg").style.display ="none";
+	    	         $("body").css({overflow:"auto"})
+	    	         getDefaultAddress()
   				}
   			})
   		}
   	})
-  	//得默认地址
-  	$.ajax({
-			url:'userAdress/getUserDefaultAddress',
-			type:'get',
-			success:function(data){
-			if(data&&data.defaultUserAddress) {
-				uReceiver = data.defaultUserAddress.oReceiver
-				oPhone = data.defaultUserAddress.oPhone
-				uAddress = data.defaultUserAddress.uAddress
-				  var html = ""
-				  html += "<div class=\"item-row\">"
-				  html += "<span>收货人：&nbsp;&nbsp;"+uReceiver+"</span>"
-				  html += " <span>"+oPhone+"</span></div>"
-				  html += "<div>"+uAddress+"</div>"
-				  $(".address-container").html(html)
-			}
-		  }
-  		})
+  	
+  	getDefaultAddress()
       
 	$(".order-ok").click(function(){
 		let objects = {'orderDetails':orderDetails,'ids':ids,"oNum":oNum,"oPrice":oPrice,"uAddress":uAddress,"uReceiver":uReceiver,"oPhone":oPhone,"oCheaper":oCheaper.toFixed(2)}
@@ -386,8 +388,30 @@ var oNum = 0,oPrice=0,uAddress='',uReceiver='',oPhone='',oCheaper=0,ids=[],order
 				$(".address-container").html(html) 
 				
 				 $(".address-all").slideUp();
+				document.getElementById("bg").style.display ="none";
+		        $("body").css({overflow:"auto"})
 		})
 		
 	})
   })
+  function getDefaultAddress(){
+	//得默认地址
+  	$.ajax({
+			url:'userAdress/getUserDefaultAddress',
+			type:'get',
+			success:function(data){
+			if(data&&data.defaultUserAddress) {
+				uReceiver = data.defaultUserAddress.oReceiver
+				oPhone = data.defaultUserAddress.oPhone
+				uAddress = data.defaultUserAddress.uAddress
+				  var html = ""
+				  html += "<div class=\"item-row\">"
+				  html += "<span>收货人：&nbsp;&nbsp;"+uReceiver+"</span>"
+				  html += " <span>"+oPhone+"</span></div>"
+				  html += "<div>"+uAddress+"</div>"
+				  $(".address-container").html(html)
+			}
+		  }
+  		})
+}
 </script>

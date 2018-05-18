@@ -29,7 +29,8 @@
       <div class="tip-area">
         <div class="check confirmPwd"></div>
       </div>
-      <label for="phone">手机号码：</label><input type="tel" placeholder="请输入手机号码" id="phone"/>
+      <label for="phone">手机号码：</label>
+      <input type="tel" placeholder="请输入手机号码" id="phone" onkeyup="WidthCheck(this,11)"/>
       <div class="tip-area">
         <div class="check tip-phone"></div>
       </div>
@@ -47,6 +48,27 @@
 </html>
 <script src="js/jquery-2.2.4.min.js"></script>
 <script>
+//手机号码限制位数和数字
+function WidthCheck(str, maxLen){ 
+	str.value=str.value.replace(/\D/g,'');
+	var w = 0; 
+	var tempCount = 0; 
+	//length 获取字数数，不区分汉子和英文 
+	for (var i=0; i<str.value.length; i++) { 
+	//charCodeAt()获取字符串中某一个字符的编码 
+	var c = str.value.charCodeAt(i); 
+	//单字节加1 
+	if ((c >= 0x0001 && c <= 0x007e) || (0xff60<=c && c<=0xff9f)) { 
+			w++; 
+		} else { 
+			w+=2; 
+			} 
+			if (w > maxLen) { 
+			str.value = str.value.substr(0,i); 
+			break; 
+		} 
+	} 
+}
   $(function () {
     function createRequest(){
         try {
@@ -136,7 +158,7 @@
     }).focus(function (){
         $(".tip-phone").html("");
     });
-
+  
   //提交按钮的ajax提交
   $("#register").click(function(){
 	let radioValue  = $("input[name='role']:checked").val()

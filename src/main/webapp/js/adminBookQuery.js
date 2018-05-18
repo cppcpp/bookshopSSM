@@ -2,6 +2,32 @@ var bAuthor='',category='',bPress='',bName='',totalPage=0,currpage=0,limit
 var selectedValue = '',searchInput=""
 	var multiDeleteArr = []
 $(function(){
+	$("#editForm").ajaxForm(function(data){ 
+		if(data.indexOf("success")!= -1) {
+			 $("#tip-success-show-admin").css("display", "block")
+		     $(".tip-content").html("修改成功")						 
+			 setTimeout(function(){
+				  $("#tip-success-show-admin").css("display", "none")
+				  $(".book_lists").html("");
+				  $("#div2").slideUp();
+		          document.getElementById("bg").style.display ="none";
+				  $("body").css({overflow:"auto"});
+				  getLists()
+			 },2000) 
+		}else {
+			 $(".tip-content").html("修改失败")
+			 $("#tip-failure-show-admin").css("display", "block")
+			  setTimeout(function(){
+				  $("#tip-success-show-admin").css("display", "none")
+				  $(".book_lists").html("");
+				  $("body").css({overflow:"auto"});
+				  $("#div2").slideUp();
+		          document.getElementById("bg").style.display ="none";
+				  getLists()
+			 },2000) 
+		 }
+  	})
+	
 	getLists()
 	$("body").on('click','.cart-multiDelete',function() {
 		 let obj = {ids:multiDeleteArr}
@@ -25,7 +51,7 @@ $(function(){
 						 $(".tip-content").html("删除失败")
 						 $("#tip-failure-show-admin").css("display", "block")
 						  setTimeout(function(){
-							  $("#tip-success-show-admin").css("display", "none")
+							  $("#tip-failure-show-admin").css("display", "none")
 							  $(".book_lists").html("");
 							  $("body").css({overflow:"auto"});
 							  getLists()
@@ -37,7 +63,7 @@ $(function(){
 						$(".tip-content").html("删除失败")
 						 $("#tip-failure-show-admin").css("display", "block")
 						  setTimeout(function(){
-							  $("#tip-success-show-admin").css("display", "none")
+							  $("#tip-failure-show-admin").css("display", "none")
 							  $(".book_lists").html("");
 							  $("body").css({overflow:"auto"});
 							  getLists()
@@ -48,6 +74,9 @@ $(function(){
 				alert("请选择要删除的图书")
 			}
 		})
+		
+	
+		
 	$("#selectAll").click(function () {
 		if (this.checked) {
 		var check = document.getElementsByClassName("selectSub");
@@ -220,9 +249,7 @@ $(function(){
         document.getElementById("bg").style.display ="block";
         $("body").css({overflow:"hidden"})
         var b_id=$(this).attr("name");
-        console.log(b_id)
         var ul = $(this).parent().parent().find("ul")
-        console.log(ul)
         var ulchilds=ul.children();
       
        for(var i=0;i<ulchilds.length;i++){
@@ -258,7 +285,7 @@ $(function(){
 							 $(".tip-content").html("删除失败")
 							 $("#tip-failure-show-admin").css("display", "block")
 							  setTimeout(function(){
-								  $("#tip-success-show-admin").css("display", "none")
+								  $("#tip-failure-show-admin").css("display", "none")
 								  $(".book_lists").html("");
 								  $("body").css({overflow:"auto"});
 								  getLists()

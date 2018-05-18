@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.bookshop.dao.RecommendBookMapper;
 import com.bookshop.modle.Books;
 import com.bookshop.modle.BooksExample;
+import com.bookshop.modle.Users;
 import com.bookshop.service.BooksService;
 import com.bookshop.service.RecommendBookService;
 import com.bookshop.util.StringUtil;
@@ -34,6 +36,8 @@ import com.github.pagehelper.PageInfo;
 @Controller
 @RequestMapping("books")
 public class BooksController {
+	@Autowired
+	HttpSession session;
 	
 	@Autowired
 	BooksService booksService;
@@ -126,16 +130,17 @@ public class BooksController {
 	}
 	
 	@RequestMapping(value="/addBooks",method=RequestMethod.POST)
-    public ModelAndView addBooks(@RequestParam("bookPic")MultipartFile bookPic,HttpServletRequest request) throws IllegalStateException, IOException{
-		ModelAndView mav=new ModelAndView();
+	@ResponseBody 
+	public String addBooks(@RequestParam("bookPic")MultipartFile bookPic,HttpServletRequest request) throws IllegalStateException, IOException{
+		//ModelAndView mav=new ModelAndView();
         String id = request.getParameter("bId");
         String category=request.getParameter("bCategory");//书籍种类
         Map<String , String> req=new HashMap<>();
         String newFileName=null;
         
         if(StringUtil.isEmpty(category)) {
-        	mav.addObject("bCategoryNull", "图书种类不能为空");
-        	return mav;
+        	//mav.addObject("bCategoryNull", "图书种类不能为空");
+        	return "bCategoryNull";
         }
         //判断非空字段是否为空 以及设置创建时间
         if(StringUtil.isEmpty(id)){
@@ -173,11 +178,12 @@ public class BooksController {
 	        	if(file.getParentFile().exists()) {
 	        		bookPic.transferTo(new File(path+File.separator+newFileName));
 	        	}else {
-	        		mav.addObject("pathNotExits", "存储图片的路径不存在，请检查");
-	        		return mav;
+	        		//mav.addObject("pathNotExits", "");
+	        		return "存储图片的路径不存在，请检查";
 	        	}
 	        }else {
-	        	mav.addObject("bookPicNotExit", "未选择图书图片");
+	        	//mav.addObject("bookPicNotExit", "未选择图书图片");
+	        	return "未选择图书图片";
 	        }
 	        
 	        req.put("bPic", newFileName);
@@ -189,17 +195,18 @@ public class BooksController {
 	        if (booksService.insertSelective(books) == 1) {
 	        	//更新recommend_book表
 	        	recommendBookService.insertBookColumn(id+"_o_num");
-	        	
-	        	mav.addObject("bookAddSuccess", "书籍添加成功!");
+	        	return "success";
+	        	//mav.addObject("bookAddSuccess", "书籍添加成功!");
 	        	
 	        }else {
-	        	mav.addObject("bookAddError", "添加失败!");
+	        	return "error";
+	        	//mav.addObject("bookAddError", "添加失败!");
 	        }
         }catch (Exception e) {
         	e.printStackTrace();
+        	return "error";
         }
-        mav.setViewName("redirect:/admin_manage_bookQuery.html");
-        return mav;
+       // mav.setViewName("redirect:/admin_manage_bookQuery.html");
     }
 	
 	@RequestMapping(value="/booksQry",method=RequestMethod.GET)
@@ -275,7 +282,8 @@ public class BooksController {
     }
 	
 	@RequestMapping(value="/updateBooks",method=RequestMethod.POST)
-    public String updateBooks(@RequestParam(name="bookPic",required=false)MultipartFile bookPic,
+	@ResponseBody
+	public String updateBooks(@RequestParam(name="bookPic",required=false)MultipartFile bookPic,
     		HttpServletRequest request) throws IllegalStateException, IOException{
 		Map<String , String> req=new HashMap<>();
         String id = request.getParameter("bId");
@@ -302,9 +310,7 @@ public class BooksController {
         if(bookPic!=null&&!bookPic.isEmpty()) {
         	//左含右不含
             newFileName=id.substring(0, 1)+StringUtil.seqGenerate();
-        	
         	String path=request.getSession().getServletContext().getRealPath("/img/book_images/");
-        	System.out.println("path:：："+path);
         	//设置上传文件名
         	String fileName=bookPic.getOriginalFilename();
         	//取得文件后缀
@@ -321,11 +327,11 @@ public class BooksController {
         	}
         	req.put("bPic", newFileName);
         }
-        
         try {
             Books books = booksService.createBooks(req);
             if (booksService.updateByPrimaryKeySelective(books) == 1) {
-                return "redirect:/admin_manage_bookQuery.html";
+               // return "redirect:/admin_manage_bookQuery.html";
+            	return "success";
             }else {
                 return "error";
             }
@@ -333,7 +339,7 @@ public class BooksController {
         	return "error";
         }
     }
-
+	
     @RequestMapping(value="/deleteBooks",method=RequestMethod.POST)
     @ResponseBody
     public String deleteBooks(@RequestBody Map<String, Object>req){
@@ -356,7 +362,7 @@ public class BooksController {
                        strNotExist += (id + " ");                   }
                }
                 if (strNotExist.equals("") && strFail.equals("")) {
-                    return strSuc + "删除成功";
+                    return strSuc + "success";
                 } else {
                     return strFail + strNotExist + "删除失败";
                 }

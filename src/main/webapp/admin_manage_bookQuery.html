@@ -59,16 +59,18 @@
     </li>
   </ul>
 </section>
-
+<iframe  id="submitFrame" style="display: none;width:0; height:0" name="submitFrame"  src="about:blank"></iframe>
 <!-- 修改弹框按钮 -->
 <div id="div2">
   <div class="circles" >X</div>
-  <form action="books/updateBooks" method="post" enctype="multipart/form-data">
+  <form id="editForm" action="books/updateBooks" method="post" enctype="multipart/form-data" target="submitFrame">
   	<input type="text" name="bId" value="" style="display:none"><!--隐藏bId框  -->
     <div class="mini-form-input">
       <label>图书名称：</label>
       <input type="text" class="book_input" name="bName" value="">
     </div>
+    
+    
     <div class="mini-form-input">
       <label>图书描述：</label>
       <input type="text" class="book_input" name="bDescription" value="">
@@ -163,7 +165,8 @@
 </div>
 </body>
 </html>
-<script src="js/jquery-2.2.4.min.js"></script>
+<script src="js/jquery-1.7.min.js"></script>
+<script src="js/jquery.form.js"></script>
 <script>
   $(function(){
     $("#bookManage").addClass("current").next().show()

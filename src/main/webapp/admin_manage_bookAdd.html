@@ -43,12 +43,12 @@
     </li>
   </ul>
 </section>
-
+ <iframe  id="submitFrame" style="display: none;width:0; height:0" name="submitFrame"  src="about:blank"></iframe>
 <section class="right-content">
   <div>
     <span class="title"><i class="glyphicon glyphicon-tasks"></i>图书添加</span>
   </div>
-  <form action="books/addBooks" method="post" class="addBooks" enctype="multipart/form-data">
+  <form id="addForm" action="books/addBooks" method="post" class="addBooks" enctype="multipart/form-data" target="submitFrame">
     <table class="add_table">
       <tr class="book_id">
         <td class="id_text">图书种类</td>
@@ -90,7 +90,9 @@
       <tr>
         <td>图书图片</td>
         <td class="file_input" colspan="2">
-          <a href="javascript:;" class="a-upload"><input type="file" name="bookPic" >选择封面</a>
+          <a href="javascript:;" class="a-upload">
+          <!-- <img src="img/default-cover.jpg" style="width:30px;height:30px;"> -->
+          <input type="file" name="bookPic" >选择封面</a>
           <div class="file_name"></div>
         </td>
       </tr>
@@ -133,10 +135,27 @@
     </table>
   </form>
 </section>
+<div id="tip-success-show-admin">
+	<div class="tip-area">
+		<div>
+		<img class="tip-img" src="img/tip_success.png"/>
+		</div>
+		<div class="tip-content">添加成功!</div>
+	</div>
+</div>
 
+<div id="tip-failure-show-admin">
+	<div class="tip-area">
+		<div>
+		<img class="tip-img" src="img/tip_failure.png"/>
+		</div>
+		<div class="tip-content">添加失败!</div>
+	</div>
+</div>
 </body>
 </html>
-<script src="js/jquery-2.2.4.min.js"></script>
+<script src="js/jquery-1.7.min.js"></script>
+<script src="js/jquery.form.js"></script>
 <script>
 var imgMark = false;
   $(document).ready(function () {
@@ -173,7 +192,21 @@ var imgMark = false;
 		   return false;
 	   }
    })
+     $("#addForm").ajaxForm(function(data){
+	  if(data.indexOf("success")!= -1) {
+			 $("#tip-success-show-admin").css("display", "block")
+			 setTimeout(function(){
+				  $("#tip-success-show-admin").css("display", "none");
+				  window.location = "admin_manage_bookQuery.html"
+			 },2000) 
+		}else {
+			 $("#tip-failure-show-admin").css("display", "block")
+			  setTimeout(function(){
+				  $("#tip-success-show-admin").css("display", "none")
+			 },2000) 
+		 }
+     });
   })
-
+  
 </script>
 <script src="js/adminUtils.js"></script>
