@@ -1,6 +1,42 @@
 var bAuthor='',category='',bPress='',bName='',totalPage=0,currpage=0,limit
 var selectedValue = '',searchInput=""
 	var multiDeleteArr = []
+var imgMark = false;
+function checkForm(){
+	   var checkPrice = $("#b_price").val()? true: false;
+	   var checkDiscount = $("#b_discount").val()?true:false;
+	  
+	   let name = $("#b_name").val();
+	   let author = $("#b_author").val();
+	   let description =$("#b_description").val();
+	   let press = $("#b_press").val();
+	   let pressTime =$("#b_presstime").val();
+	   let server = $("#b_service").val();
+	   if(name  &&imgMark && author && description && checkPrice && checkDiscount &&press && pressTime &&server){
+		   $("#editForm").submit();
+		   return true
+	   }else {
+		   alert("请完善正确的图书信息")
+		   return false;
+	   }
+}
+
+function showPreview(source) {
+   var file = source.files[0];
+   if(window.FileReader) {
+       var fr = new FileReader();
+       var portrait = document.getElementById('book_pic');
+       fr.onloadend = function(e) {
+         portrait.src = e.target.result;
+         $(".file_name").html(source.files[0].name);
+         imgMark = true
+       };
+       fr.readAsDataURL(file);
+   }else {
+   	 $(".file_name").html("您未上传文件，或者您上传文件类型有误！");
+        imgMark = false
+   }
+ }
 $(function(){
 	$("#editForm").ajaxForm(function(data){ 
 		
@@ -249,16 +285,15 @@ $(function(){
     	var img = $(this).parent().parent().find(".book_column_two").children().find("img")[0].src
     	var startIndex = img.indexOf("/book")
     	img = img.substring(startIndex,img.length)
-    	console.log(img)
-    	
         $("#div2").slideDown();
     	$("#book_pic").attr('src',img)
+    	imgMark= true
         document.getElementById("bg").style.display ="block";
         $("body").css({overflow:"hidden"})
         var b_id=$(this).attr("name");
         var ul = $(this).parent().parent().find("ul")
         var ulchilds=ul.children();
-      
+        
        for(var i=0;i<ulchilds.length;i++){
     	   if(ulchilds[i].tagName=="LI"){
                assignment(ulchilds[i]);
@@ -307,7 +342,11 @@ $(function(){
     //给input的相应节点赋值
     function assignment(thNode){
         var input=document.getElementsByTagName("input");
-        for(var k=0;k<input.length;k++){
+        var textarea =document.getElementsByTagName("textarea");
+        if(textarea[0].name ==thNode.title) {
+        	textarea[0].value=thNode.lastChild.nodeValue;
+        }
+            for(var k=0;k<input.length;k++){
             var name=input[k].name;
             if(name==thNode.title){
                 input[k].value=thNode.lastChild.nodeValue;
@@ -352,7 +391,7 @@ function getLists(page,limit){
    			  html += "<div class=\"book_column book_column_two\">"
    			  html += "<div class=\"book_img\"><img src=\"/book_images/"+bdata['bPic']+"\"></div></div>"
    			  html += "<div class=\"book_column book_column_three\">"	
-   			  html += "<ul>"
+   			  html += "<ul class='alone-ul'>"
    			  html += "<li title=\"bId\"  class=\"li_book\"><b>Id：</b>"+bdata['bId']+"</li><br>"
    			  html += "<li title=\"bName\"  class=\"li_book\"><b>名称：</b>"+bdata['bName']+"</li><br>"
    			  html += "<li title=\"bDescription\" class=\"li_book\"><b>图书描述：</b>"+bdata['bDescription']+"</li><br>"

@@ -138,7 +138,7 @@ a:hover {
     margin-bottom: 30px;
 }
 
-input[type="text"],input[type="password"],input[type="email"],input[type="date"]{
+input[type="text"],input[type="number"],input[type="password"],input[type="email"],input[type="date"],.input-textarea{
     display:block;
     width: 300px;
     height: 42px;
@@ -367,7 +367,6 @@ input[type="submit"]:focus{
 
 .mini-form-input {
     width: 100%;
-    margin-top: 5px;
 }
 
 .input-book {
@@ -377,9 +376,9 @@ input[type="submit"]:focus{
 	
 }
 
-select, .mini-form-input  input[type="text"],.mini-form-input input[type="password"],.mini-form-input input[type='date'],.mini-form-input input[type="email"],.mini-form-input input[type="tel"]{
+select, .mini-form-input  input[type="text"],.mini-input-textarea,.mini-form-input input[type="number"],.mini-form-input input[type="password"],.mini-form-input input[type='date'],.mini-form-input input[type="email"],.mini-form-input input[type="tel"]{
     display:inline-block;
-    width: 50%;
+    width: 280px;
     height: 32px;
     line-height: 32px;
     margin-left: 5px;
@@ -396,7 +395,7 @@ select, .mini-form-input  input[type="text"],.mini-form-input input[type="passwo
     width: 100px;
 }
 
-.mini-form-input input[type='submit']{
+.mini-form-input input[type='submit'],.mini-form-input input[type='button']{
     border: 1px solid #de6a5d;
     border-radius: 5px;
     -moz-border-radius: 5px;
@@ -444,6 +443,10 @@ select, .mini-form-input  input[type="text"],.mini-form-input input[type="passwo
 
 .book_column_two {
     width: 15%;
+    text-align:center;
+    display:flex;
+    justify-content:center;
+    overflow:hidden;
 }
 
 .book_column_two img{
@@ -554,6 +557,7 @@ select, .mini-form-input  input[type="text"],.mini-form-input input[type="passwo
 	height:25px;
 	margin-right:5px;
 }
+
 
 
 

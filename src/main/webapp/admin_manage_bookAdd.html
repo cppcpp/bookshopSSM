@@ -99,55 +99,62 @@
       <tr class="book_name">
         <td class="name_text">图书名称</td>
         <td class="name_input"><input type="text" name="bName" id="b_name" class="input-book"></td>
-        <td><p id="p_name"></p></td>
+        <td><p id="p_name" style="opacity:0">请输入图书名称</p></td>
       </tr>
       <tr>
         <td>图书图片</td>
         <td class="file_input" colspan="2" >
-         <div style=" position: relative;padding:10px 0px;">
-	         <img src="img/default-cover.png" style="width:100px;height:100px;margin-left:5px;" id="book_pic" >
+         <div style=" position: relative;padding:20px 0px;">
+	         <img src="img/default-cover.png" style="border:1px solid gray;width:100px;height:100px;margin-left:5px;" onclick="$('input[id=book]').click();" id="book_pic" >
 	          <!-- <img src="img/default-cover.jpg" style="width:30px;height:30px;"> -->
-	          <input type="file" name="bookPic" id="book" onchange="showPreview(this)">    
+	          <input type="file" name="bookPic" id="book" onchange="showPreview(this)" style="display:none">    
 	          <div class="file_name"></div>
          </div>
         </td>
       </tr>
       <tr class="book_desc">
         <td class="desc_text">描述</td>
-        <td class="desc_input"><input type="text" name="bDescription" id="b_description" class="input-book"></td>
-        <td><p id="p_description"></p></td>
+        <td class="desc_input">
+        <textarea rows="10" name="bDescription" id="b_description" class="input-book input-textarea" style="height:100px;padding:10px 15px"></textarea>
+        <!-- <input type="text" > -->
+        </td>
+        <td><p id="p_description" style="opacity:0">请输入图书描述</p></td>
       </tr>
       <tr class="book_price">
         <td class="price_text">单价</td>
-        <td class="price_input"><input type="text" name="bPrice" id="b_price" class="input-book"></td>
-        <td><p id="p_price"></p></td>
+        <td class="price_input"><input type="number" name="bPrice" id="b_price" class="input-book" oninput="checkPrice(this)"></td>
+        <td><p id="p_price" style="opacity:0">请输入大于等于0的数字</p></td>
       </tr>
       <tr  class="book_disc">
         <td class="disc_text">折扣（百分制）</td>
-        <td class="disc_input"><input type="text" name="bDiscount" id="b_discount" class="input-book"></td>
-        <td><p id="p_discount"></p></td>
+        <td class="disc_input"><input type="number" name="bDiscount" id="b_discount" class="input-book" oninput="checkDiscount(this)"></td>
+        <td><p id="p_discount"  style="opacity:0">请输入1~100的数字</p></td>
       </tr>
       <tr class="book_author">
         <td class="author_text">作者</td>
         <td class="author_input"><input type="text" name="bAuthor" id="b_author"  class="input-book"></td>
-        <td><p id="p_author"></p></td>
+        <td><p id="p_author" style="opacity:0">请输入图书作者</p></td>
       </tr>
       <tr class="book_press">
         <td class="press_text">出版社</td>
         <td class="press_input"><input type="text" name="bPress" id="b_press"  class="input-book"></td>
-        <td><p id="p_press"></p></td>
+        <td><p id="p_press" style="opacity:0">请输入出版社</p></td>
       </tr>
       <tr class="book_press_time">
         <td class="time_text">出版时间</td>
         <td class="time_input"><input type="date" name="bPressTime" id="b_press_time" class="input-book"></td>
-        <td><p id="p_input_time"></p></td>
+        <td><p id="p_input_time" style="opacity:0">请选择出版时间</p></td>
       </tr>
       <tr class="book_server">
         <td class="server_text">店铺服务</td>
         <td class="server_input"><input type="text" name="bService" id="b_server"   class="input-book"></td>
         <td><p id="p_server"></p></td>
       </tr>
-      <tr><td colspan="3"><input type="button" value="提交"  onclick= "checkForm()" class="add_submit"></td></tr>
+      <tr>
+	      <td colspan="3">
+	      <input type="button" value="提交"  onclick= "checkForm()" class="add_submit" style="position:absolute;right:50%;margin-right:-165px;margin-top:-20px;">
+	      </td>
+      </tr>
     </table>
   </form>
 </section>
@@ -174,26 +181,27 @@
 <script src="js/jquery.form.js"></script>
 <script>
 var imgMark = false;
+
 function checkForm(){
-	
-	 let category = $("#b_category").val()
+	   
+	   let checkPrice = ($("#b_price").val()? true: false) && ($("#p_price").css("opacity") == 0?true:false)
+	   let checkDiscount = ($("#b_discount").val()?true:false) && ($("#p_discount").css("opacity") ==0 ? true:false)
+	   let category = $("#b_category").val()
 	   let name = $("#b_name").val()
 	   let author = $("#b_author").val()
 	   let description =$("#b_description").val()
-	   let price = $("#b_price").val()
-	   let discount = $("#b_discount").val()
 	   let press = $("#b_press").val()
 	   let pressTime =$("#b_press_time").val()
 	   let server = $("#b_server").val()
-	   if(name && category && imgMark && author && description &&price && discount &&press && pressTime &&server){
+	   if(name && category && imgMark && author && description && checkPrice && checkDiscount &&press && pressTime &&server){
 		   $("#addForm").submit();
 		   return true
 	   }else {
-		   console.log("00001111")
-		   alert("请完善图书信息")
+		   alert("请完善正确的图书信息")
 		   return false;
 	   }
 }
+//预览图片和图片名显示
 function showPreview(source) {
     var file = source.files[0];
     if(window.FileReader) {
@@ -211,12 +219,31 @@ function showPreview(source) {
          return false
     }
   }
+  
+  function checkPrice(v){
+	  v.value=v.value.replace(/[^\d]/g,'')
+	  var reg =  /^\d+(?=.{0,1}\d+$|$)/
+		   if(!reg.test(v.value)){
+			   $("#p_price").css({"opacity":"1","color":'red'})
+		   }else {
+			   $("#p_price").css({"opacity":"0"})
+		   }
+  }
+  
+  function checkDiscount(v){
+	  v.value=v.value.replace(/[^\d]/g,'')
+		   if(v.value > 100 || v.value <= 0){
+			   $("#p_discount").css({"opacity":"1","color":'red'})
+		   }else {
+			   $("#p_discount").css({"opacity":"0"})
+		   }
+  }
+  
   $(document).ready(function () {
+	  
     $("#bookManage").addClass("current").next().show()
     $("#book_add").addClass("subliCurrent")
-
-   
-  
+	//form表单提交的回掉函数  
      $("#addForm").ajaxForm(function(data){
 	  if(data.indexOf("success")!= -1) {
 			 $("#tip-success-show-admin").css("display", "block")

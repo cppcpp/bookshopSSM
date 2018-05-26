@@ -29,6 +29,11 @@
     filter: alpha(opacity=0);
     cursor: pointer
 }
+
+.alone-ul li {
+	display:block;
+	width:100%;
+}
   </style>
 </head>
 <body>
@@ -77,52 +82,58 @@
   	<input type="text" name="bId" value="" style="display:none"><!--隐藏bId框  -->
     <div class="mini-form-input">
       <label>图书名称：</label>
-      <input type="text" class="book_input" name="bName" value="">
+      <input type="text" class="book_input" name="bName" value="" id="b_name">
     </div>
     
      <div class="mini-form-input upload" style=" position: relative;padding:10px 0px;">
       <label>图书图片：</label>
       <!-- <input type="file" class="book_input" name="bName" value=""> -->
-      <img src="img/default-cover.png" style="width:50px;height:50px;margin-left:5px;" id="book_pic" >
-      <input type="file" name="bookPic" onchange="showPreview(this)" style="width:50px;height:50px;">
+      <img src="img/default-cover.png" style="width:50px;height:50px;margin-left:5px;"  onclick="$('input[id=book]').click();" id="book_pic" >
+      <input type="file" id="book" name="bookPic" onchange="showPreview(this)" style="display:none">
+      <div class="file_name" style="color:#000;z-index:1006;"></div>
     </div>
     
     <div class="mini-form-input">
-      <label>图书描述：</label>
-      <input type="text" class="book_input" name="bDescription" value="">
+    <div style="display:flex;align-items:center">
+     <label>图书描述：</label>
+      <textarea rows="10" name="bDescription" id="b_description" class="book_input mini-input-textarea" style="padding:5px 15px;height:100px;width:280px;"></textarea>
+       
+    </div>
+     
+     <!--  <input type="text" class="book_input" name="bDescription" id="b_description" value=""> -->
     </div>
 
     <div class="mini-form-input">
       <label>图书价格：</label>
-      <input type="text" class="book_input" name="bPrice" value="">
+      <input type="text" class="book_input" name="bPrice" id="b_price" value="">
     </div>
 
     <div class="mini-form-input">
       <label>图书折扣：</label>
-      <input type="text" class="book_input" name="bDiscount" value="">
+      <input type="text" class="book_input" name="bDiscount" id="b_discount" value="">
     </div>
 
     <div class="mini-form-input">
       <label>图书作者：</label>
-      <input type="text" class="book_input" name="bAuthor" value="">
+      <input type="text" class="book_input" name="bAuthor" value="" id="b_author">
     </div>
 
     <div class="mini-form-input">
       <label>图书出版社：</label>
-      <input type="text" class="book_input" name="bPress" value="">
+      <input type="text" class="book_input" name="bPress" value="" id="b_press">
     </div>
 
     <div class="mini-form-input">
       <label>出版时间：</label>
-      <input type="date" class="book_input" name="bPressTime" value="">
+      <input type="date" class="book_input" name="bPressTime" value="" id="b_presstime">
     </div>
 
     <div class="mini-form-input">
       <label>图书服务：</label>
-      <input type="text" class="book_input" name="bService" value="">
+      <input type="text" class="book_input" name="bService" value="" id="b_service">
     </div>
     <div class="mini-form-input">
-      <input type="submit" value="提交" name="submitButton">
+      <input type="button" value="提交" name="submitButton" onclick= "checkForm()" style="margin-top:15px;margin-bottom:10px;">
     </div>
 
   </form>
@@ -184,24 +195,23 @@
 <script src="js/jquery-1.7.min.js"></script>
 <script src="js/jquery.form.js"></script>
 <script>
-function showPreview(source) {
-    var file = source.files[0];
-    if(window.FileReader) {
-        var fr = new FileReader();
-        var portrait = document.getElementById('book_pic');
-        fr.onloadend = function(e) {
-          portrait.src = e.target.result;
-        };
-        fr.readAsDataURL(file);
-    }
-  }
+  
   $(function(){
-	  
-	 
-	  
     $("#bookManage").addClass("current").next().show()
     $("#book_query").addClass("subliCurrent")
+    document.getElementsByTagName('textarea')[0].onkeyup = function () {
+    var value = this.value,
+    
+        allLine = value.split('\n'),
+        lastLine = allLine.pop();
+  if (lastLine.length >= 20) {
+      lastLine = lastLine.substr(0, 20) + '\n' + lastLine.substr(20);
+      allLine.push(lastLine)
+      this.value = allLine.join('\n');
+  }
+    }
   })
+    
 </script>
 <script src="js/adminUtils.js"></script>
 <script src="js/adminBookQuery.js"></script>

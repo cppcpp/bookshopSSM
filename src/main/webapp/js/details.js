@@ -1,4 +1,29 @@
 var uAddress='',uReceiver='',oPhone='',orderDetails=[];
+let categoryArray = [
+         	        {name:'马列主义、毛泽东思想(A)',value:'a'},
+         	        {name:'哲学(B)',value:'b'},
+         	        {name:'社会科学(C)',value:'c'},
+         	        {name:'政治、法律(D)',value:'d'},
+         	        {name:'军事(E)',value:'e'},
+         	        {name:'经济(F)',value:'f'},
+         	        {name:'文化、科学、教育、体育(G)',value:'g'},
+         	        {name:'语言、文字(H)',value:'h'},
+         	        {name:'文学(I)',value:'i'},
+         	        {name:'艺术(J)',value:'j'},
+         	        {name:'历史、地理(K)',value:'k'},
+         	        {name:'自然科学总论(N)',value:'n'},
+         	        {name:'数理科学和化学(O)',value:'o'},
+         	        {name:'天文学、地球科学(P)',value:'p'},
+         	        {name:'生物科学(Q)',value:'q'},
+         	        {name:'医药、卫生(R)',value:'r'},
+         	        {name:'农业科学(S)',value:'s'},
+         	        {name:'工业科学(T)',value:'t'},
+         	        {name:'交通运输(U)',value:'u'},
+         	        {name:'航空、航天(V)',value:'v'},
+         	        {name:'环境科学(X)',value:'x'},
+         	        {name:'综合性图书(Z)',value:'z'}
+         	
+         	]
 $(function(){
 	 $("#searchBtn").click(function(){
 		  if($("#searchBook").val()!=""){
@@ -11,7 +36,18 @@ $(function(){
 		 if (r != null) return unescape(r[2]); 
         return null; 
 	}
+    function getActiveNav(category){
+    	
+		for(var i = 0; i<categoryArray.length;i++){
+			if(category.indexOf( categoryArray[i].value)!=-1){
+				$(".list li").eq(i).addClass("categroy-nav-active")
+			}
+		}
+	}
+   
+		
 	var bookId = getQueryString('bId')
+	 getActiveNav(bookId)
 	var bName,bNums,bPrice,bDiscountprice,bSumprice,bSumdiscountprice,bImg;
 	if(bookId) {
 		$.ajax({

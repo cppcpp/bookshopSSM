@@ -70,22 +70,22 @@ $(function(){
   //购物车中减少数量的功能
   $("body").on("click",".desc",function(){
     //获取总价列
-    var sum_money = $(this).parent().next();
+    var sum_money = this.parentNode.nextSibling;
     while(sum_money.nodeName=="#text"){
-      sum_money = sum_money.next().val();
+    	 sum_money = sum_money.nextSibling;
     }
     //获取单价列
-    var price = $(this).parent().prev().prev();
+    var price =this.parentNode.previousSibling.previousSibling;
     while(price.nodeName=="#text"){
-      price = price.next();
+      price = price.nextSibling;
     }
-    every_price = Number(price.val());
+    every_price = Number(price.innerHTML);
     //获取复选框
-    var check = this.parent().parent().children();
-    subCheck = check[1].children();
-    var num = this.next();
+    var check = this.parentNode.parentNode.childNodes;
+    subCheck = check[1].childNodes;
+    var num = this.nextSibling;
     while(num.nodeName=="#text"){
-      num = num.next();
+      num = num.nextSibling;
     }
     var num_text = num.value;
     num_text = Number(num_text)-1;
